@@ -1,7 +1,7 @@
 # NoPoly
 A small raymarching program that allows you to build little 3d scenes
 
-![Marching Hammers](https://i.ibb.co/z8HP5B2/Marching-Hammers80-P.gif)
+![Marching Hammers](<a href="https://ibb.co/6vJDZTt"><img src="https://i.ibb.co/6vJDZTt/Marching-Hammers80-P.gif" alt="Marching-Hammers80-P" border="0"></a>)
 
 ## Requirements
 ### include folder
