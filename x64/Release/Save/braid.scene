@@ -1,0 +1,708 @@
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name braid
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name new object
+transformPoint 1
+dynTransform 1
+position -0.000000 0.000000 -0.000000
+rotation 3.141499 1.570500 3.141499
+scale 0.499914
+animateScale 0
+animatedScaleFunction sqrt(pow(tmpP.y/2, 2.0f) + 1)
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP1.y * 3.142) * 2, 0, sin(tmpP1.y * 2 * 3.142 ))*0.20 + vec3(0, 2, 0) * progress
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.025000
+repeat 1
+repeatOffset 0.000000 2.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -0.666000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -1.333000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+endGroup
+endGroup
+new group
+name braid
+transformPoint 1
+dynTransform 1
+position 0.000000 -0.666000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name new object
+transformPoint 1
+dynTransform 1
+position -0.000000 0.000000 -0.000000
+rotation 3.141499 1.570500 3.141499
+scale 0.499914
+animateScale 0
+animatedScaleFunction sqrt(pow(tmpP.y/2, 2.0f) + 1)
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP1.y * 3.142) * 2, 0, sin(tmpP1.y * 2 * 3.142 ))*0.20 + vec3(0, 2, 0) * progress
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.025000
+repeat 1
+repeatOffset 0.000000 2.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -0.666000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -1.333000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+endGroup
+endGroup
+new group
+name braid
+transformPoint 1
+dynTransform 1
+position 0.000000 -1.333000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name new object
+transformPoint 1
+dynTransform 1
+position -0.000000 0.000000 -0.000000
+rotation 3.141499 1.570500 3.141499
+scale 0.499914
+animateScale 0
+animatedScaleFunction sqrt(pow(tmpP.y/2, 2.0f) + 1)
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP1.y * 3.142) * 2, 0, sin(tmpP1.y * 2 * 3.142 ))*0.20 + vec3(0, 2, 0) * progress
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.025000
+repeat 1
+repeatOffset 0.000000 2.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -0.666000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -1.333000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.666000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(cos(tmpP3.y * 3.142) * 2, 0, sin(tmpP3.y * 2 * 3.142 ))*0.075
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 3.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.598039 0.598039 0.598039
+shape 5
+height 10.000000
+radius 0.100000
+end
+endGroup
+endGroup
+endGroup
+endGroup
+sunDirection 0.000000 -0.707107 0.707107
+sunColor 1.000000 0.900000 0.700000
+skyColor 0.150000 0.300000 0.500000
+floorColor 0.030000 0.090000 0.020000
+ambientColor 0.050000 0.050000 0.050000
+lightCount 0
+materialNumber 1
+name new material
+id 0
+diffuse none
+normal none
+roughness none
+ambientOcclusion none

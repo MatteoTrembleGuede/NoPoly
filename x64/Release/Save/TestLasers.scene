@@ -1,0 +1,216 @@
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name Lasers
+transformPoint 1
+dynTransform 1
+position -0.000000 0.000000 -0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 0.000000 0.000000
+rotation 1.471000 0.100000 0.899999
+scale 1.799009
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(0, 1, 0) * mod(time, 0.4f) * 200.0f
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 1.000000 0.348039 0.348039
+shape 5
+height 3.100000
+radius 0.100000
+end
+new object
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 0.000000 0.000000
+rotation 1.570999 -0.000000 0.000000
+scale 1.798896
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(0, 1, 0) * mod(time - 0.3f, 0.4f) * 200.0f
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 1.000000 0.348039 0.348039
+shape 5
+height 3.100000
+radius 0.100000
+end
+new object
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 0.000000 0.000000
+rotation 1.576000 -0.100000 0.410000
+scale 1.799528
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(0, 1, 0) * mod(time - 0.2f, 0.4f) * 200.0f
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 1.000000 0.348039 0.348039
+shape 5
+height 3.100000
+radius 0.100000
+end
+new object
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 0.000000 0.000000
+rotation 1.550000 0.100000 -0.390000
+scale 1.799515
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(0, 1, 0) * mod(time - 0.1f, 0.4f) * 200.0f
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 1.000000 0.348039 0.348039
+shape 5
+height 3.100000
+radius 0.100000
+end
+endGroup
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -1.400000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.264706 0.264706 0.264706
+shape 9
+end
+endGroup
+sunDirection 0.000000 -0.707107 0.707107
+sunColor 0.000000 0.000000 0.000000
+skyColor 0.000000 0.000000 0.000000
+floorColor 0.000000 0.000000 0.000000
+ambientColor 0.050000 0.050000 0.050000
+lightCount 0
+materialNumber 0

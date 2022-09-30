@@ -1,0 +1,6 @@
+type SpaceRemap
+name InitMorphState
+body 
+morphStageID = -1;
+return m;
+

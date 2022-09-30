@@ -1,0 +1,24 @@
+type SpaceRemap
+name GyroidSpace
+attribName scale
+attribType float
+body 
+vec3 p = point / scale;
+
+#define GYR(p) (abs(dot(sin(p), cos((p).yzx))))
+
+float dist = GYR(p);
+
+const vec2 e = vec2(1.0,-1.0)*0.02;
+vec3 normal = normalize(e.xyy*GYR( p + e.xyy ) + 
+						e.yyx*GYR( p + e.yyx ) + 
+						e.yxy*GYR( p + e.yxy ) + 
+						e.xxx*GYR( p + e.xxx ) );
+
+float az = atan(normal.z, normal.x);
+float el = atan(normal.y, length(normal.xz));
+vec3 fakePoint = vec3(az, dist * dist, el);
+return InvTranslate(m, point - fakePoint);
+
+
+

@@ -1,0 +1,14 @@
+type Primitive
+name Cheese
+attribName radius
+attribType float
+attribName scale
+attribType float
+attribName bounds
+attribType vec3
+attribName smoothing
+attribType float
+body 
+
+return Intersection( (snoise(point/scale))-radius , sdBox(point, bounds), smoothing);
+

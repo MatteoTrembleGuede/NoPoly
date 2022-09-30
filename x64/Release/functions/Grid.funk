@@ -1,0 +1,24 @@
+type SpaceRemap
+name Grid
+attribName size
+attribType float
+attribName speed
+attribType vec2
+attribName height
+attribType float
+attribName sstep
+attribType vec2
+body 
+vec3 p = point;
+float s = float(timeSinceLaunch) * speed.x;
+p /= size;
+
+vec2 cell = ivec2(p.xz + 0.5);
+p.xz = fract(p.xz + 0.5) - 0.5;
+float h = (snoise(vec3(cell / speed.y, s)) * 0.5f + 0.5f);
+h = smoothstep(sstep.x, sstep.y, h) * h;
+p.y -= h * height;
+p *= size;
+
+return InvTranslate(m, point - p);
+

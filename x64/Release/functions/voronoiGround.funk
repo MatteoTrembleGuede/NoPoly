@@ -1,0 +1,37 @@
+type Primitive
+name voronoiGround
+attribName hurst
+attribType float
+attribName octave
+attribType float
+attribName zoom
+attribType float
+attribName height
+attribType float
+attribName offset
+attribType float
+attribName blur
+attribType float
+attribName stepFactor
+attribType float
+attribName rot
+attribType float
+body 
+float t = 0.0f;
+float G = exp2(-hurst);
+float a = 1.0f;
+float f = 1.0f;
+
+point /= zoom;
+offset = clamp(offset, 0.0, 1.0);
+blur = clamp(blur, 0.0, 1.0);
+mat2 m = mat2(cos(rot), -sin(rot), sin(rot), cos(rot));
+for (int i = 1; i < octave; ++i)
+{
+	point.xz *= m;
+	t += a * voronoise2(f * point.xz, offset, blur);
+	f *= stepFactor;
+	a *= G;
+}
+
+return (point.y - t * height) * zoom;

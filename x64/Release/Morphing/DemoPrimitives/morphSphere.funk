@@ -1,0 +1,12 @@
+type Primitive
+name MorphSphere
+attribName radius
+attribType float
+body 
+SetMorphDistance(length(point) - radius);
+return 9999999.0f;
+
+
+
+
+

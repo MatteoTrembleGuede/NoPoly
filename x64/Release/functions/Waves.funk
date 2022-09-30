@@ -1,0 +1,12 @@
+type SpaceRemap
+name Waves
+attribName Factor
+attribType vec3
+attribName Frequency
+attribType float
+attribName Strength
+attribType float
+body 
+point *= Frequency;
+return InvTranslate(m, Factor * sin(point.zxy) * Strength);
+

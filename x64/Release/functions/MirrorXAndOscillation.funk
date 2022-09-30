@@ -1,0 +1,37 @@
+type SpaceRemap
+name MirrorXAndOscillation
+attribName offset
+attribType float
+attribName speed
+attribType float
+attribName magnitude
+attribType float
+attribName phase
+attribType float
+attribName delay
+attribType float
+attribName test
+attribType float
+body 
+vec3 fakePoint = offset == 0 ? point : vec3(abs(point.x), point.yz) - offset * vec3(1, 0, 0);
+float r = cos((sign(point.x) * phase) + 3.14159 * speed * float(timeSinceLaunch - delay));
+//r = sign(r) * pow(abs(r), power);
+float t = fract(speed * float(timeSinceLaunch - delay)-0.2);
+t = smoothstep(0.0, test, t) - smoothstep(test, 1.0, t);
+r = /*sign(r) **/ smoothstep(-1.0, 1.0, r) - pow(t, 0.25);
+r = mix(r, r*0.5, r * 0.5 + 0.5);
+fakePoint = Rotate(fakePoint.yxz, magnitude * r).yxz;
+return InvTranslate(m, point - fakePoint);
+
+
+
+
+
+
+
+
+
+
+
+
+

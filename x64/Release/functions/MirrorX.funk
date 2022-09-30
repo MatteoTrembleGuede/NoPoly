@@ -1,0 +1,4 @@
+type SpaceRemap
+name MirrorX
+body 
+return InvTranslate(m, point - vec3(abs(point.x), point.yz));

@@ -1,0 +1,31 @@
+type SpaceRemap
+name FBMVoronoi
+attribName hurst
+attribType float
+attribName octave
+attribType float
+attribName speed
+attribType float
+attribName zoom
+attribType float
+attribName strength
+attribType float
+body 
+float t = 0.0f;
+float G = exp2(-hurst);
+float a = 1.0f;
+float f = 1.0f;
+float s = float(timeSinceLaunch * 0.001) * speed;
+
+point /= zoom;
+
+for (int i = 1; i < octave; ++i)
+{
+	t += a * Voronoi3(f * vec3(point.xz + s, s));
+	f *= 2.0f;
+	a *= G;
+}
+
+return InvTranslate(m, vec3(0, t * strength, 0));
+
+

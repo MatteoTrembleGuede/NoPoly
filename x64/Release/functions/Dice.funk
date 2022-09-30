@@ -1,0 +1,36 @@
+type SpaceRemap
+name Dice
+attribName radius
+attribType float
+attribName spherical
+attribType float
+attribName type
+attribType float
+body 
+#define PI 3.14159265359
+
+int Type=int(type);
+float cospin=cos(PI/float(Type)), scospin=sqrt(0.75-cospin*cospin);
+vec3 nc = vec3(-0.5,scospin,-cospin);
+
+vec3 p = point;
+for(int i=0;i<Type;i++)
+{
+	p.xz = abs(p.xz);
+    p -= 2. * min(0., dot(p,nc)) * nc;
+}
+
+if (spherical >= 1.)
+	{
+		p.y = length(point);
+		p.xz /= p.y;
+		p.y -= radius;
+		p.y /= radius;
+		p *= 2;
+	}
+else
+	p.y -= radius;
+
+
+
+return InvTranslate(m, point - p);

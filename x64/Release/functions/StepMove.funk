@@ -1,0 +1,23 @@
+type SpaceRemap
+name StepMove
+attribName delay
+attribType float
+attribName speed
+attribType float
+attribName frequency
+attribType float
+attribName test
+attribType float
+body 
+float r = cos(3.14159 * frequency * float(timeSinceLaunch - delay));
+//r = sign(r) * pow(abs(r), power);
+float t = (frequency * float(timeSinceLaunch - delay)-0.2);
+t = int(t) + smoothstep(0.0, test, fract(t));// - smoothstep(0.7, 1.0, t);
+r = /*sign(r) **/ r*0.5+0.5 + pow(t, 0.25);
+return InvTranslate(m, vec3(0, 0, r) * speed);
+
+
+
+
+
+

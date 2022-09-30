@@ -1,0 +1,26 @@
+type Primitive
+name PaletteBox
+attribName size
+attribType vec3
+attribName radius
+attribType float
+attribName bounds
+attribType float
+body 
+const vec2 e = vec2(1.0,-1.0)*0.5773*0.0005;
+vec3 nor = normalize( e.xyy*(sdBox( point + e.xyy , size) - radius) + 
+					  e.yyx*(sdBox( point + e.yyx , size) - radius) + 
+					  e.yxy*(sdBox( point + e.yxy , size) - radius) + 
+					  e.xxx*(sdBox( point + e.xxx , size) - radius) );
+
+vec3 p = abs(point);
+
+vec3 ma = sign(point) * vec3(p.x > p.y && p.x > p.z ? 1 : 0, 
+							 p.y > p.x && p.y > p.z ? 1 : 0, 
+							 p.z > p.x && p.z > p.y ? 1 : 0);
+
+gradientValue = dot(nor, ma);
+
+return min(sdBox(point, size) - radius, -sdBox(point, vec3(size.xz + bounds + radius, 99999999).xzy));
+
+

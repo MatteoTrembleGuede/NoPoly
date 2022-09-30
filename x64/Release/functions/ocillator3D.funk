@@ -1,0 +1,18 @@
+type SpaceRemap
+name ocillator3D
+attribName speed
+attribType vec3
+attribName offset
+attribType vec3
+attribName amplitude
+attribType vec3
+body 
+vec3 fakePoint = Rotate(point.yxz, 
+	amplitude.x * cos(float(timeSinceLaunch) * speed.x + offset.x)).yxz;
+fakePoint = Rotate(fakePoint, 
+	amplitude.y * cos(float(timeSinceLaunch) * speed.y + offset.y));
+fakePoint = Rotate(fakePoint.yxz, 
+	amplitude.z * cos(float(timeSinceLaunch) * speed.z + offset.z)).xzy;
+return InvTranslate(m, point - fakePoint);
+
+

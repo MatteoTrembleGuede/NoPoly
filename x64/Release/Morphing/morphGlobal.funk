@@ -1,0 +1,42 @@
+type SpaceRemap
+name morphPositionGlobal
+body 
+return m;
+}
+
+// DECLARE GLOBALS HERE
+
+struct MorphStage
+{
+	float morphPosition;
+	float morphLayersdistance[8];
+	int morphLayerID;
+};
+
+MorphStage morphStages[16];
+int morphStageID;
+
+void SetMorphDistance(float dist)
+{
+	if (morphStageID >= 0 && morphStageID < 16)
+	{
+		++morphStages[morphStageID].morphLayerID;
+		
+		if (morphStages[morphStageID].morphLayerID >= 0 && morphStages[morphStageID].morphLayerID < 8)
+		{
+			morphStages[morphStageID].morphLayersdistance[morphStages[morphStageID].morphLayerID] = dist;
+		}
+	}
+}
+
+//
+
+void nullFonction()
+{
+
+
+
+
+
+
+

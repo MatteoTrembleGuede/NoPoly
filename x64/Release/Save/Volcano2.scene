@@ -1,0 +1,260 @@
+new group
+name scene
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+spaceRemaps 
+function ../functions\BaseFBM.funk
+dynamic 0
+attribValue 1.300000 
+attribValue 8.300000 
+attribValue 0.000000 
+attribValue 7.700000 
+attribValue 2.300000 
+bias 0.700000
+name mountain
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.039216 0.016724 0.009804
+shape 8
+angle 0.585000
+height 27.900000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 -9.843952 -0.000000
+rotation 3.141499 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 1.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.049020 0.022587 0.008170
+shape 8
+angle 0.985000
+height 12.400000
+end
+endGroup
+new object
+bias 0.500000
+name new object
+transformPoint 1
+dynTransform 1
+position -0.000000 -15.028114 -0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 1
+roundValue 0.100000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 2.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.272491 0.464838 0.514706
+shape 0
+radius 20.000000
+end
+new group
+bias 0.500000
+name lava
+transformPoint 1
+dynTransform 0
+position -0.000000 -4.417335 -0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 0.700000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 1.000000 0.285467 0.132353
+shape 7
+height 0.100000
+radius 6.300000
+end
+new object
+spaceRemaps 
+function ../functions\BaseFBM.funk
+dynamic 0
+attribValue 0.300000 
+attribValue 4.100000 
+attribValue 9.700000 
+attribValue 1.800000 
+attribValue 0.200000 
+bias 0.700000
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 -0.100000 -0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 0
+matId -1
+dynData 0
+color 0.024510 0.013273 0.005407
+shape 7
+height 0.050000
+radius 6.300000
+end
+endGroup
+endGroup
+sunDirection 0.000000 -0.999314 -0.037026
+sunColor 1.000000 0.769320 0.607843
+skyColor 0.150000 0.300000 0.500000
+floorColor 0.030000 0.090000 0.020000
+ambientColor 0.063725 0.035198 0.021554
+lightCount 0
+materialNumber 0

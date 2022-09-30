@@ -1,0 +1,1140 @@
+new group
+bias 0.700000
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name SpaceWarp
+transformPoint 1
+dynTransform 0
+position -0.000000 0.000000 -20.000000
+rotation 1.570999 -0.000000 0.000000
+scale 1.798984
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+spaceRemaps 
+function ../functions\BaseFBM.funk
+dynamic 0
+attribValue 1.300000 
+attribValue 3.100000 
+attribValue 1000.000000 
+attribValue 2.000000 
+attribValue 4.800000 
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 104.099998
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.990196 0.155325 0.155325
+shape 0
+radius 0.000000
+end
+new object
+spaceRemaps 
+function ../functions\RotateOnTime.funk
+dynamic 1
+attribValue 5.000000 
+function ../functions\Twist.funk
+dynamic 1
+attribValue 1.200000 
+function ../functions\NonUniformScale.funk
+dynamic 1
+attribValue 1.130000 1.000000 1.000000 
+function ../functions\Bend.funk
+dynamic 1
+attribValue 1.900000 
+name new object
+transformPoint 1
+dynTransform 0
+position -0.000000 -2.662878 -0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 0.500000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 1.000000 1.000000 1.000000
+shape 9
+end
+endGroup
+new group
+spaceRemaps 
+function ../functions\PosAndRotNoise.funk
+dynamic 0
+attribValue 3.000000 
+attribValue 0.500000 
+attribValue 0.600000 
+attribValue 0.100000 
+name Ship
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name Body
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name Window
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 1.571000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name Core
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.485294 0.485294 0.485294
+shape 0
+radius 0.500000
+end
+new group
+spaceRemaps 
+function ../functions\RepeatSection.funk
+dynamic 0
+attribValue 8.000000 
+name WindowCarve
+transformPoint 1
+dynTransform 0
+position 0.000000 0.500000 0.000000
+rotation 0.000000 0.393000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 8.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 0.200000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.147059 0.147059 0.147059
+shape 1
+halfExtends 0.400000 0.200000 0.500000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.200000 0.000000 0.000000
+rotation 0.000000 0.000000 -0.300000
+scale 0.200000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.149020 0.149020 0.149020
+shape 1
+halfExtends 0.500000 0.400000 0.600000
+end
+endGroup
+new group
+spaceRemaps 
+function ../functions\RepeatSection.funk
+dynamic 0
+attribValue 8.000000 
+name WindowBars
+transformPoint 1
+dynTransform 0
+position 0.000000 0.500000 0.000000
+rotation 0.000000 0.393000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 8.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.150000 -0.045000 -0.185000
+rotation 0.000000 0.340000 -0.450000
+scale 0.200000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.486275 0.486275 0.486275
+shape 1
+halfExtends 0.590000 0.020000 0.600000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.150000 -0.045000 0.185000
+rotation 0.000000 -0.340000 -0.450000
+scale 0.200000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.486275 0.486275 0.486275
+shape 1
+halfExtends 0.590000 0.020000 0.600000
+end
+endGroup
+new object
+name Cutout
+transformPoint 1
+dynTransform 0
+position 0.000000 0.400000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 2
+matId -1
+dynData 0
+color 0.486275 0.486275 0.486275
+shape 7
+height 0.100000
+radius 0.310000
+end
+endGroup
+new group
+name Core
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 0
+radius 0.490000
+end
+new object
+name Cut
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.900000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.000000 0.000000 0.000000
+shape 1
+halfExtends 0.500000 0.500000 0.500000
+end
+endGroup
+endGroup
+new group
+spaceRemaps 
+function ../functions\RepeatSection.funk
+dynamic 0
+attribValue 2.000000 
+name Wings
+transformPoint 0
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name arms
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name biceps
+transformPoint 0
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 1.800000 0.000000 0.000000
+rotation 0.000000 0.000000 -1.571000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 8
+angle 1.385000
+height 1.700000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 1.400000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.000000 0.000000 0.000000
+shape 1
+halfExtends 0.500000 0.500000 0.500000
+end
+new group
+spaceRemaps 
+function ../functions\RepeatSection.funk
+dynamic 0
+attribValue 4.000000 
+name Carve
+transformPoint 1
+dynTransform 0
+position 0.700000 0.000000 0.000000
+rotation 0.000000 0.785000 1.571000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.100000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.020000
+blendMode 1
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.350000 0.000000 0.000000
+rotation 0.000000 0.785000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.230000 0.300000 0.230000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 7
+height 1.000000
+radius 0.100000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.200000 -0.200000 0.000000
+rotation 0.000000 0.000000 1.100000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.200000 0.100000 0.200000
+end
+endGroup
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.947971 -0.000000 -0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.010000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 0
+radius 0.120000
+end
+endGroup
+new group
+name forearm
+transformPoint 1
+dynTransform 0
+position 1.300000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position -0.130645 -0.000000 -0.000000
+rotation 0.000000 -0.000000 1.570999
+scale 0.999704
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.010000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 7
+height 0.200000
+radius 0.110000
+end
+new object
+spaceRemaps 
+function ../functions\NonUniformScale.funk
+dynamic 0
+attribValue 1.000000 1.000000 0.800000 
+function ../functions\RepeatSection.funk
+dynamic 0
+attribValue 6.000000 
+name new object
+transformPoint 1
+dynTransform 0
+position 0.097750 -0.000000 -0.000000
+rotation 0.000000 -0.000000 1.570999
+scale 0.499877
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.010000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.500000 0.030000 0.500000
+end
+endGroup
+endGroup
+new group
+spaceRemaps 
+function ../functions\NonUniformScale.funk
+dynamic 0
+attribValue 1.000000 1.000000 0.750000 
+function ../functions\RepeatSection.funk
+dynamic 0
+attribValue 6.000000 
+name new object
+transformPoint 1
+dynTransform 0
+position 1.396869 -0.000000 -0.000000
+rotation 0.000000 -0.000000 1.570999
+scale 0.999646
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+spaceRemaps 
+function ../functions\Waves.funk
+dynamic 0
+attribValue 0.000000 1.000000 0.000000 
+attribValue 42.299999 
+attribValue 0.010000 
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.098039 0.098039 0.098039
+shape 1
+halfExtends 1.400000 0.010000 0.900000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 1.400000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.050000 0.030000 0.900000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.700000 0.000000 0.400000
+rotation 0.000000 1.047000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.050000 0.023000 0.800000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.700000 0.000000 -0.400000
+rotation 0.000000 -1.047000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.050000 0.023000 0.800000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.350000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.176471 0.176471 0.176471
+shape 1
+halfExtends 0.050000 0.030000 0.900000
+end
+endGroup
+endGroup
+endGroup
+endGroup
+sunDirection 0.000000 -0.357764 0.933812
+sunColor 0.000000 0.000000 0.000000
+skyColor 0.000000 0.000000 0.000000
+floorColor 0.000000 0.000000 0.000000
+ambientColor 0.082353 0.011765 0.011765
+lightCount 1
+name new light
+position 0.000000 0.000000 15.900000
+direction 0.000000 0.000000 -1.000000
+type 3
+color 1.000000 0.914216 0.828431
+intensity 111.699997
+radius 16.799999
+attenuation 2.600000
+aperture 0.280000
+focus 1.000000
+materialNumber 0

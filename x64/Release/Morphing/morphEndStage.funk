@@ -1,0 +1,28 @@
+type Primitive
+name EndMorphStage
+body 
+float dist = 9999999.0f;
+
+if (morphStageID >= 0 && morphStageID < 16 &&
+	morphStages[morphStageID].morphLayerID >= 0 && morphStages[morphStageID].morphLayerID < 8)
+{
+	float mp = morphStages[morphStageID].morphPosition;
+	int id1 = int(mp);
+	int id2 = id1 + 1;
+	id1 = max(min(morphStages[morphStageID].morphLayerID, id1), 0);
+	id2 = max(min(morphStages[morphStageID].morphLayerID, id2), 0);
+	float factor = fract(mp);
+	factor = (id1 == id2) || mp < 0 ? 0 : factor;
+	dist = mix(morphStages[morphStageID].morphLayersdistance[id1], 
+			   morphStages[morphStageID].morphLayersdistance[id2],
+			   factor);
+}
+
+--morphStageID;
+return dist;
+
+
+
+
+
+

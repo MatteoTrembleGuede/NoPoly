@@ -1,0 +1,10 @@
+type Primitive
+name Singularity
+attribName strength
+attribType float
+body 
+float d = length(point);
+
+direction = normalize(direction - normalize(point) * strength / (d));
+
+return 99999999.0f;

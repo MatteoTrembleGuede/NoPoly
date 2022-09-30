@@ -1,0 +1,811 @@
+#version 460 core
+out vec4 FragColor;
+
+in vec2 vertexUV;
+
+uniform float customData[128];
+uniform vec4 lightColors[32]; // xyz color | w intensity
+uniform vec4 lightAttribs[32]; // x radius | y attenuation | z aperture | w focus
+uniform vec3 lightDirections[32];
+uniform vec3 lightPositions[32];
+uniform int lightTypes[32]; // 1 = directional | 2 = spot | 3 = point
+uniform int lightCount;
+uniform mat4 dynTransforms[32];
+uniform float dynScales[32];
+uniform vec4 shapeData[32];
+uniform vec3 shapeColors[32];
+uniform vec3 lightingProperties[32];
+uniform vec3 shapePalettes[128];
+uniform sampler2D materials[32];
+uniform mat2x4 materialTextureSizes[32];
+uniform int screenWidth;
+uniform int screenHeight;
+uniform vec3 sunDirection;
+uniform vec3 sunColor;
+uniform vec3 skyColor;
+uniform vec3 floorColor;
+uniform vec3 ambientColor;
+uniform bool showSDF;
+uniform bool showTrespassing;
+uniform bool showComplexity;
+uniform bool applyPRMNC;
+uniform bool showRenderChunks;
+uniform int chunkNum;
+uniform int chunkNumMax;
+
+vec3 direction;
+uniform vec3 camForward;
+uniform vec3 camRight;
+uniform vec3 camUp;
+uniform float camAngle;
+uniform vec3 camPos;
+
+uniform double timeSinceLaunch;
+float time;
+float progress;
+
+mat4 matLocalMat[128];
+int usedMats[128];
+float matFactors[128];
+int usedMatsCount;
+
+float _Metallic;
+float _Gloss;
+float _Shine;
+
+int emittersCount;
+vec4 emitterPositions[32];
+vec3 emitterColors[32];
+vec3 volumetricLight;
+float gradientValue; // for color palettes
+
+#define RAYCAST_PRECISION 0.0001f
+
+vec3 rand3( vec3 p ) {
+    return fract(sin(vec3(dot(p,vec3(127.1,311.7, 256.1)),dot(p,vec3(269.5,183.3, 52.4)),dot(p,vec3(314.5, 245.3, 167.4))))*43758.5453);
+}
+
+// Simplex Noise
+// 	<www.shadertoy.com/view/XsX3zB>
+//	by Nikita Miropolskiy
+
+/* discontinuous pseudorandom uniformly distributed in [-0.5, +0.5]^3 */
+vec3 random3(vec3 c) {
+	float j = 4096.0*sin(dot(c,vec3(17.0, 59.4, 15.0)));
+	vec3 r;
+	r.z = fract(512.0*j);
+	j *= .125;
+	r.x = fract(512.0*j);
+	j *= .125;
+	r.y = fract(512.0*j);
+	return r-0.5;
+}
+
+vec2 random2(vec2 c) {
+	float j = 4096.0*sin(dot(c,vec2(17.0, 59.4)));
+	vec2 r;
+	r.x = fract(512.0*j);
+	j *= .125;
+	r.y = fract(512.0*j);
+	return r-0.5;
+}
+
+const float F3 =  0.3333333;
+const float G3 =  0.1666667;
+float snoise(vec3 p) {
+
+	vec3 s = floor(p + dot(p, vec3(F3)));
+	vec3 x = p - s + dot(s, vec3(G3));
+	 
+	vec3 e = step(vec3(0.0), x - x.yzx);
+	vec3 i1 = e*(1.0 - e.zxy);
+	vec3 i2 = 1.0 - e.zxy*(1.0 - e);
+	 	
+	vec3 x1 = x - i1 + G3;
+	vec3 x2 = x - i2 + 2.0*G3;
+	vec3 x3 = x - 1.0 + 3.0*G3;
+	 
+	vec4 w, d;
+	 
+	w.x = dot(x, x);
+	w.y = dot(x1, x1);
+	w.z = dot(x2, x2);
+	w.w = dot(x3, x3);
+	 
+	w = max(0.6 - w, 0.0);
+	 
+	d.x = dot(random3(s), x);
+	d.y = dot(random3(s + i1), x1);
+	d.z = dot(random3(s + i2), x2);
+	d.w = dot(random3(s + 1.0), x3);
+	 
+	w *= w;
+	w *= w;
+	d *= w;
+	 
+	return dot(d, vec4(52.0));
+}
+
+vec2 rand2(vec2 co)
+{
+    return fract(sin(vec2(dot(co, vec2(12.9898, 78.233)), dot(co, vec2(54.9898, 29.233)))) * 43758.5453);
+}
+
+float rand(vec2 co)
+{
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+    // return 0.5 + 0.5 * sin(co.x * 111.0 * screenWidth) * sin(co.y * 156.0 * screenHeight);
+}
+
+float dot2( in vec2 v ) { return dot(v,v); }
+float dot2( in vec3 v ) { return dot(v,v); }
+float ndot( in vec2 a, in vec2 b ) { return a.x*b.x - a.y*b.y; }
+
+mat4 InvMat(mat4 m)
+{
+	float Coef00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
+	float Coef02 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
+	float Coef03 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
+
+	float Coef04 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
+	float Coef06 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
+	float Coef07 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
+
+	float Coef08 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
+	float Coef10 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
+	float Coef11 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
+
+	float Coef12 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
+	float Coef14 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
+	float Coef15 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
+
+	float Coef16 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
+	float Coef18 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
+	float Coef19 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
+
+	float Coef20 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+	float Coef22 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
+	float Coef23 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
+
+	vec4 Fac0 = vec4(Coef00, Coef00, Coef02, Coef03);
+	vec4 Fac1 = vec4(Coef04, Coef04, Coef06, Coef07);
+	vec4 Fac2 = vec4(Coef08, Coef08, Coef10, Coef11);
+	vec4 Fac3 = vec4(Coef12, Coef12, Coef14, Coef15);
+	vec4 Fac4 = vec4(Coef16, Coef16, Coef18, Coef19);
+	vec4 Fac5 = vec4(Coef20, Coef20, Coef22, Coef23);
+
+	vec4 Vec0 = vec4(m[1][0], m[0][0], m[0][0], m[0][0]);
+	vec4 Vec1 = vec4(m[1][1], m[0][1], m[0][1], m[0][1]);
+	vec4 Vec2 = vec4(m[1][2], m[0][2], m[0][2], m[0][2]);
+	vec4 Vec3 = vec4(m[1][3], m[0][3], m[0][3], m[0][3]);
+
+	vec4 Inv0 = vec4(Vec1 * Fac0 - Vec2 * Fac1 + Vec3 * Fac2);
+	vec4 Inv1 = vec4(Vec0 * Fac0 - Vec2 * Fac3 + Vec3 * Fac4);
+	vec4 Inv2 = vec4(Vec0 * Fac1 - Vec1 * Fac3 + Vec3 * Fac5);
+	vec4 Inv3 = vec4(Vec0 * Fac2 - Vec1 * Fac4 + Vec2 * Fac5);
+
+	vec4 SignA = vec4(+1, -1, +1, -1);
+	vec4 SignB = vec4(-1, +1, -1, +1);
+	mat4 Inverse = mat4(Inv0 * SignA, Inv1 * SignB, Inv2 * SignA, Inv3 * SignB);
+
+	vec4 Row0 = vec4(Inverse[0][0], Inverse[1][0], Inverse[2][0], Inverse[3][0]);
+
+	vec4 Dot0 = vec4(m[0] * Row0);
+	float Dot1 = (Dot0.x + Dot0.y) + (Dot0.z + Dot0.w);
+
+	float OneOverDeterminant = 1.0f / Dot1;
+
+	return Inverse * OneOverDeterminant;
+}
+
+mat4 InvScale(in mat4 m, float s)
+{
+	float iS = 1.0f/s;
+	return mat4(iS, 0, 0, 0, 
+				0, iS, 0, 0,
+				0, 0, iS, 0,
+				0, 0, 0, 1) * m;
+}
+
+mat4 InvTranslate(in mat4 m, vec3 t)
+{
+	return mat4(1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				-t.x, -t.y, -t.z, 1) * m;
+}
+
+mat4 Rotate(in mat4 m, in float angle)
+{
+	return mat4(cos(angle), 0, -sin(angle), 0,
+				0, 1, 0, 0,
+				sin(angle), 0, cos(angle), 0,
+				0, 0, 0, 1) * m;
+}
+
+mat4 RepeatByRevolution(in mat4 m, in vec3 p, in float RevNum)
+{
+	float angleSec = 6.28318530717 / RevNum;
+	float sector = round(atan(p.z, p.x) / angleSec);
+	float fixAngle = sector * angleSec;
+	return Rotate(m, fixAngle);
+}
+
+void AddLight(vec3 point, float dist, vec3 color)
+{
+	int ID = min(31, emittersCount);
+	if (emittersCount < 32)
+	{
+		emitterPositions[ID] = vec4(point, dist);
+		emitterColors[ID] = color;
+		emittersCount += 1;
+	}
+	else
+	{
+		emitterPositions[ID] = vec4(emitterPositions[ID].xyz, emitterPositions[ID].w);
+		emitterColors[ID] = emitterColors[ID];
+		emittersCount += 0;
+	}
+}
+
+void UseMaterial(int ID, float factor, in mat4 worldToLocal)
+{
+	if (usedMatsCount >= 128) return;
+	//factor = usedMatsCount < 128 ? factor : 0;
+
+	//if (factor > 0.05)
+	{
+		matLocalMat[usedMatsCount] = worldToLocal;
+		matFactors[usedMatsCount] = factor;
+		usedMats[usedMatsCount] = ID;
+		usedMatsCount += 1;
+	}
+	//else
+	//{
+	//	matLocalMat[0] = matLocalMat[0];
+	//	matFactors[0] = matFactors[0];
+	//	usedMats[0] = usedMats[0];
+	//	usedMatsCount += 0;
+	//}
+}
+
+vec4 textureAniso(sampler2D T, vec2 p, vec2 offset) {
+    mat2 J = inverse(mat2(dFdx(p),dFdy(p)));      
+    J = transpose(J)*J;                           
+    float d = determinant(J), t = J[0][0]+J[1][1],
+          D = sqrt(abs(t*t-4.*d)),               
+          V = (t-D)/2., v = (t+D)/2.,                     
+          M = 1./sqrt(V), m = 1./sqrt(v), l =log2(m*screenHeight); 
+    vec2 A = M * normalize(vec2( -J[0][1] , J[0][0]-V ));
+    vec4 O = vec4(0);
+    for (float i = -7.5; i<8.; i++)                      
+        O += textureLod(T, 0.0001+mod(p+(i/16.)*A, vec2(0.4998)) + offset, l);
+    return O/16.;
+}
+
+void SampleMaterial(in int usedMatID, in vec3 position, in out vec3 normal, out vec3 color, out float roughness, out float ao)
+{
+	int matID = usedMats[usedMatID];
+	vec3 localPos = (matLocalMat[usedMatID] * vec4(position, 1.0f)).xyz;
+	vec3 localNormal = normalize((matLocalMat[usedMatID] * vec4(normal, 0.0f)).xyz);
+	vec3 inNormalSqr = pow(abs(localNormal), vec3(2.0f, 2.0f, 2.0f));
+	
+	//inNormalSqr.y = inNormalSqr.y > 0.707106781 ? 1.0 : 0.0;
+	//inNormalSqr.xz = inNormalSqr.y > 0.5 ? vec2(0.0) : (inNormalSqr.z > inNormalSqr.x ? vec2(0.0, 1.0) : vec2(1.0, 0.0));
+	
+	vec3 uvw = fract(localPos) * 0.5f;
+	uvw += vec3(
+	uvw.x < 0 ? 0.5 : 0,
+	uvw.y < 0 ? 0.5 : 0,
+	uvw.z < 0 ? 0.5 : 0
+	);
+	uvw = 0.0001 + mod(uvw, vec3(0.4998));
+	
+	// sampling color
+	vec2 texSize = vec2(materialTextureSizes[matID][0][0], materialTextureSizes[matID][1][0]);
+	color = texture(materials[matID], uvw.xy * texSize).xyz * inNormalSqr.z
+		  + texture(materials[matID], uvw.xz * texSize).xyz * inNormalSqr.y
+		  + texture(materials[matID], uvw.zy * texSize).xyz * inNormalSqr.x;
+		  
+	// sampling normal
+	texSize = vec2(materialTextureSizes[matID][0][2], materialTextureSizes[matID][1][2]);
+	
+	vec3 tmpNormZ = texture(materials[matID], uvw.xy * texSize+ vec2(0.5f, 0.0f)).xyz * vec3(2, 2, 1) - vec3(1, 1, 0);
+	vec3 tmpNormY = texture(materials[matID], uvw.xz * texSize+ vec2(0.5f, 0.0f)).xyz * vec3(2, 2, 1) - vec3(1, 1, 0);
+	vec3 tmpNormX = texture(materials[matID], uvw.zy * texSize+ vec2(0.5f, 0.0f)).xyz * vec3(2, 2, 1) - vec3(1, 1, 0);
+	
+	tmpNormX = vec3(tmpNormX.xy + localNormal.zy, localNormal.x);
+	tmpNormY = vec3(tmpNormY.xy + localNormal.xz, localNormal.y);
+	tmpNormZ = vec3(tmpNormZ.xy + localNormal.xy, localNormal.z);
+	
+	normal = normalize((inverse(matLocalMat[usedMatID]) * vec4(normalize(
+	tmpNormX.zyx * inNormalSqr.x +
+	tmpNormY.xzy * inNormalSqr.y +
+	tmpNormZ.xyz * inNormalSqr.z
+	), 0.0f)).xyz);
+		  
+	// sampling roughness
+	texSize = vec2(materialTextureSizes[matID][0][1], materialTextureSizes[matID][1][1]);
+	roughness = texture(materials[matID], uvw.xy * texSize+ vec2(0.0f, 0.5f)).x * inNormalSqr.z
+		      + texture(materials[matID], uvw.xz * texSize+ vec2(0.0f, 0.5f)).x * inNormalSqr.y
+		      + texture(materials[matID], uvw.zy * texSize+ vec2(0.0f, 0.5f)).x * inNormalSqr.x;
+		  
+	// sampling ambient occlusion
+	texSize = vec2(materialTextureSizes[matID][0][3], materialTextureSizes[matID][1][3]);
+	ao = texture(materials[matID], uvw.xy * texSize+ vec2(0.5f, 0.5f)).x * inNormalSqr.z
+	   + texture(materials[matID], uvw.xz * texSize+ vec2(0.5f, 0.5f)).x * inNormalSqr.y
+	   + texture(materials[matID], uvw.zy * texSize+ vec2(0.5f, 0.5f)).x * inNormalSqr.x;
+}
+
+void SampleMaterialAniso(in int usedMatID, in vec3 position, in out vec3 normal, out vec3 color, out float roughness, out float ao)
+{
+	int matID = usedMats[usedMatID];
+	vec3 localPos = (matLocalMat[usedMatID] * vec4(position, 1.0f)).xyz;
+	vec3 localNormal = normalize((matLocalMat[usedMatID] * vec4(normal, 0.0f)).xyz);
+	vec3 inNormalSqr = pow(abs(localNormal), vec3(2.0f, 2.0f, 2.0f));
+	
+	//inNormalSqr.y = inNormalSqr.y > 0.707106781 ? 1.0 : 0.0;
+	//inNormalSqr.xz = inNormalSqr.y > 0.5 ? vec2(0.0) : (inNormalSqr.z > inNormalSqr.x ? vec2(0.0, 1.0) : vec2(1.0, 0.0));
+	
+	vec3 uvw = fract(localPos) * 0.5f;
+	uvw += vec3(
+	uvw.x < 0 ? 0.5 : 0,
+	uvw.y < 0 ? 0.5 : 0,
+	uvw.z < 0 ? 0.5 : 0
+	);
+	uvw = 0.0001 + mod(uvw, vec3(0.4998));
+	
+	// sampling color
+	vec2 texSize = vec2(materialTextureSizes[matID][0][0], materialTextureSizes[matID][1][0]);
+	color = textureAniso(materials[matID], uvw.xy * texSize, vec2(0)).xyz * inNormalSqr.z
+		  + textureAniso(materials[matID], uvw.xz * texSize, vec2(0)).xyz * inNormalSqr.y
+		  + textureAniso(materials[matID], uvw.zy * texSize, vec2(0)).xyz * inNormalSqr.x;
+		  
+	// sampling normal
+	texSize = vec2(materialTextureSizes[matID][0][2], materialTextureSizes[matID][1][2]);
+	
+	vec3 tmpNormZ = textureAniso(materials[matID], uvw.xy * texSize, vec2(0.5f, 0.0f)).xyz * vec3(2, 2, 1) - vec3(1, 1, 0);
+	vec3 tmpNormY = textureAniso(materials[matID], uvw.xz * texSize, vec2(0.5f, 0.0f)).xyz * vec3(2, 2, 1) - vec3(1, 1, 0);
+	vec3 tmpNormX = textureAniso(materials[matID], uvw.zy * texSize, vec2(0.5f, 0.0f)).xyz * vec3(2, 2, 1) - vec3(1, 1, 0);
+	
+	tmpNormX = vec3(tmpNormX.xy + localNormal.zy, localNormal.x);
+	tmpNormY = vec3(tmpNormY.xy + localNormal.xz, localNormal.y);
+	tmpNormZ = vec3(tmpNormZ.xy + localNormal.xy, localNormal.z);
+	
+	normal = normalize((inverse(matLocalMat[usedMatID]) * vec4(normalize(
+	tmpNormX.zyx * inNormalSqr.x +
+	tmpNormY.xzy * inNormalSqr.y +
+	tmpNormZ.xyz * inNormalSqr.z
+	), 0.0f)).xyz);
+		  
+	// sampling roughness
+	texSize = vec2(materialTextureSizes[matID][0][1], materialTextureSizes[matID][1][1]);
+	roughness = textureAniso(materials[matID], uvw.xy * texSize, vec2(0.0f, 0.5f)).x * inNormalSqr.z
+		      + textureAniso(materials[matID], uvw.xz * texSize, vec2(0.0f, 0.5f)).x * inNormalSqr.y
+		      + textureAniso(materials[matID], uvw.zy * texSize, vec2(0.0f, 0.5f)).x * inNormalSqr.x;
+		  
+	// sampling ambient occlusion
+	texSize = vec2(materialTextureSizes[matID][0][3], materialTextureSizes[matID][1][3]);
+	ao = textureAniso(materials[matID], uvw.xy * texSize, vec2(0.5f, 0.5f)).x * inNormalSqr.z
+	   + textureAniso(materials[matID], uvw.xz * texSize, vec2(0.5f, 0.5f)).x * inNormalSqr.y
+	   + textureAniso(materials[matID], uvw.zy * texSize, vec2(0.5f, 0.5f)).x * inNormalSqr.x;
+}
+
+float sdBox( vec3 p, vec3 b )
+{
+  vec3 q = abs(p) - b;
+  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
+}
+
+float sdBoxFrame( vec3 p, vec3 b, float e )
+{
+  p = abs(p  )-b;
+  vec3 q = abs(p+e)-e;
+  return min(min(
+      length(max(vec3(p.x,q.y,q.z),0.0))+min(max(p.x,max(q.y,q.z)),0.0),
+      length(max(vec3(q.x,p.y,q.z),0.0))+min(max(q.x,max(p.y,q.z)),0.0)),
+      length(max(vec3(q.x,q.y,p.z),0.0))+min(max(q.x,max(q.y,p.z)),0.0));
+}
+
+float sdTorus( vec3 p, vec2 t )
+{
+  vec2 q = vec2(length(p.xz)-t.x,p.y);
+  return length(q)-t.y;
+}
+
+float sdCappedTorus(in vec3 p, in vec2 sc, in float ra, in float rb)
+{
+  p.x = abs(p.x);
+  float k = (sc.y*p.x>sc.x*p.y) ? dot(p.xy,sc) : length(p.xy);
+  return sqrt( dot(p,p) + ra*ra - 2.0*ra*k ) - rb;
+}
+
+float sdLink( vec3 p, float le, float r1, float r2 )
+{
+  vec3 q = vec3( p.x, max(abs(p.y)-le,0.0), p.z );
+  return length(vec2(length(q.xy)-r1,q.z)) - r2;
+}
+
+float SignedDistToSphere(vec3 p, float _radius)
+{
+    return length(p) - _radius;
+}
+
+float sdCone( in vec3 p, in vec2 c, float h )
+{
+  // c is the sin/cos of the angle, h is height
+  // Alternatively pass q instead of (c,h),
+  // which is the point at the base in 2D
+  vec2 q = h*vec2(c.x/c.y,-1.0);
+    
+  vec2 w = vec2( length(p.xz), p.y );
+  vec2 a = w - q*clamp( dot(w,q)/dot(q,q), 0.0, 1.0 );
+  vec2 b = w - q*vec2( clamp( w.x/q.x, 0.0, 1.0 ), 1.0 );
+  float k = sign( q.y );
+  float d = min(dot( a, a ),dot(b, b));
+  float s = max( k*(w.x*q.y-w.y*q.x),k*(w.y-q.y)  );
+  return sqrt(d)*sign(s);
+}
+
+float sdPlane( vec3 p )
+{
+  return p.y;
+}
+
+float sdHexPrism( vec3 p, vec2 h )
+{
+  const vec3 k = vec3(-0.8660254, 0.5, 0.57735);
+  p = abs(p);
+  p.xy -= 2.0*min(dot(k.xy, p.xy), 0.0)*k.xy;
+  vec2 d = vec2(
+       length(p.xy-vec2(clamp(p.x,-k.z*h.x,k.z*h.x), h.x))*sign(p.y-h.x),
+       p.z-h.y );
+  return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+}
+
+float sdTriPrism( vec3 p, vec2 h )
+{
+  vec3 q = abs(p);
+  return max(q.z-h.y,max(q.x*0.866025+p.y*0.5,-p.y)-h.x*0.5);
+}
+
+float sdCapsule( vec3 p, float h, float r )
+{
+  p.y -= clamp( p.y, 0.0, h );
+  return length( p ) - r;
+}
+
+float sdCappedCylinder( vec3 p, float h, float r )
+{
+  vec2 d = abs(vec2(length(p.xz),p.y)) - vec2(h,r);
+  return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+}
+
+float sdOctahedron( vec3 p, float s)
+{
+  p = abs(p);
+  float m = p.x+p.y+p.z-s;
+  vec3 q;
+       if( 3.0*p.x < m ) q = p.xyz;
+  else if( 3.0*p.y < m ) q = p.yzx;
+  else if( 3.0*p.z < m ) q = p.zxy;
+  else return m*0.57735027;
+    
+  float k = clamp(0.5*(q.z-q.y+s),0.0,s); 
+  return length(vec3(q.x,q.y-s+k,q.z-k)); 
+}
+
+float sdPyramid( vec3 p, float h)
+{
+  float m2 = h*h + 0.25;
+    
+  p.xz = abs(p.xz);
+  p.xz = (p.z>p.x) ? p.zx : p.xz;
+  p.xz -= 0.5;
+
+  vec3 q = vec3( p.z, h*p.y - 0.5*p.x, h*p.x + 0.5*p.y);
+   
+  float s = max(-q.x,0.0);
+  float t = clamp( (q.y-0.5*p.z)/(m2+0.25), 0.0, 1.0 );
+    
+  float a = m2*(q.x+s)*(q.x+s) + q.y*q.y;
+  float b = m2*(q.x+0.5*t)*(q.x+0.5*t) + (q.y-m2*t)*(q.y-m2*t);
+    
+  float d2 = min(q.y,-q.x*m2-q.y*0.5) > 0.0 ? 0.0 : min(a,b);
+    
+  return sqrt( (d2+q.z*q.z)/m2 ) * sign(max(q.z,-p.y));
+}
+
+float sdEllipsoid( vec3 p, vec3 r )
+{
+  float k0 = length(p/r);
+  float k1 = length(p/(r*r));
+  return k0*(k0-1.0)/k1;
+}
+
+float udTriangle( vec3 p, vec3 a, vec3 b, vec3 c )
+{
+  vec3 ba = b - a; vec3 pa = p - a;
+  vec3 cb = c - b; vec3 pb = p - b;
+  vec3 ac = a - c; vec3 pc = p - c;
+  vec3 nor = cross( ba, ac );
+
+  return sqrt(
+    (sign(dot(cross(ba,nor),pa)) +
+     sign(dot(cross(cb,nor),pb)) +
+     sign(dot(cross(ac,nor),pc))<2.0)
+     ?
+     min( min(
+     dot2(ba*clamp(dot(ba,pa)/dot2(ba),0.0,1.0)-pa),
+     dot2(cb*clamp(dot(cb,pb)/dot2(cb),0.0,1.0)-pb) ),
+     dot2(ac*clamp(dot(ac,pc)/dot2(ac),0.0,1.0)-pc) )
+     :
+     dot(nor,pa)*dot(nor,pa)/dot2(nor) );
+}
+
+float udQuad( vec3 p, vec3 a, vec3 b, vec3 c, vec3 d )
+{
+  vec3 ba = b - a; vec3 pa = p - a;
+  vec3 cb = c - b; vec3 pb = p - b;
+  vec3 dc = d - c; vec3 pc = p - c;
+  vec3 ad = a - d; vec3 pd = p - d;
+  vec3 nor = cross( ba, ad );
+
+  return sqrt(
+    (sign(dot(cross(ba,nor),pa)) +
+     sign(dot(cross(cb,nor),pb)) +
+     sign(dot(cross(dc,nor),pc)) +
+     sign(dot(cross(ad,nor),pd))<3.0)
+     ?
+     min( min( min(
+     dot2(ba*clamp(dot(ba,pa)/dot2(ba),0.0,1.0)-pa),
+     dot2(cb*clamp(dot(cb,pb)/dot2(cb),0.0,1.0)-pb) ),
+     dot2(dc*clamp(dot(dc,pc)/dot2(dc),0.0,1.0)-pc) ),
+     dot2(ad*clamp(dot(ad,pd)/dot2(ad),0.0,1.0)-pd) )
+     :
+     dot(nor,pa)*dot(nor,pa)/dot2(nor) );
+}
+
+float Addition( float d1, float d2, float k ) 
+{
+    float h = clamp( 0.5 + 0.5*(d2-d1)/k, 0.0, 1.0 );
+	return mix( d2, d1, h ) - k*h*(1.0-h);
+}
+
+float Subtraction( float d1, float d2, float k ) 
+{
+    float h = clamp( 0.5 - 0.5*(d2+d1)/k, 0.0, 1.0 );
+	return mix( d2, -d1, h ) + k*h*(1.0-h);
+}
+	
+float Intersection( float d1, float d2, float k ) 
+{
+    float h = clamp( 0.5 - 0.5*(d2-d1)/k, 0.0, 1.0 );
+    return mix( d2, d1, h ) + k*h*(1.0-h); 
+}
+	
+float Exclusion( float d1, float d2, float k ) 
+{
+	float h = clamp( 0.5 - 0.5*(-d2-d1)/k, 0.0, 1.0 );
+	float res = mix( -d2, d1, h ) + k*h*(1.0-h); 
+	
+	h = clamp( 0.5 - 0.5*(-d1-d2)/k, 0.0, 1.0 );
+	return min(mix( -d1, d2, h ) + k*h*(1.0-h), res);
+}
+
+float AddAndSub( float d1, float d2, float k ) 
+{
+	float h = clamp( 0.5 - 0.5*(-d2-d1)/k, 0.0, 1.0 );
+	return min(mix( -d2, d1, h ) + k*h*(1.0-h), d2);
+}
+
+float Addition( vec4 d1, vec4 d2, float k , out vec3 color) 
+{
+    float h = clamp( 0.5 + 0.5*(d2.w-d1.w)/k, 0.0, 1.0 );
+    color = mix( d2.xyz, d1.xyz, h );
+	return mix( d2.w, d1.w, h ) - k*h*(1.0-h);
+}
+
+float Subtraction( vec4 d1, vec4 d2, float k , out vec3 color) 
+{
+    float h = clamp( 0.5 - 0.5*(d2.w+d1.w)/k, 0.0, 1.0 );
+    color = mix( d2.xyz, d1.xyz, h );
+	return mix( d2.w, -d1.w, h ) + k*h*(1.0-h);
+}
+	
+float Intersection( vec4 d1, vec4 d2, float k , out vec3 color) 
+{
+    float h = clamp( 0.5 - 0.5*(d2.w-d1.w)/k, 0.0, 1.0 );
+	color = mix( d2.xyz, d1.xyz, h );
+    return mix( d2.w, d1.w, h ) + k*h*(1.0-h); 
+}
+	
+float Exclusion( vec4 d1, vec4 d2, float k , out vec3 color) 
+{
+    float h = clamp( 0.5 - 0.5*(-d2.w-d1.w)/k, 0.0, 1.0 );
+	float res1 = mix( -d2.w, d1.w, h ) + k*h*(1.0-h); 
+	
+	h = clamp( 0.5 - 0.5*(-d1.w-d2.w)/k, 0.0, 1.0 );
+	float res2 = mix( -d1.w, d2.w, h ) + k*h*(1.0-h);
+	
+	color = res1 < res2 ? d1.xyz : d2.xyz;
+	
+	return min(res1, res2);
+}
+
+float AddAndSub( vec4 d1, vec4 d2, float k , out vec3 color ) 
+{
+	float h = clamp( 0.5 - 0.5*(-d2.w-d1.w)/k, 0.0, 1.0 );
+	float res = mix( -d2.w, d1.w, h ) + k*h*(1.0-h);
+	color = res < d2.w ? d1.xyz : d2.xyz;
+	return min(res, d2.w);
+}
+	
+float Min(vec4 d1, vec4 d2, out vec3 color)
+{
+	color = d1.w < d2.w ? d1.xyz : d2.xyz;
+	return d1.w < d2.w ? d1.w : d2.w;
+}
+
+float Max(vec4 d1, vec4 d2, out vec3 color)
+{
+	color = d1.w > d2.w ? d1.xyz : d2.xyz;
+	return d1.w > d2.w ? d1.w : d2.w;
+}
+	
+float Exclusion( float d1, float d2) 
+{
+	float k = 0.000001f;
+	float h = clamp( 0.5 - 0.5*(-d2-d1)/k, 0.0, 1.0 );
+	float res = mix( -d2, d1, h ) + k*h*(1.0-h); 
+	
+	h = clamp( 0.5 - 0.5*(-d1-d2)/k, 0.0, 1.0 );
+	return min(mix( -d1, d2, h ) + k*h*(1.0-h), res);
+}
+
+float Exclusion( vec4 d1, vec4 d2, out vec3 color) 
+{
+	float k = 0.000001f;
+    float h = clamp( 0.5 - 0.5*(-d2.w-d1.w)/k, 0.0, 1.0 );
+	float res1 = mix( -d2.w, d1.w, h ) + k*h*(1.0-h); 
+	
+	h = clamp( 0.5 - 0.5*(-d1.w-d2.w)/k, 0.0, 1.0 );
+	float res2 = mix( -d1.w, d2.w, h ) + k*h*(1.0-h);
+	
+	color = res1 < res2 ? d1.xyz : d2.xyz;
+	
+	return min(res1, res2);
+}
+
+vec4 multiply(in mat4 m, in vec4 v)
+{
+	return vec4(
+	m[0].x * v.x + m[1].x * v.y + m[2].x * v.z + m[3].x * v.w, 
+	m[0].y * v.x + m[1].y * v.y + m[2].y * v.z + m[3].y * v.w, 
+	m[0].z * v.x + m[1].z * v.y + m[2].z * v.z + m[3].z * v.w, 
+	m[0].w * v.x + m[1].w * v.y + m[2].w * v.z + m[3].w * v.w 
+	);
+}
+
+vec3 Triplanar(in vec3 p, in vec3 normal, in float texSize, sampler2D xyPlane, sampler2D xzPlane, sampler2D yzPlane)
+{
+	p /= texSize;
+	float xFactor = abs(dot(normal, vec3(1, 0, 0)));
+	float yFactor = abs(dot(normal, vec3(0, 1, 0)));
+	float zFactor = abs(dot(normal, vec3(0, 0, 1)));
+	
+	return (xFactor * texture(yzPlane, p.yz) + yFactor * texture(xzPlane, p.xz) + zFactor * texture(xyPlane, p.xy)).xyz;
+}
+
+vec3 Rotate(in vec3 p, in float angle)
+{
+	p.xz = mat2(cos(angle), -sin(angle), sin(angle), cos(angle)) * p.xz;
+	return p;
+}
+
+vec3 RepeatByRevolution(in vec3 p, in float RevNum)
+{
+	float angleSec = 6.28318530717 / RevNum;
+	float sector = round(atan(p.z, p.x) / angleSec);
+	float fixAngle = sector * angleSec;
+	return Rotate(p, fixAngle);
+}
+
+vec3 hash3( vec2 p )
+{
+    vec3 q = vec3( dot(p,vec2(127.1,311.7)), 
+				   dot(p,vec2(269.5,183.3)), 
+				   dot(p,vec2(419.2,371.9)) );
+	return fract(sin(q)*43758.5453);
+}
+vec4 hash4( vec3 p )
+{
+    vec4 q = vec4( dot(p,vec3(60.1,167.7, 465.44)), 
+				   dot(p,vec3(127.1,311.7, 123.4)), 
+				   dot(p,vec3(269.5,183.3, 247.5)), 
+				   dot(p,vec3(419.2,371.9, 365.2)) );
+	return fract(sin(q)*43758.5453);
+}
+
+float voronoise2( in vec2 p, float u, float v )
+{
+	float k = 1.0+63.0*pow(1.0-v,6.0);
+
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    
+	vec2 a = vec2(0.0,0.0);
+    for( int y=-2; y<=2; y++ )
+    for( int x=-2; x<=2; x++ )
+    {
+        vec2  g = vec2( x, y );
+		vec3  o = hash3( i + g )*vec3(u,u,1.0);
+		vec2  d = g - f + o.xy;
+		float w = pow( 1.0-smoothstep(0.0,1.414,length(d)), k );
+		a += vec2(o.z*w,w);
+    }
+	
+    return a.x/a.y;
+}
+
+float voronoise3( in vec3 p, float u, float v )
+{
+	float k = 1.0+63.0*pow(1.0-v,6.0);
+
+    vec3 i = floor(p);
+    vec3 f = fract(p);
+    
+	vec2 a = vec2(0.0);
+    for( int z=-2; z<=2; z++ )
+    for( int y=-2; y<=2; y++ )
+    for( int x=-2; x<=2; x++ )
+    {
+        vec3  g = vec3( x, y, z );
+		vec4  o = hash4( i + g )*vec4(u,u,u,1.0);
+		vec3  d = g - f + o.xyz;
+		float w = pow( 1.0-smoothstep(0.0,1.414,length(d)), k );
+		a += vec2(o.w*w,w);
+    }
+	
+    return a.x/a.y;
+}
+
+float Voronoi2(vec2 point)
+{
+	vec2 intPart = floor(point);
+	vec2 floatPart = fract(point);
+	float dist = 1.0f;
+	
+	for (int x = -1; x <= 1; ++x)
+	for (int y = -1; y <= 1; ++y)
+	{
+		vec2 offset = vec2(x, y);
+		vec2 locP = rand2(offset + intPart);
+		float tmpDist = dot2(offset + locP - floatPart);
+		
+		dist = Addition(dist, tmpDist, 0.1);
+	}
+	
+	return dist;
+}
+
+float Voronoi3(vec3 point)
+{
+	vec2 intPart = floor(point.xy);
+	vec2 floatPart = fract(point.xy);
+	float dist = 1.0f;
+	
+	for (int x = -1; x <= 1; ++x)
+	for (int y = -1; y <= 1; ++y)
+	{
+		vec2 offset = vec2(x, y);
+		vec2 locP = rand2(offset + intPart);
+		locP = 0.5 + 0.5*sin(point.z + 6.2831*locP);
+		float tmpDist = dot2(offset + locP - floatPart);
+		
+		dist = Addition(dist, tmpDist, 0.1);
+	}
+	
+	return dist;
+}
+

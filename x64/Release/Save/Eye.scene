@@ -1,0 +1,153 @@
+new group
+name scene name
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.900000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction tmpP - vec3( tmpP.z,atan(tmpP.y, tmpP.x), length(tmpP.xy))
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 0.100000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 -7.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction tmpP0 - Rotate(tmpP0, tmpP0.y*10) + pow(clamp(progress*20, 0, 1), 2f) * vec3(0, 7, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.100000
+repeat 0
+repeatOffset 2.000000 2.000000 2.000000
+revolutionRepeat 0
+revolutionTimesRepeat 4.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 1.000000 0.000000 0.000000
+shape 6
+mainRadius 0.200000
+auxRadius 0.100000
+length 3.200000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position -0.200000 -7.000000 0.300000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction pow(clamp(progress*20, 0, 1), 2f) * vec3(0, 7, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.100000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.100000
+blendMode 0
+matId -1
+dynData 1
+color 0.362745 0.328960 0.328960
+shape 7
+height 3.200000
+radius 0.100000
+end
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position -3.000000 0.000000 -0.300000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction vec3(pow(clamp(progress*20 - 1, 0, 1), 0.2f) * 3, 0, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.050000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 1.000000 0.000000 0.000000
+shape 2
+halfExtends 0.900000 3.300000 0.000000
+edgeThickness 0.010000
+end
+endGroup
+sunDirection 0.000000 -0.707107 0.707107
+sunColor 0.000000 0.000000 0.000000
+skyColor 0.000000 0.000000 0.000000
+floorColor 0.196078 0.074971 0.074971
+ambientColor 0.000000 0.000000 0.000000
+lightCount 2
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.000000 0.000000 -1.000000
+type 1
+color 1.000000 0.691176 0.250000
+intensity 7.400000
+radius 6.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+name new light
+position 0.000000 0.000000 1.800000
+direction 0.000000 0.000000 -1.000000
+type 3
+color 1.000000 0.580882 0.161765
+intensity 5.500000
+radius 27.900000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+materialNumber 1
+name new material
+id 0
+diffuse I:\SAVE_DISQUE_EXTERNE\Prog_3\perso\SVN\Projet Perso\Primitive open gl\x64\Debug\TextureSamples\Dry Leaves\Leaves 01_1K_BaseColor.png
+normal I:\SAVE_DISQUE_EXTERNE\Prog_3\perso\SVN\Projet Perso\Primitive open gl\x64\Debug\TextureSamples\Dry Leaves\Leaves 01_1K_Normal.png
+roughness I:\SAVE_DISQUE_EXTERNE\Prog_3\perso\SVN\Projet Perso\Primitive open gl\x64\Debug\TextureSamples\Dry Leaves\Leaves 01_1K_Roughness.png
+ambientOcclusion I:\SAVE_DISQUE_EXTERNE\Prog_3\perso\SVN\Projet Perso\Primitive open gl\x64\Debug\TextureSamples\Dry Leaves\Leaves 01_1K_Ambient Occlusion.png

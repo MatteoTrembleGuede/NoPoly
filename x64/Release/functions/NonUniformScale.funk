@@ -1,0 +1,7 @@
+type SpaceRemap
+name NonUniformScale
+attribName Scale
+attribType vec3
+body 
+vec3 fakePoint = point / Scale;
+return InvTranslate(m, point - fakePoint);

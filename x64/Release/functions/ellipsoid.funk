@@ -1,0 +1,7 @@
+type Primitive
+name ellispoid
+attribName radius
+attribType vec3
+body 
+return sdEllipsoid(point, radius);
+

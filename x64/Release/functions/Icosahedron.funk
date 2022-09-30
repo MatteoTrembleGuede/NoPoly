@@ -1,0 +1,21 @@
+type SpaceRemap
+name Icosahedron
+attribName radius
+attribType float
+body 
+#define PI 3.14159265359
+
+int Type=5;
+float cospin=cos(PI/float(Type)), scospin=sqrt(0.75-cospin*cospin);
+vec3 nc = vec3(-0.5,scospin,-cospin);
+
+vec3 p = point;
+for(int i=0;i<Type;i++)
+{
+	p.xz = abs(p.xz);
+    p -= 2. * min(0., dot(p,nc)) * nc;
+}
+
+p.y -= radius;
+
+return InvTranslate(m, point - p);

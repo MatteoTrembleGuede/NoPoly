@@ -1,0 +1,213 @@
+new group
+name scene name
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+spaceRemaps 
+function ../functions\Dice.funk
+dynamic 1
+attribValue 2.500000 
+attribValue 1.600000 
+attribValue 5.300000 
+name new group
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+spaceRemaps 
+function ../functions\Grid.funk
+dynamic 1
+attribValue 1.000000 
+attribValue 1.600000 8.000000 
+attribValue -5.000000 
+attribValue 0.400000 0.600000 
+name new group
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 0.100000
+animateScale 1
+animatedScaleFunction sin(float(timeSinceLaunch)) + 0.2
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 1.000000 1.000000 1.000000
+shape 10
+function ../functions\PaletteBox.funk
+dynamic 1
+attribValue 0.300000 1.000000 0.300000 
+attribValue 0.100000 
+attribValue 0.200000 
+end
+endGroup
+endGroup
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 1.000000 1.000000 1.000000
+shape 0
+radius 1.950000
+end
+new object
+emitLight 
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 1
+roundValue 2.400000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.004902 0.000505 0.000505
+shape 0
+radius 8.200000
+end
+endGroup
+sunDirection 0.000000 -0.707107 0.707107
+sunColor 0.112745 0.321511 1.000000
+skyColor 0.000000 0.000000 0.000000
+floorColor 1.000000 0.000000 0.205883
+ambientColor 0.000000 0.000000 0.000000
+lightCount 2
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.106965 -0.844707 0.524432
+type 1
+color 0.088235 0.678201 1.000000
+intensity 5.400000
+radius 5.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.000000 0.985489 0.169738
+type 1
+color 0.951557 0.176471 1.000000
+intensity 3.700000
+radius 5.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+materialNumber 0

@@ -1,0 +1,10 @@
+type Primitive
+name Gyroid
+attribName thickness
+attribType float
+attribName scale
+attribType float
+body 
+point /= scale * 0.01f;
+return abs(dot(sin(point), cos(point.yzx))) - thickness / (scale * 0.01f);
+

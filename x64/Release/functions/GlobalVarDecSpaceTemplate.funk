@@ -1,0 +1,14 @@
+type SpaceRemap
+name useOnlyToDeclareGlobals
+body 
+return m;
+}
+
+// DECLARE GLOBALS HERE
+
+
+
+//
+
+void nullFonction()
+{

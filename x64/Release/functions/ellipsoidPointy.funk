@@ -1,0 +1,14 @@
+type Primitive
+name ellipsoidPointy
+attribName radius
+attribType vec3
+attribName deform
+attribType vec2
+attribName bow
+attribType float
+body 
+float factor = pow(abs(point.y - deform.y), 2.0);
+point.xz += point.xz * deform.x * factor; 
+point.x += bow * 0.01f * factor;
+return sdEllipsoid(point, radius);
+

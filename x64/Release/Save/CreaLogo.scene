@@ -1,0 +1,969 @@
+new group
+name CreaLogo
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 15.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name logoRef
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 -20.000000
+rotation 3.141499 0.000500 3.141499
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name base
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 7.000000 5.000000 1.000000
+end
+new object
+name border cut
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 1.570000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 1
+elongation 6.000000 0.000000 4.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 2
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 7
+height 2.000000
+radius 1.000000
+end
+new object
+name center hole
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 3.500000 2.500000 2.000000
+end
+new object
+name middle cut
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 0.700000 10.000000 2.000000
+end
+new group
+name j cut
+transformPoint 1
+dynTransform 0
+position 2.500000 4.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 4.500000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 0.500000 0.500000 2.000000
+end
+new object
+name cut
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.785000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 9
+end
+endGroup
+new object
+name point
+transformPoint 1
+dynTransform 0
+position 4.700000 7.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 1.200000 1.200000 1.000000
+end
+endGroup
+new group
+name animatedLogo
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 -3.000000
+rotation 3.141499 0.000500 3.141499
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction sin(clamp(progress * 100 - 25.5, 0, 1) * 3.14159265f) * vec3(0, -1, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name Logo
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction clamp(progress * 100 - 10, 0, 1) * vec3(-5.0f, 0, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name SideVerticals
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 3.141500 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction clamp(progress * 100 - 10, 0, 1) * vec3(-5.0f, 0, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.050000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 1
+revolutionTimesRepeat 2.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name base
+transformPoint 1
+dynTransform 0
+position -0.400000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 2.000000 5.000000 1.000000
+end
+new object
+name RoundBaseCut
+transformPoint 1
+dynTransform 0
+position 2.000000 0.000000 0.000000
+rotation 1.570000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 1
+elongation 3.000000 0.000000 4.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 2
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 7
+height 2.000000
+radius 1.000000
+end
+new group
+name ArmsPivot
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 1.571000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 2.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name ArmsPivot
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 -1.571000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 1
+revolutionTimesRepeat 2.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name Arms
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction clamp(progress * 100 - 12, 0, 1) * vec3(3, 0, 0) + clamp(progress * 100 - 14, 0, 1) * vec3(0, 3.5, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name base
+transformPoint 1
+dynTransform 0
+position 0.000000 0.250000 0.000000
+rotation 1.571000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 1
+elongation 1.500000 0.000000 0.750000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 7
+height 1.000000
+radius 0.500000
+end
+new object
+name cut
+transformPoint 1
+dynTransform 0
+position 1.300000 0.000000 0.000000
+rotation 0.000000 0.000000 1.571000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 9
+end
+endGroup
+endGroup
+endGroup
+endGroup
+new group
+name DotRoot
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction clamp(progress * 100 - 10, 0, 1) * vec3(5.0f, 0, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name Dot
+transformPoint 1
+dynTransform 0
+position -0.450000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction pow(clamp(progress * 20 - 4.1, 0, 1), 0.25f) * vec3(0, 14, 0) - pow(clamp(progress * 20.0 - 4.1, 0, 1), 8.0f) * vec3(0, 7, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.050000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 1.150000 1.150000 1.000000
+end
+endGroup
+new group
+name slider
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 2.100000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 1
+matId -1
+new object
+name slider
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 -1.000000
+rotation 1.575000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction clamp(progress * 100 - 10, 0, 1) * vec3(5.0f, 0, 0)
+elongate 1
+elongation 0.000000 0.000000 3.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 7
+height 0.200000
+radius 0.500000
+end
+endGroup
+new group
+name DotKickerRoot
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 2.200000
+rotation -0.000001 -0.000000 -0.000001
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction clamp(progress * 100 - 10, 0, 1) * vec3(5.0f, 0, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+name DotKicker
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 1
+animatedPositionFunction pow(clamp(progress * 100 - 16, 0, 1), 2.0f) * vec3(0, -3, 0) + clamp(progress * 800 - 160, 0, 1) * vec3(0, 6, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name base
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 -1.000000
+rotation 1.570000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.050000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 7
+height 0.500000
+radius 0.500000
+end
+new object
+name Toroidal cut
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 -1.000000
+rotation 1.570000 -0.000000 0.000000
+scale 0.999828
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 3
+mainRadius 0.500000
+auxRadius 0.200000
+end
+endGroup
+endGroup
+new group
+name TriangleCut
+transformPoint 1
+dynTransform 0
+position 2.000000 3.750000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 1
+animatedScaleFunction (progress * 10 > 2.55 ? 1.1 : 0.00001)
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 1
+matId -1
+new object
+name base
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.050000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 1.300000 1.200000 1.000000
+end
+new object
+name cut
+transformPoint 1
+dynTransform 0
+position 0.100000 0.000000 0.000000
+rotation 0.000000 0.000000 0.785000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 9
+end
+endGroup
+new group
+name TriangleShard
+transformPoint 1
+dynTransform 0
+position 2.000000 3.750000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 0.999000
+animateScale 1
+animatedScaleFunction (progress * 10 > 2.55 ? 1 : 0.00001)
+animatePosition 1
+animatedPositionFunction pow(clamp(50 * (progress - 0.255), 0, 1), 8.0f) * vec3(2.75, 0, 0)
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name base
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 1
+hollow 0
+roundValue 0.050000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 1
+halfExtends 1.300000 1.200000 1.000000
+end
+new object
+name cut
+transformPoint 1
+dynTransform 0
+position 0.100000 0.000000 0.000000
+rotation 0.000000 0.000000 0.785000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.050000
+blendMode 1
+matId -1
+dynData 0
+color 0.960784 0.505882 0.000000
+shape 9
+end
+endGroup
+endGroup
+endGroup
+endGroup
+sunDirection -0.532527 -0.795903 0.288016
+sunColor 1.000000 0.858564 0.465686
+skyColor 0.000000 0.000000 0.000000
+floorColor 0.000000 0.000000 0.000000
+ambientColor 0.053922 0.053922 0.053922
+lightCount 0
+materialNumber 0

@@ -1,0 +1,10 @@
+type SpaceRemap
+name Bend
+attribName Strength
+attribType float
+body 
+
+return InvTranslate(m, length(point.xz)*Strength*vec3(0,1,0));
+
+
+

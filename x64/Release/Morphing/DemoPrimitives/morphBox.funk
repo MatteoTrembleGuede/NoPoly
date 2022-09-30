@@ -1,0 +1,11 @@
+type Primitive
+name MorphBox
+attribName size
+attribType vec3
+body 
+SetMorphDistance(sdBox(point, size));
+return 9999999.0f;
+
+
+
+

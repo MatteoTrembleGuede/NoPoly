@@ -1,0 +1,65 @@
+type Primitive
+name FractalishDisc
+attribName radius
+attribType float
+attribName smoothing
+attribType float
+attribName trans
+attribType vec3
+attribName iteration
+attribType float
+attribName rotOffset
+attribType vec3
+attribName rot
+attribType vec3
+attribName speed
+attribType float
+body 
+point = abs(point);
+//trans *= 0.01f;
+mat4 t = mat4(1, 0, 0, 0,
+			  0, 1, 0, 0,
+			  0, 0, 1, 0,
+			  trans.x, trans.y, trans.z, 1);
+
+rot = (rot == vec3(0, 0, 0) ? rot : normalize(rot)) * speed * float(timeSinceLaunch) + rotOffset;
+vec2 rotX = cos(vec2(rot.x, rot.x - 1.571));
+vec2 rotY = cos(vec2(rot.y, rot.y - 1.571));
+vec2 rotZ = cos(vec2(rot.z, rot.z - 1.571));
+
+mat4 rx = mat4(1, 0, 0, 0,
+			   0, rotX.x, rotX.y, 0,
+			   0, -rotX.y, rotX.x, 0,
+			   0, 0, 0, 1);
+				
+mat4 ry = mat4(rotY.x, 0, -rotY.y, 0,
+				0, 1, 0, 0,
+				rotY.y, 0, rotY.x, 0,
+				0, 0, 0, 1);
+				
+mat4 rz = mat4(rotZ.x, rotZ.y, 0, 0,
+			   -rotZ.y, rotZ.x, 0, 0,
+			   0, 0, 1, 0,
+			   0, 0, 0, 1);
+			   
+t = rz * ry * rx * t;
+
+float dist = length(point) - radius;
+float f = 0;
+
+for (int i = 0; i < iteration; ++i)
+{
+	//t *= t;
+	point = (t * vec4(-abs(point), 1)).xyz;
+	//float tmp = length(point) - radius;
+	float hL = length(point.xz);
+	float tmp = length(vec2(point.y, hL - clamp(hL, 0.0, 10.0))) - radius;
+	float tf = Addition(tmp, dist, smoothing);
+	//f += pow(abs(tf - tmp) / abs(dist - tmp), 0.3);
+	f += 1.0f / (1.0f + min(min(abs(point.x), abs(point.y)), abs(point.z)));
+	dist = tf;
+}
+
+gradientValue = f / iteration;
+
+return dist;

@@ -1,0 +1,9 @@
+type SpaceRemap
+name CosineOffsetXZ
+attribName frequency
+attribType float
+attribName strength
+attribType float
+body 
+return InvTranslate(m, normalize(vec3(point.xz, 0).xzy) * vec3(1, 0, 1) * cos(point.y * frequency) * strength);
+

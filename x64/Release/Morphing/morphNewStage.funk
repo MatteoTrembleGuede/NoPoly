@@ -1,0 +1,16 @@
+type SpaceRemap
+name NewMorphStage
+attribName morphPosition
+attribType float
+body 
+++morphStageID; 
+
+if (morphStageID >= 0 && morphStageID < 16) 
+{
+	morphStages[morphStageID].morphPosition = morphPosition;
+	morphStages[morphStageID].morphLayerID = -1;
+}
+return m;
+
+
+

@@ -1,0 +1,14 @@
+type SpaceRemap
+name SymetrieSixAxes
+body 
+vec3 p = point;
+vec3 ap = abs(p);
+int ma = ap.x > ap.y && ap.x > ap.z ? 0:
+		 ap.y > ap.x && ap.y > ap.z ? 1:
+		 							  2;
+int mi1 = (ma + 1) % 3;
+int mi2 = (ma + 2) % 3;
+
+p = vec3(p[mi2], ap[ma], p[mi1]);
+
+return InvTranslate(m, point - p);

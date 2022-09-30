@@ -1,0 +1,151 @@
+new group
+name scene name
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+spaceRemaps 
+function Save\../functions\FBMVoronoi.funk
+dynamic 1
+attribValue 1.700000 
+attribValue 5.700000 
+attribValue 324.200012 
+attribValue 0.600000 
+attribValue 0.150000 
+bias 0.200000
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.201341 0.218483 0.240196
+shape 9
+end
+new group
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.200000
+blendMode 0
+matId -1
+new object
+spaceRemaps 
+function Save\../functions\FBMVoronoi.funk
+dynamic 1
+attribValue 1.500000 
+attribValue 9.400000 
+attribValue 0.000000 
+attribValue 106.000000 
+attribValue 41.200001 
+bias 0.200000
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 -5.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+color 0.120657 0.200980 0.070934
+shape 9
+end
+endGroup
+endGroup
+sunDirection 0.000000 -0.312195 0.950018
+sunColor 0.387255 0.323606 0.279051
+skyColor 0.038279 0.068714 0.132353
+floorColor 0.030000 0.090000 0.020000
+ambientColor 0.035637 0.028018 0.053922
+lightCount 1
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.000000 -1.000000 0.000000
+type 1
+color 1.000000 1.000000 1.000000
+intensity -0.100000
+radius 5.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+materialNumber 1
+name grass
+id 0
+diffuse TextureSamples\Grass\Grass Fine 01_1K_Base Color.png
+normal Save\../TextureSamples\Grass\Grass Fine 01_1K_Normal.png
+roughness Save\../TextureSamples\Grass\Grass Fine 01_1K_Roughness.png
+ambientOcclusion Save\../TextureSamples\Grass\Grass Fine 01_1K_Ambient Occlusion.png

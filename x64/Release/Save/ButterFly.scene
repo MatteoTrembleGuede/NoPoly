@@ -1,0 +1,91 @@
+new group
+name scene name
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+colorP 0.350000 0.200000 0.150000;0.200000 0.400000 1.000000;1.000000 1.000000 1.000000;0.250000 0.200000 0.250000
+shape 10
+function ../functions\FractalishSphere.funk
+dynamic 1
+attribValue 0.500000 
+attribValue 0.100000 
+attribValue 0.400000 0.900000 0.100000 
+attribValue 40.799999 
+attribValue 3.200000 3.000000 3.200000 
+attribValue 0.000000 0.000000 0.000000 
+attribValue 0.000000 
+end
+endGroup
+sunDirection 0.000000 -0.707107 0.707107
+sunColor 0.000000 0.000000 0.000000
+skyColor 0.000000 0.000000 0.000000
+floorColor 1.000000 0.515571 0.176471
+ambientColor 0.000000 0.000000 0.000000
+lightCount 2
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.000000 -0.597423 0.801927
+type 1
+color 0.434689 0.564243 0.985294
+intensity 3.600000
+radius 5.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.000000 -0.801887 -0.597475
+type 1
+color 0.181373 1.000000 0.398068
+intensity 4.900000
+radius 5.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+materialNumber 0

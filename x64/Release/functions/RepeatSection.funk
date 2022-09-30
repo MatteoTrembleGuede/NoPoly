@@ -1,0 +1,7 @@
+type SpaceRemap
+name RepeatSection
+attribName NumSection
+attribType float
+body 
+
+return InvTranslate(m, point - RepeatByRevolution(point, float(int(NumSection))));

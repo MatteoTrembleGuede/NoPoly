@@ -1,0 +1,420 @@
+#define MaxDistance 200.0f
+#define MaxIteration 200
+
+uniform float AORadius;
+uniform float AOStrength;
+
+float GetSoftShadow( in vec3 position, in vec3 direction, const float sharpness )
+{
+	float illumination = 1.0;
+    float totalDistance = 0;
+    for( int i=0; i<40; ++i )
+    {
+		float tmpDist = DistToScene( position + direction * totalDistance );
+        illumination = min( illumination, sharpness * tmpDist / totalDistance );
+        totalDistance += clamp( illumination/5.0, 0.1, 0.4 );
+		//totalDistance += 0.2;
+        if( illumination<0.005 || totalDistance > MaxDistance ) break;
+    }
+	illumination = clamp(illumination, 0, 1);
+	illumination = illumination * illumination * (3.0f - 2.0f * illumination);
+    return clamp( illumination, 0.0, 1.0 );
+}
+
+float GetSoftShadow( in vec3 position, in vec3 direction, const float sharpness , in float maxDistance)
+{
+	float illumination = 1.0;
+    float totalDistance = 0;
+    for( int i=0; i<40; ++i )
+    {
+		float tmpDist = DistToScene( position + direction * totalDistance );
+        illumination = min( illumination, sharpness * tmpDist / totalDistance );
+        //totalDistance += clamp( tmpDist, 0.01, 0.2 );
+		totalDistance += 0.2;
+        if( illumination<0.005 || totalDistance > maxDistance ) break;
+    }
+	illumination = clamp(illumination, 0, 1);
+	illumination = illumination * illumination * (3.0f - 2.0f * illumination);
+    return clamp( illumination, 0.0, 1.0 );
+}
+
+uniform float normalRadius;
+
+vec3 GetNormal(in vec3 position)
+{
+	const vec2 e = vec2(1.0,-1.0)*0.5773*0.0005 * normalRadius;
+    return normalize( e.xyy*DistToScene( position + e.xyy ) + 
+					  e.yyx*DistToScene( position + e.yyx ) + 
+					  e.yxy*DistToScene( position + e.yxy ) + 
+					  e.xxx*DistToScene( position + e.xxx ) );
+}
+
+float GetAmbientOcclusion( in vec3 position, in vec3 normal )
+{
+	float occlusion = 0.0;
+    float scale = 1.0;
+    for( int i=0; i<5; i++ )
+    {
+        const float offset = 0.01 + 0.033*float(i) * AORadius;
+        const float dist = DistToScene( normal * offset + position );
+        occlusion += -(dist-offset)*scale;
+        scale *= 0.95;
+    }
+    return clamp( 1.0 - occlusion*AOStrength, 0.0, 1.0 );
+}
+
+// specular
+
+vec3 GetSpecular(in vec3 lightColor, in vec3 lightDirection, in vec3 viewDirection, in vec3 normal, in vec3 sceneColor, in float roughness)
+{
+    const vec3 reflectDir = reflect(lightDirection, normal);
+	return lightColor * (0.03f*(1 - _Metallic) + sceneColor * _Metallic) * _Gloss * pow(max(0, dot(-viewDirection, reflectDir)), max(1 - roughness, 0.0001));
+}
+
+vec3 GetSpecularDirectional(in int lightID, in vec3 viewDirection, in vec3 normal, in vec3 sceneColor, in float roughness)
+{
+	return GetSpecular(lightColors[lightID].xyz, lightDirections[lightID], viewDirection, normal, sceneColor, roughness) * lightColors[lightID].w;
+}
+
+vec3 GetSpecularPoint(in int lightID, in vec3 position, in vec3 viewDirection, in vec3 normal, in vec3 sceneColor, in float roughness)
+{
+	const float distToLight = distance(lightPositions[lightID], position);
+	const float factor = (distToLight / lightAttribs[lightID].x) * lightAttribs[lightID].y;
+	return GetSpecular(lightColors[lightID].xyz, normalize(position - lightPositions[lightID]), viewDirection, normal, sceneColor, roughness) * lightColors[lightID].w / (1 + factor * 10.0f);
+}
+
+vec3 GetSpecularPointEmitter(in int emitterID, in vec3 position, in vec3 viewDirection, in vec3 normal, in vec3 sceneColor, in float roughness)
+{
+	const float distToLight = emitterPositions[emitterID].w;
+	const float factor = (distToLight * 0.05f) * 2.0f;
+	return GetSpecular(emitterColors[emitterID].xyz*20.0, normalize(position - emitterPositions[emitterID].xyz), viewDirection, normal, sceneColor, roughness) / (1 + factor * 10.0f);
+}
+
+vec3 GetSpecularSpot(in int lightID, in vec3 position, in vec3 viewDirection, in vec3 normal, in vec3 sceneColor, in float roughness)
+{
+	const float alignment = pow(1.0f - clamp((1.0f - dot(lightDirections[lightID], normalize(position - lightPositions[lightID]))) / (1.00f - cos(lightAttribs[lightID].z)), 0, 1), lightAttribs[lightID].w);
+	return GetSpecularPoint(lightID, position, viewDirection, normal, sceneColor, roughness) * (alignment);
+}
+
+// diffuse
+
+vec3 GetDiffuse(in vec3 position, in vec3 lightColor, in vec3 lightDirection, in vec3 normal, in vec3 sceneColor)
+{
+	return sceneColor * (max(dot(-lightDirection, normal), 0) * lightColor) * (1.0f - _Metallic);
+}
+
+vec3 GetDiffuseDirectional(in int lightID, in vec3 position, in vec3 normal, in vec3 sceneColor)
+{
+	return GetDiffuse(position, lightColors[lightID].xyz, lightDirections[lightID], normal, sceneColor) * lightColors[lightID].w;
+}
+
+vec3 GetDiffusePoint(in int lightID, in vec3 position, in vec3 normal, in vec3 sceneColor)
+{
+	const float distToLight = distance(lightPositions[lightID], position);
+	const float factor = pow(clamp(distToLight / lightAttribs[lightID].x, 0, 1), 1/lightAttribs[lightID].y);
+	return GetDiffuse(position, lightColors[lightID].xyz, normalize(position - lightPositions[lightID]), normal, sceneColor) * lightColors[lightID].w * (1.0f - factor);
+}
+
+vec3 GetDiffusePointEmitter(in int emitterID, in vec3 position, in vec3 normal, in vec3 sceneColor)
+{
+	const float distToLight = emitterPositions[emitterID].w;
+	const float factor = pow(clamp(distToLight * 0.05f, 0, 1), 0.5);
+	return GetDiffuse(position, emitterColors[emitterID].xyz*20.0, normalize(position - emitterPositions[emitterID].xyz), normal, sceneColor) * (1.0f - factor);
+}
+
+vec3 GetDiffuseSpot(in int lightID, in vec3 position, in vec3 normal, in vec3 sceneColor)
+{
+	const float alignment = pow(1.0f - clamp((1.0f - dot(lightDirections[lightID], normalize(position - lightPositions[lightID]))) / (1.0f - cos(lightAttribs[lightID].z)), 0, 1), lightAttribs[lightID].w);
+	return GetDiffusePoint(lightID, position, normal, sceneColor) * (alignment);
+}
+
+vec3 skyReflection;
+uniform float shadowSharpness;
+
+vec3 GetDiffuseAndSpecular( in vec3 position, in vec3 viewDirection, in vec3 normal , in vec3 sceneColor, inout float ao, in float roughness)
+{
+	vec3 diffuse = vec3(0);
+	vec3 specular = vec3(0);
+	
+	// sun diff and spec
+	
+	float shadowFactor = GetSoftShadow(0.001f * normal * (0.5f * dot(normal, -sunDirection) + 0.5f) + position, -sunDirection, shadowSharpness);
+	
+	specular += GetSpecular(sunColor, sunDirection, viewDirection, normal, sceneColor, roughness) * shadowFactor;
+	diffuse += GetDiffuse(position, sunColor, sunDirection, normal, sceneColor) * shadowFactor;
+	
+	// lights
+	
+		for (int  i = 0; i < lightCount; ++i)
+		{
+			switch(lightTypes[i])
+			{
+			case 1: // directional
+				shadowFactor = GetSoftShadow(0.001f * normal * (0.5f * dot(normal, -lightDirections[i]) + 0.5f) + position, -lightDirections[i], shadowSharpness);
+				diffuse += GetDiffuseDirectional(i, position, normal, sceneColor) * shadowFactor;
+				specular += GetSpecularDirectional(i, viewDirection, normal, sceneColor, roughness) * shadowFactor;
+				break;
+			case 2: // point
+				shadowFactor = GetSoftShadow(0.001f * normal * (0.5f * dot(normal, normalize(lightPositions[i] - position)) + 0.5f) + position, normalize(lightPositions[i] - position), shadowSharpness, distance(lightPositions[i], position));
+				diffuse += GetDiffusePoint(i, position, normal, sceneColor) * shadowFactor;
+				specular += GetSpecularPoint(i, position, viewDirection, normal, sceneColor, roughness) * shadowFactor;
+				break;
+			case 3: // spot
+				shadowFactor = GetSoftShadow(0.001f * normal * (0.5f * dot(normal, normalize(lightPositions[i] - position)) + 0.5f) + position, normalize(lightPositions[i] - position), shadowSharpness, distance(lightPositions[i], position));
+				diffuse += GetDiffuseSpot(i, position, normal, sceneColor) * shadowFactor;
+				specular += GetSpecularSpot(i, position, viewDirection, normal, sceneColor, roughness) * shadowFactor;
+				break;
+			}
+		}
+		
+	// sky and floor indirect lighting
+	vec3 skyDirection = normalize(reflect(viewDirection, normal));
+	specular += GetSpecular(skyReflection, -skyDirection, viewDirection, normal, sceneColor, roughness) / _Gloss;
+	diffuse += sceneColor * ((0.5 + 0.5 * (normal.y)) * skyColor + max(-normal.y, 0) * floorColor) * (1.0f - _Metallic);
+	//diffuse *= GetAmbientOcclusion(position + 0.001f * normal, normal) * ao;
+	ao *= GetAmbientOcclusion(position + 0.001f * normal, normal);
+		
+	// emitting objects
+	for (int  i = 0; i < emittersCount; ++i)
+	{
+		shadowFactor = (GetSoftShadow(position + 0.001f * normal * (0.5f + 0.5f * dot(normal, normalize(emitterPositions[i].xyz - position))), normalize(emitterPositions[i].xyz - position), shadowSharpness, emitterPositions[i].w));
+		diffuse += GetDiffusePointEmitter(i, position, normal, sceneColor) * shadowFactor;
+		specular += GetSpecularPointEmitter(i, position, viewDirection, normal, sceneColor, roughness) * shadowFactor;
+	}
+	
+	//----------------
+	
+	
+	return diffuse + specular;
+}
+
+vec3 grad(in vec3 p)
+{
+	vec2 h = vec2( 0.01, 0.0 );
+    return vec3( DistToScene(p+h.xyy) - DistToScene(p-h.xyy),
+                 DistToScene(p+h.yxy) - DistToScene(p-h.yxy),
+				 DistToScene(p+h.yyx) - DistToScene(p-h.yyx))/(2.0*h.x);
+}
+
+void main()
+{
+	volumetricLight = vec3(0);
+	emittersCount = 0;
+	usedMatsCount = 0;
+	vec3 finalColor;
+	const vec2 factor = 2.0f * (vertexUV.xy) - 1.0f;
+	
+    float totalDistance = 0;
+    vec4 distResult = vec4(0, 0, 0, 9999999);
+	float lastDist = 9999999;
+	float lastTotalDist = 0;
+
+	int n = 0;
+	
+	//float random = rand(vertexUV.xy + time);
+	
+	time = float(timeSinceLaunch);// + pow(0.5*random + 0.5, 2.0) * 0.02;
+	progress = time * 0.1f;
+	/*const vec3*/ direction = normalize(camForward + factor.x * camRight * screenWidth * tan(camAngle * 0.5f) / screenHeight + factor.y * camUp * tan(camAngle * 0.5f));
+	vec3 p = camPos;
+    for (; n < MaxIteration && totalDistance < MaxDistance; ++n)
+	{
+		float tmpDistResult = DistToScene(direction * totalDistance + camPos);
+		//float tmpDistResult = DistToScene(p);
+		
+		if ((tmpDistResult) < RAYCAST_PRECISION * totalDistance + RAYCAST_PRECISION)
+		{
+			distResult.w = tmpDistResult;
+			break;
+		}
+		else
+		{
+			lastTotalDist = totalDistance;
+			//p += direction * tmpDistResult;
+			totalDistance += (tmpDistResult);
+		}
+		lastDist = tmpDistResult;
+	}
+	
+	
+	
+	if (applyPRMNC /*&& distResult.w < 0*/)
+	{
+		if (DistToScene(direction * totalDistance + camPos) < 0)
+		for (int i = 0; (distResult.w >= RAYCAST_PRECISION * totalDistance + RAYCAST_PRECISION || distResult.w < 0) && i < 10; ++i)
+		{
+			//if (dot(direction, direction * sign(totalDistance)) < 0) break;
+			float weight = distResult.w / ((distResult.w) - (lastDist));
+			totalDistance = mix(totalDistance, lastTotalDist, weight);
+			distResult.w = DistToScene(direction * totalDistance + camPos);
+		}
+	}
+	
+	
+		
+	
+	const vec3 finalPosition = direction * totalDistance + camPos;
+    vec3 normal = GetNormal(finalPosition);
+	vec3 tmpLightP;
+	
+	DistToScene(finalPosition, normal, distResult.xyz);
+	DistToScene(finalPosition, tmpLightP);
+	
+	_Metallic = tmpLightP.x, _Shine = tmpLightP.y, _Gloss = tmpLightP.z;
+	
+	// test triplanar
+	
+	float roughness = 1.0 - _Shine;
+	float ao = 1;
+	vec3 tmpFinalColor = distResult.xyz;
+	vec3 tmpFinalNormal = normal;
+	float tmpFinalRoughness = 1.0 - _Shine;
+	float tmpFinalAO = 1;
+	float finalFactor = 0;
+	
+	for (int i = 0; i < usedMatsCount; ++i)
+	{
+		vec3 tmpColor;
+		vec3 tmpNormal = normal;
+		float tmpRoughness;
+		float tmpAo;
+		SampleMaterial(i, finalPosition, tmpNormal, tmpColor, tmpRoughness, tmpAo);
+		
+		tmpFinalColor = mix(tmpFinalColor, tmpColor, matFactors[i]);
+		tmpFinalNormal = mix(tmpFinalNormal, tmpNormal, matFactors[i]);
+		tmpFinalRoughness = mix(tmpFinalRoughness, tmpRoughness, matFactors[i]);
+		tmpFinalAO = mix(tmpFinalAO, tmpAo, matFactors[i]);
+		finalFactor = mix(finalFactor, matFactors[i], matFactors[i]);
+	}
+	
+	//distResult.xyz = tmpFinalColor * finalFactor + (1 - finalFactor) * distResult.xyz;
+	distResult.xyz = tmpFinalColor;
+	//normal = tmpFinalNormal * finalFactor + (1 - finalFactor) * normal;
+	normal = tmpFinalNormal;
+	ao = tmpFinalAO;
+	roughness = tmpFinalRoughness;
+	//normal = normalize(normal);
+	
+	if (finalFactor > 0)
+	{
+		float tmpShine = _Shine;
+		//if (mod(time, 2.0) < 1)
+		{
+			//float factor = clamp((1-roughness), 0, 1);
+			//_Shine *= factor;
+			//_Gloss *= factor;
+			
+			_Shine = _Shine * 0.1 / roughness;
+		}
+		
+		roughness = 1-(1-tmpFinalRoughness) * tmpShine / roughness;
+	}
+	
+	/////////////////////////////////////////////////////////////
+
+	const float farRatio = pow(max(totalDistance / MaxDistance, n / float(MaxIteration)), 8.0f);
+	const float upRatio = pow(clamp(/*0.5 + 0.5 **/ direction.y, 0, 1), 0.75f);
+	// vec3 sky = max(upRatio * vec3(0.05, 0.05, 0.05), 0.01);
+	const float sunRatio = pow(1-smoothstep(max(dot(sunDirection, -direction), 0), 1.0f, 0.998f), 0.7f);
+	float transitionRatio = min(upRatio * 5.0f, 1);
+	transitionRatio = transitionRatio * transitionRatio * (-2 * transitionRatio + 3);
+	const vec3 sky = (transitionRatio * (skyColor + (1-pow(upRatio, 0.2f)) * sunColor) 
+			+ (1.0f - transitionRatio) * ambientColor /** (pow(upRatio, 10.0f) + (1 - pow(upRatio, 10.0f)) * floorColor)*/)
+			+ (2.0f / (1.0f + pow(10.0f * abs(direction.y), 0.2f))) * (sunColor * (1.5f * -abs(sunDirection.y)+1.5f) * pow(max(0.5f * dot(normalize(vec3(sunDirection.x, 0.0f, sunDirection.z)), -normalize(direction * vec3(1.0f, 40.0f, 1.0f))) + 0.5f, 0.0f), 4.0f))
+			+ sunRatio * sunColor;
+			
+	/////////////////////////////////////////////////////////////
+	skyReflection = vec3(0);
+	#define NUM_BLUR_SAMPLE 2
+	
+	vec3 tmpRight;
+	vec3 tmpUp;
+	
+	//vec3 upRight = cross(normal, vec3(0, 1, 0));
+	//vec3 dirRight = cross(normal, -direction);
+	//tmpRight = length(upRight) > length(dirRight) ? normalize(upRight) : normalize(dirRight);
+	tmpRight = normalize(cross(normal, normalize(cross(vec3(0, 1, 0), -camForward))));
+	tmpUp = normalize(cross(tmpRight, normal));
+	
+	for (int j = -NUM_BLUR_SAMPLE; j <= NUM_BLUR_SAMPLE; ++j)
+	for (int i = -NUM_BLUR_SAMPLE; i <= NUM_BLUR_SAMPLE; ++i)
+	{		
+		float r = rand(time+vertexUV.xy + vec2(i,j));
+		float c = (i != 0 && j != 0) ? max(abs(i), abs(j))/ length(vec2(i,j)) : 1;
+		vec2 o = vec2(i, j) + r;
+		vec3 deviation = (tmpRight * o.x + tmpUp * o.y) / float(NUM_BLUR_SAMPLE) * c;
+		
+		vec3 dir = normalize(reflect(direction, normalize(normal + deviation / _Shine)));
+		const float upRatio = pow(clamp(/*0.5 + 0.5 **/ dir.y, 0, 1), 0.75f);
+		const float sunRatio = pow(1-smoothstep(max(dot(sunDirection, -dir), 0), 1.0f, 0.998f), 0.7f);
+		float transitionRatio = min(upRatio * 5.0f, 1);
+		transitionRatio = transitionRatio * transitionRatio * (-2 * transitionRatio + 3);
+		skyReflection += (transitionRatio * (skyColor + (1-pow(upRatio, 0.2f)) * sunColor) 
+			+ (1.0f - transitionRatio) * ambientColor /** (pow(upRatio, 10.0f) + (1 - pow(upRatio, 10.0f)) * floorColor)*/)
+			+ (2.0f / (1.0f + pow(10.0f * abs(dir.y), 0.2f))) * (sunColor * (1.5f * -abs(sunDirection.y)+1.5f) * pow(max(0.5f * dot(normalize(vec3(sunDirection.x, 0.0f, sunDirection.z)), -normalize(dir * vec3(1.0f, 40.0f, 1.0f))) + 0.5f, 0.0f), 4.0f))
+			+ sunRatio * sunColor;
+	}
+	skyReflection /= float(pow(NUM_BLUR_SAMPLE*2+1, 2));
+	float brightness = pow(clamp((skyReflection.x + skyReflection.y + skyReflection.z) * 0.3333f, 0.0, 1.0), pow(_Gloss, 0.1f));
+	skyReflection *= _Gloss * brightness;
+	
+	//vec3 sky = vec3(0, 0, 0);
+	
+    if ((distResult.w) >= RAYCAST_PRECISION + RAYCAST_PRECISION * totalDistance)
+    {
+        finalColor = sky;
+    }
+	else
+	{
+		finalColor =  ((GetDiffuseAndSpecular( finalPosition, direction, normal , distResult.xyz, ao, roughness)
+		+ ambientColor * distResult.xyz) * ao * (1 - farRatio) + sky * farRatio);
+	}
+	
+	if (showSDF)
+	{
+		if (finalPosition.z > 0)
+		{
+			const vec3 posOnPlane = camPos - (camPos.z) / (direction.z) * direction;
+			
+			// test fixing distance
+			
+			/*float v = DistToScene(posOnPlane);
+			vec3 g = grad(posOnPlane);
+			const float dis = v/length(g);*/
+	
+			//
+			
+			const float dis = DistToScene(posOnPlane);
+			finalColor = int(dis * 10.0f) % 2 == 0 ? vec3(0.5,0.5, 0) : vec3(0.2, 0.2, 0);
+			if (direction.z > 0.2)
+			{
+				finalColor = finalColor;
+			}
+			else
+			{
+				finalColor = sky;
+			}
+		}
+	}
+	
+	finalColor = clamp(pow(finalColor, vec3(0.45)), 0.0f, 1.0f);
+	finalColor = finalColor * finalColor * (3.0f - 2.0f * finalColor);
+	
+	if (showRenderChunks) 
+	{
+		float factor = chunkNum / float(chunkNumMax);
+		FragColor = vec4(1 - pow(factor, 5.0f), pow(factor, 0.20f), 0, 1);
+	}
+	else
+	{
+		if (showComplexity) finalColor = vec3(pow(totalDistance / MaxDistance ,0.5), float(n) / float(MaxIteration), 1.0f / abs(distResult.w));
+		
+		if (showTrespassing && distResult.w < 0)
+			FragColor = vec4(
+				int(abs(finalPosition.x) + abs(finalPosition.y) + abs(finalPosition.z) * 100.0f) % 2 == 0 ? vec2(1, 0) : vec2(0, 1)
+				, 0, 1);
+		else
+			FragColor = vec4(finalColor, 1);
+	}
+}
+

@@ -1,0 +1,6 @@
+type SpaceRemap
+name RotateOnTime
+attribName speed
+attribType float
+body 
+return InvTranslate(m, point - Rotate(point, time * speed));

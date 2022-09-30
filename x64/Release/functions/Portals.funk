@@ -1,0 +1,60 @@
+type SpaceRemap
+name portals
+attribName pos1
+attribType vec3
+attribName rot1
+attribType vec2
+attribName pos2
+attribType vec3
+attribName rot2
+attribType vec2
+attribName size
+attribType float
+attribName maxIteration
+attribType float
+body 
+vec3 p = point;
+vec3 fakePoint = point;
+vec3 cam = camPos;
+int maxI = min(int(maxIteration), 50);
+for (int i = 0; i < maxI; ++i)
+{
+	vec3 dir1 = Rotate(Rotate(vec3(1, 0, 0), rot1.y).yzx, rot1.x);
+	vec3 dir2 = Rotate(Rotate(vec3(1, 0, 0), rot2.y).yzx, rot2.x);
+	
+	vec3 proj1 = dot(pos1 - cam, dir1) / dot(direction, dir1) * direction + cam;
+	vec3 proj2 = dot(pos2 - cam, dir2) / dot(direction, dir2) * direction + cam;
+	
+	if (dot2(proj1 - cam) < dot2(proj2 - cam))
+	{
+		if (dot(dir1, p - pos1) < 0 && dot(dir1, cam - pos1) > 0 && length(proj1 - pos1) < size)
+		{
+			fakePoint = Rotate(Rotate(Rotate(Rotate(p - pos1, -rot1.x).zxy, -rot1.y), rot2.y).yzx, rot2.x + 3.14159f) + pos2;
+			cam = Rotate(Rotate(Rotate(Rotate(proj1 - dir1 * 0.001f - pos1, -rot1.x).zxy, -rot1.y), rot2.y).yzx, rot2.x + 3.14159f) + pos2;
+		}
+		else if (dot(dir2, p - pos2) < 0 && dot(dir2, cam - pos2) > 0 && length(proj2 - pos2) < size)
+		{
+			fakePoint = Rotate(Rotate(Rotate(Rotate(p - pos2, -rot2.x).zxy, -rot2.y), rot1.y).yzx, rot1.x + 3.14159f) + pos1;
+			cam = Rotate(Rotate(Rotate(Rotate(proj2 - dir2 * 0.001f - pos2, -rot2.x).zxy, -rot2.y), rot1.y).yzx, rot1.x + 3.14159f) + pos1;
+		}
+		else break;
+	}
+	else
+	{
+		if (dot(dir2, p - pos2) < 0 && dot(dir2, cam - pos2) > 0 && length(proj2 - pos2) < size)
+		{
+			fakePoint = Rotate(Rotate(Rotate(Rotate(p - pos2, -rot2.x).zxy, -rot2.y), rot1.y).yzx, rot1.x + 3.14159f) + pos1;
+			cam = Rotate(Rotate(Rotate(Rotate(proj2 - dir2 * 0.001f - pos2, -rot2.x).zxy, -rot2.y), rot1.y).yzx, rot1.x + 3.14159f) + pos1;
+		}
+		else if (dot(dir1, p - pos1) < 0 && dot(dir1, cam - pos1) > 0 && length(proj1 - pos1) < size)
+		{
+			fakePoint = Rotate(Rotate(Rotate(Rotate(p - pos1, -rot1.x).zxy, -rot1.y), rot2.y).yzx, rot2.x + 3.14159f) + pos2;
+			cam = Rotate(Rotate(Rotate(Rotate(proj1 - dir1 * 0.001f - pos1, -rot1.x).zxy, -rot1.y), rot2.y).yzx, rot2.x + 3.14159f) + pos2;
+		}
+		else break;
+	}
+	
+	p = fakePoint;
+}
+
+return InvTranslate(m, point - fakePoint);

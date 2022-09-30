@@ -1,0 +1,27 @@
+type SpaceRemap
+name PosAndRotNoise
+attribName Octave
+attribType float
+attribName OctaveFactor
+attribType float
+attribName TranslationFactor
+attribType float
+attribName RotationFactor
+attribType float
+body 
+float angle = 1.0f;
+float offsetX = 1.0f;
+
+float frequencyFactor = 1.0f;
+
+for (int i = 0; i < min(10, int(Octave)); ++i)
+{
+	angle += sin(float(timeSinceLaunch) * frequencyFactor);
+	offsetX += -cos(float(timeSinceLaunch) * frequencyFactor);
+	frequencyFactor *= OctaveFactor;
+}
+
+vec3 fakePoint = Rotate(point, angle * RotationFactor);
+fakePoint = Rotate(fakePoint.xzy, angle * RotationFactor).xzy;
+fakePoint += vec3(offsetX, 0, 0) * TranslationFactor;
+return InvTranslate(m, point - fakePoint);

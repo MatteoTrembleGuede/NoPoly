@@ -1,0 +1,10 @@
+type SpaceRemap
+name ocillator
+attribName speed
+attribType float
+attribName offset
+attribType float
+attribName amplitude
+attribType float
+body 
+return InvTranslate(m, point - Rotate(point.yxz, amplitude * cos(float(timeSinceLaunch) * speed + offset)).yxz);

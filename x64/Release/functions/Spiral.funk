@@ -1,0 +1,17 @@
+type Primitive
+name Spiral
+attribName radius
+attribType float
+attribName size
+attribType vec3
+body 
+float r=length(point.xy)/radius;
+vec3 p;
+p.x = atan(point.y, point.x);
+float spire = int(r + (p.x/6.283)+0.5);
+p.y = (mod(r + (p.x/6.283) + 0.5, 1.0) - 0.5) * radius;
+p.z = point.z;
+p.x -= spire * 3.14159;
+p.x *= spire * 3.14159;
+
+return length(p - clamp(p, -size, size));

@@ -1,0 +1,108 @@
+new group
+spaceRemaps 
+function ../functions\Dice.funk
+dynamic 1
+attribValue 2.000000 
+attribValue 1.500000 
+attribValue 5.200000 
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.010000
+blendMode 0
+matId -1
+dynData 1
+color 0.470588 0.470588 0.470588
+shape 9
+end
+new object
+bias 0.500000
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.020000
+blendMode 4
+matId -1
+dynData 1
+color 0.289216 0.069468 0.069468
+shape 10
+function ../functions\ExcludingBoxes.funk
+dynamic 1
+attribValue 0.200000 
+attribValue -0.200000 0.200000 
+attribValue 1.000000 
+attribValue 1.100000 
+attribValue 0.300000 
+attribValue 2.600000 
+attribValue 3.300000 
+attribValue 0.500000 
+end
+endGroup
+sunDirection 0.260736 -0.012732 0.965326
+sunColor 1.000000 0.900000 0.700000
+skyColor 0.150000 0.300000 0.500000
+floorColor 0.030000 0.090000 0.020000
+ambientColor 0.050000 0.050000 0.050000
+lightCount 0
+materialNumber 0

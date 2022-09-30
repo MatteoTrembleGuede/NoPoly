@@ -1,0 +1,10 @@
+type SpaceRemap
+name RepeatPos
+attribName size
+attribType float
+body 
+vec3 fakePoint = point;
+fakePoint.xz = mod(point.xz + 0.5f * size, vec2(size)) - 0.5f * size;
+return InvTranslate(m, point - fakePoint);
+
+

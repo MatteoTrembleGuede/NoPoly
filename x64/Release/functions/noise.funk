@@ -1,0 +1,34 @@
+type Primitive
+name noise
+attribName octave
+attribType float
+attribName hurst
+attribType float
+attribName zoom
+attribType float
+attribName speed
+attribType float
+attribName strength
+attribType float
+body 
+float t = 0.0f;
+float m = 0.0f;
+float G = exp2(-hurst);
+float a = 1.0f;
+float f = 1.0f;
+float s = float(timeSinceLaunch * 0.001) * speed;
+
+point /= zoom;
+
+for (int i = 1; i < int(octave); ++i)
+{
+	float tmp = snoise(f * vec3(point + s));
+	m += tmp;
+	t += a * tmp;
+	f *= 2.0f;
+	a *= G;
+}
+
+gradientValue = m / octave;
+
+return t * pow(zoom / f, 0.9 / hurst/(int(octave)*0.25));

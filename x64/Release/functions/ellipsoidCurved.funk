@@ -1,0 +1,26 @@
+type Primitive
+name ellipsoidCurved
+attribName radius
+attribType vec3
+attribName rotation
+attribType vec3
+attribName center
+attribType vec3
+attribName yStretch
+attribType float
+body 
+vec3 p = point - center;
+p = Rotate(p.yxz, rotation.x * length(p.yz)).yxz;
+p = Rotate(p, rotation.y * length(p.xz));
+p = Rotate(p.xzy, rotation.z * length(p.xy)).xzy;
+point = p + center;
+if (abs(point.y) < radius.y)
+{
+	float old = point.y;
+	float factor = (sign(yStretch)*(old) + radius.y) / (2*radius.y);
+	point.y = yStretch > 0.0f ? 
+	pow((point.y + radius.y) / (2.0f * radius.y), max(yStretch, 1)) * (2.0f * radius.y) - radius.y:
+	pow((point.y + radius.y) / (2.0f * radius.y), 1.0f / max(-yStretch, 1)) * (2.0f * radius.y) - radius.y;
+	point.y = pow(factor, 0.5) * (old - point.y) + point.y;
+}
+return sdEllipsoid(point, radius);
