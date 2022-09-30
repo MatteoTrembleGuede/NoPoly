@@ -50,6 +50,10 @@ You might encounter other issues
 
 Thanks to Inigo Quilez (https://iquilezles.org) for his amazing website which helped me a lot
 
+![CreaLogo](https://i.imgur.com/co4mV0w.gif)
+
+Creajeux's animated Logo i made for the intro of the game i worked on during my last year in school (paradox : https://www.creajeux.fr/project/paradox/)
+
 ![Tie](https://i.imgur.com/mH3RgDF.gif)
 
 ![Portals](https://i.imgur.com/y2BKBaD.gif)
