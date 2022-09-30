@@ -47,6 +47,7 @@ You might encounter other issues
 
 ## Examples
 ![IQ Thanks](https://i.imgur.com/r22yhqq.gif)
+
 Thanks to Inigo Quilez (https://iquilezles.org) for his amazing website which helped me a lot
 
 ![Tie](https://i.imgur.com/mH3RgDF.gif)
