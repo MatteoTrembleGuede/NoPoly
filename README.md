@@ -58,6 +58,8 @@ Creajeux's animated Logo i made for the intro of the game i worked on during my 
 
 ![Portals](https://i.imgur.com/y2BKBaD.gif)
 
+![Hat](https://i.imgur.com/v9T23lu.png)
+
 ![Debug Distance And Steps](https://i.imgur.com/hd6nPso.png)
 
 ![Debug Trespassing](https://i.imgur.com/fYHoWAJ.png)
