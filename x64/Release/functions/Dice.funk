@@ -1,11 +1,23 @@
 type SpaceRemap
 name Dice
 attribName radius
-attribType float
+attribDesc float
+1 2.000000
+1 2.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
 attribName spherical
-attribType float
+attribDesc float
+1 0.000000
+0 0.000000
+1 1.000000
+1 1.000000
 attribName type
-attribType float
+attribDesc float
+1 0.000000
+1 5.000000
+1 5.000000
+1 1.000000
 body 
 #define PI 3.14159265359
 
@@ -34,3 +46,7 @@ else
 
 
 return InvTranslate(m, point - p);
+
+
+
+

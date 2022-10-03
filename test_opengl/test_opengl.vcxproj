@@ -183,6 +183,7 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Transformable.cpp" />
+    <ClCompile Include="UIAttribDesc.cpp" />
     <ClCompile Include="UICustomPrimitiveEditor.cpp" />
     <ClCompile Include="UIDebug.cpp" />
     <ClCompile Include="UIDisplayTextWindow.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Transformable.h" />
+    <ClInclude Include="UIAttribDesc.h" />
     <ClInclude Include="UICustomPrimitiveEditor.h" />
     <ClInclude Include="UIDebug.h" />
     <ClInclude Include="UIDisplayTextWindow.h" />

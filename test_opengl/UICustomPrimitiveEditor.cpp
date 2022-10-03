@@ -1,6 +1,8 @@
 #include "UICustomPrimitiveEditor.h"
 #include <sstream>
 #include "UIResourceBrowser.h"
+#include "ShaderGenerator.h"
+#include "UIAttribDesc.h"
 
 std::string UIShaderFunctionEditor::noneSelected;
 
@@ -23,7 +25,7 @@ UIShaderFunctionEditor::UIShaderFunctionEditor(std::string _name) : UIWindow(_na
 
 void UIShaderFunctionEditor::LoadModel(std::string path, std::string fileName, void* data)
 {
-	ShaderFunctionModel::Load(path, fileName);
+	ShaderFunction::GetModel(std::string("/") + UIResourceBrowser::GetRelativePath(path, ShaderGenerator::GetProjectPath()) + fileName);
 }
 
 void UIShaderFunctionEditor::SaveLoadModel()
@@ -184,28 +186,38 @@ void UIShaderFunctionEditor::SignModel()
 				ImGui::Text("\n");
 
 				int id = param->type;
-
-				ImGui::Combo((std::string("type ") + std::to_string(i)).c_str(), &id,
-					[](void* data, int idx, const char** out_text)
-					{
-						std::string* types = (std::string*)data;
-						if (idx >= 0 && idx < AttribType::AT_Count)
-						{
-							*out_text = types[idx].c_str();
-							return true;
-						}
-						else
-						{
-							return false;
-						}
-					}
-				, paramTypes, AttribType::AT_Count);
-
-				if (param->type != (AttribType)id)
+				if (ImGui::BeginTable("param desc : ", 2))
 				{
-					param->type = (AttribType)id;
-					currentModel->onModelChanged();
-					param->oldType = param->type;
+					ImGui::TableNextColumn();
+					ImGui::Combo((std::string("type ") + std::to_string(i)).c_str(), &id,
+						[](void* data, int idx, const char** out_text)
+						{
+							std::string* types = (std::string*)data;
+							if (idx >= 0 && idx < AttribType::AT_Count)
+							{
+								*out_text = types[idx].c_str();
+								return true;
+							}
+							else
+							{
+								return false;
+							}
+						}
+					, paramTypes, AttribType::AT_Count);
+
+					if (param->type != (AttribType)id)
+					{
+						param->type = (AttribType)id;
+						currentModel->onModelChanged();
+						param->oldType = param->type;
+					}
+
+					ImGui::TableNextColumn();
+					if (ImGui::Button((std::string("options ") + std::to_string(i)).c_str()))
+					{
+						new UIAttribDesc(param->name, *param);
+					}
+					ImGui::EndTable();
 				}
 
 				const char* tmpName = param->name.c_str();

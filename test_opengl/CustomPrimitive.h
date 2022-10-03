@@ -39,6 +39,14 @@ typedef struct AttribModel
 	std::string name;
 	AttribType type = AttribType::Float;
 	AttribType oldType = AttribType::Float;
+	bool hasMin = false; 
+	bool hasDef = false; 
+	bool hasMax = false; 
+	bool hasStep = false; 
+	float minimum = -FLT_MAX;
+	float defaultVal = 0;
+	float maximum = FLT_MAX;
+	float step = 0.1;
 	void Save(std::string& saveString);
 }AttribModel;
 

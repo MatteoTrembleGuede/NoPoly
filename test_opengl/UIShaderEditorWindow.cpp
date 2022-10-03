@@ -130,7 +130,10 @@ void UIShaderEditorWindow::ShaderFunctionDataSetter(ShaderFunction* function)
 
 		if (func)
 		{
-			func(attrib->model.name.c_str(), attrib->val, 0.1, -FLT_MAX, FLT_MAX, "%.3f", 0);
+			float minimum = attrib->model.hasMin ? attrib->model.minimum : -FLT_MAX;
+			float maximum = attrib->model.hasMax ? attrib->model.maximum : FLT_MAX;
+			float step = attrib->model.hasStep ? attrib->model.step : 0.1;
+			func(attrib->model.name.c_str(), attrib->val, step, minimum, maximum, "%.3f", 0);
 		}
 	}
 }

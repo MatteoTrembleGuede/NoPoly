@@ -1,0 +1,52 @@
+type Primitive
+name Hat
+attribName offset
+attribType vec2
+attribName power
+attribType float
+attribName strength
+attribType float
+attribName edgeRadius
+attribType float
+attribName height
+attribType float
+attribName aperture
+attribType float
+attribName headWidth
+attribType float
+attribName sideElevation
+attribType float
+attribName bandHeight
+attribType vec2
+body 
+point.z *= -1;
+point.x /= headWidth;
+strength /= edgeRadius*20;
+
+	float bound = sdCappedCylinder(point-vec3(0, height, 0), 0.406, height*1.5);
+	vec3 p = point;
+	float excentricity = pow(clamp(length(p.xz)-edgeRadius, 0.0, 0.4-edgeRadius), power);
+	float factor = abs(/*(p.z-offset.y) **/ (1+excentricity*500)) * excentricity * strength;
+	p.y -= sign(sideElevation)*pow(abs(sideElevation) * max(abs(p.x) - edgeRadius*(abs(p.x) / length(p.xz)), 0), power) * strength;
+	p.z -= offset.y;
+	p = Rotate(p.yxz, factor*0.1).yxz;
+	p.z += offset.y;
+	float dist = Intersection(sdCappedCylinder(p-vec3(0, 0, offset.x), 0.4, 0)-0.005, bound, 0.001);
+	height *= 0.1;
+	float hatDist = sdCappedCylinder(point-vec3(0, height+0.01, 0), edgeRadius*0.95*(1+point.y*aperture), height);
+	hatDist = Subtraction(sdTorus(Rotate((point+vec3(0, -(height*4), 0)).xzy, 1.571).xzy, vec2(height, edgeRadius*0.75)), hatDist, 0.1);
+	dist = Addition(dist, abs(hatDist) - 0.01, 0.01);
+	p = point - vec3(0, bandHeight.y*0.1, 0);
+	float dist2 = sdCappedCylinder(p, edgeRadius*0.95*(1+point.y*aperture)+0.01, bandHeight.x*0.1)-0.002;
+
+gradientValue = dist < dist2 ? 0 : 1;
+dist = min(dist2,dist);
+dist = Subtraction(sdCappedCylinder(point, edgeRadius*0.95*(1+point.y*aperture)-0.02, 0.1), dist, 0.01);
+return dist;
+
+
+
+
+
+
+

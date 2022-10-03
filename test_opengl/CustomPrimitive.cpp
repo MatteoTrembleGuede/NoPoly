@@ -122,6 +122,22 @@ ShaderFunctionModel* ShaderFunctionModel::Load(std::string path, std::string fil
 					lastAttrib->type = ToAttribType(value);
 					lastAttrib->oldType = lastAttrib->type;
 				}
+				else if (word == "attribDesc")
+				{
+					lastAttrib->type = ToAttribType(value);
+					lastAttrib->oldType = lastAttrib->type;
+
+					for (int i = 0; i < 4; ++i)
+					{
+						file.getline(buf, 512, '\n');
+						std::string line = buf;
+						std::string word = std::string(line.c_str(), line.find_first_of(' '));
+						std::string value = std::string(line.c_str() + line.find_first_of(' ') + 1);
+
+						*((&lastAttrib->hasMin) + i) = std::stoi(word);
+						*((&lastAttrib->minimum) + i) = std::stof(value);
+					}
+				}
 				else if (word == "body")
 				{
 					model->functionBody = "";
@@ -341,7 +357,8 @@ Attrib::Attrib(AttribModel& _model) : model(_model)
 	val = new float[model.type + 1];
 
 	for (int i = 0; i < model.type + 1; ++i)
-		val[i] = 0.0f;
+		if (model.hasDef) val[i] = model.defaultVal;
+		else val[i] = 0;
 }
 
 Attrib::Attrib(const Attrib& _model) : model(_model.model)
@@ -431,7 +448,7 @@ void ShaderFunction::UpdateFunction()
 			{
 				if (i > oldT)
 				{
-					newAttrib.val[i] = 0;
+					//newAttrib.val[i] = 0;
 				}
 				else
 				{
@@ -590,5 +607,11 @@ FunctionType ToFunctionType(std::string funcType)
 void AttribModel::Save(std::string& saveString)
 {
 	saveString += "attribName " + name + "\n";
-	saveString += "attribType " + ToString(type) + "\n";
+
+	saveString += "attribDesc " + ToString(type) + "\n";
+	saveString += std::to_string(hasMin) + " " + std::to_string(minimum) + "\n";
+	saveString += std::to_string(hasDef) + " " + std::to_string(defaultVal) + "\n";
+	saveString += std::to_string(hasMax) + " " + std::to_string(maximum) + "\n";
+	saveString += std::to_string(hasStep) + " " + std::to_string(step) + "\n";
+	//saveString += "attribType " + ToString(type) + "\n"; // old save
 }
