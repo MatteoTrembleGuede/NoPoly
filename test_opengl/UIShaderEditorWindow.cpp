@@ -231,7 +231,7 @@ void UIShaderEditorWindow::LeafBody()
 	}
 
 	ImGui::DragFloat("Metallic", (float*)part->lightingProperties, 0.01f, 0, 1);
-	ImGui::DragFloat2("Shine/Gloss", (float*)part->lightingProperties+1, 0.1f, 0);
+	ImGui::DragFloat2("Shine/Gloss", (float*)part->lightingProperties + 1, 0.1f, 0);
 
 	switch (part->shape)
 	{
@@ -405,12 +405,15 @@ void UIShaderEditorWindow::NodeBody()
 
 	if (node != currentPart) return;
 
-	if (ImGui::BeginTable("children list : ", 3))
+	int id = 0;
+	int width = ImGui::GetWindowSize().x;
+	for (auto it = node->parts.begin(); it != node->parts.end(); ++it)
 	{
-		int id = 0;
-
-		for (auto it = node->parts.begin(); it != node->parts.end(); ++it)
+		ImGui::BeginChild(id + 1, ImVec2(width, 20));
+		bool mustBreak = false;
+		if (ImGui::BeginTable("children list : ", 3))
 		{
+
 			ShaderNode* childNode = dynamic_cast<ShaderNode*>(*it);
 			ShaderLeaf* childLeaf = dynamic_cast<ShaderLeaf*>(*it);
 			auto itNext = it;
@@ -428,7 +431,7 @@ void UIShaderEditorWindow::NodeBody()
 			int m = selMask;
 			bool check = (m >> id) & 1;
 
-			ImGui::Checkbox(std::to_string(id).c_str(), &check);
+			ImGui::Checkbox("", &check);
 			m = 1 << id;
 			if (check)
 				selMask |= m;
@@ -459,8 +462,7 @@ void UIShaderEditorWindow::NodeBody()
 			}
 
 			ImGui::TableNextColumn();
-
-			if (ImGui::Button(("up " + STR(id)).c_str()) && it != node->parts.begin())
+			if (ImGui::Button("up") && it != node->parts.begin())
 			{
 				std::swap(*itPrev, *it);
 				CompileShader();
@@ -469,41 +471,39 @@ void UIShaderEditorWindow::NodeBody()
 
 			ImGui::SameLine();
 
-			if (ImGui::Button(("down " + STR(id)).c_str()) && itNext != node->parts.end())
+			if (ImGui::Button("down") && itNext != node->parts.end())
 			{
 				std::swap(*it, *itNext);
 				CompileShader();
 				ResetSelected();
 			}
-
 			ImGui::TableNextColumn();
-
-			if (ImGui::Button(("copy " + STR(id)).c_str()))
+			if (ImGui::Button("copy"))
 			{
 				ShaderPart* part = (*it)->Copy();
 				part->SetParent(node);
 				node->parts.push_back(part);
 				CompileShader();
 				ResetSelected();
-				break;
+				mustBreak = true;
 			}
 
 			ImGui::SameLine();
 
-			if (ImGui::Button(("del " + STR(id)).c_str()))
+			if (ImGui::Button("del"))
 			{
 				ShaderPart* part = (*it);
 				node->parts.remove(part);
 				delete part;
 				CompileShader();
 				ResetSelected();
-				break;
+				mustBreak = true;
 			}
-
 			++id;
+			ImGui::EndTable();
 		}
-
-		ImGui::EndTable();
+		ImGui::EndChild();
+		if (mustBreak) break;
 	}
 }
 
@@ -757,8 +757,6 @@ void UIShaderEditorWindow::AnimatePosition()
 	ImGui::Checkbox("animate position", &currentPart->animatePosition);
 	if (currentPart->animatePosition)
 	{
-		//ImGui::SameLine();
-
 		const char* tmpFnc = currentPart->animatedPositionFunction.c_str();
 		char* newFnc = new char[512];
 		strcpy(newFnc, tmpFnc);
@@ -810,7 +808,7 @@ void UIShaderEditorWindow::RemapSpace()
 				SRToSwap = -1;
 				swapDir = 0;
 			}
-
+			
 			if (ImGui::BeginTabItem(std::to_string(i).c_str(), &stillOn, flag))
 			{
 				bool isDynamic = (*func)->IsDynamic();
@@ -831,7 +829,7 @@ void UIShaderEditorWindow::RemapSpace()
 
 				ImGui::EndTabItem();
 
-				if (func != beg && ImGui::TabItemButton(std::string("<:" + std::to_string(i)).c_str()))
+				if (func != beg && ImGui::TabItemButton("<", ImGuiTabItemFlags_::ImGuiTabItemFlags_Trailing))
 				{
 					auto prev = func;
 					std::swap(*func, *(--prev));
@@ -841,7 +839,7 @@ void UIShaderEditorWindow::RemapSpace()
 				}
 
 				auto last = en;
-				if (func != --last && ImGui::TabItemButton(std::string(std::to_string(i) + ":>").c_str()))
+				if (func != --last && ImGui::TabItemButton(">", ImGuiTabItemFlags_::ImGuiTabItemFlags_Trailing))
 				{
 					auto next = func;
 					std::swap(*func, *(++next));
@@ -861,7 +859,7 @@ void UIShaderEditorWindow::RemapSpace()
 		}
 	}
 
-	if (ImGui::TabItemButton("+"))
+	if (ImGui::TabItemButton("+", ImGuiTabItemFlags_::ImGuiTabItemFlags_Trailing))
 	{
 		if (ShaderFunction::models[FunctionType::SpaceRemap].size() > 0)
 		{
@@ -905,7 +903,6 @@ void UIShaderEditorWindow::RotateObject()
 	ImGui::Checkbox("rotate over time", &currentPart->rotating);
 	if (currentPart->rotating)
 	{
-		//ImGui::SameLine();
 		ImGui::DragFloat("rotate x times per second", &currentPart->rotatingSpeed, 0.1f, -FLT_MAX, FLT_MAX);
 	}
 }

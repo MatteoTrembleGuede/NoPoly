@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "stb_image/stb_image.h"
 #include "UIResourceBrowser.h"
+#include "UIHost.h"
 
 #define Min(val1, val2) ((val2) > (val1) ? (val1) : (val2))
 #define Max(val1, val2) ((val2) > (val1) ? (val2) : (val1))
@@ -355,19 +356,20 @@ void ViewportManager::RemoveEdge(Edge* edge)
 
 void ViewportManager::RemoveSection(ViewportSnapSection* section)
 {
+	if (section == nullptr) return;
 	sections.remove(section);
 	section->Destroy();
 	AdjustQuad();
 }
 
-ViewportSnapSection* ViewportManager::GetSectionAndQuadrant(ImVec2 position, ViewportSnapSectionQuadrant& outQuadrant)
+ViewportSnapSection* ViewportManager::GetSectionAndQuadrant(ImVec2 position, ViewportSnapSectionQuadrant& outQuadrant, bool noCenter)
 {
 	ViewportSnapSectionQuadrant quadrant;
 	for (auto it = sections.begin(); it != sections.end(); ++it)
 	{
 		ViewportSnapSection* tmpSection = *it;
 
-		quadrant = tmpSection->Contains(position);
+		quadrant = tmpSection->Contains(position, noCenter || it == sections.begin());
 
 		if (quadrant != outside)
 		{
@@ -413,21 +415,50 @@ void ViewportManager::Snap(UIWindow* window, ImVec2 position)
 		break;
 	}
 
-	newSection = AddSection(ImVec2(newPos3.x, newPos3.y));
-
-	if (!newSection)
+	if (quadrant != center || section == *sections.begin())
 	{
-		std::cout << "failed to create new section" << std::endl;
-		return;
-	}
+		newSection = AddSection(ImVec2(newPos3.x, newPos3.y));
 
-	if (window->snapSection)
+		if (!newSection)
+		{
+			std::cout << "failed to create new section" << std::endl;
+			return;
+		}
+
+		if (window->snapSection)
+		{
+			ViewportManager::RemoveSection(window->snapSection);
+		}
+
+		window->snapSection = newSection;
+	}
+	else
 	{
-		ViewportManager::RemoveSection(window->snapSection);
+		UIWindow* windowInSec = GetUIWindowInSection(section);
+		Snap(window, windowInSec);
 	}
-
-	window->snapSection = newSection;
 	AdjustQuad();
+}
+
+void ViewportManager::Snap(UIWindow* window, UIWindow* parentWindow)
+{
+	if (parentWindow)
+	{
+		UIHost* host = nullptr;
+		if (parentWindow->snapSection)
+		{
+			host = new UIHost("Host Window");
+			((UIWindow*)host)->snapSection = parentWindow->snapSection;
+			host->AddChild(parentWindow);
+		}
+		else
+		{
+			host = (UIHost*)parentWindow->host;
+		}
+		if (host == nullptr) return;
+		ViewportManager::RemoveSection(window->snapSection);
+		host->AddChild(window);
+	}
 }
 
 void ViewportManager::DebugDrawEdges()
@@ -555,6 +586,22 @@ void ViewportManager::GetSceneViewPosAndSize(ImVec2& outSize, ImVec2& outPos)
 	}
 }
 
+UIWindow* ViewportManager::GetUIWindowInSection(ViewportSnapSection* _section)
+{
+	UIWindow* uiWindow = nullptr;
+
+	for (UIWindow*& tmpWindow : UIWindow::windows)
+	{
+		if (tmpWindow->snapSection == _section)
+		{
+			uiWindow = tmpWindow;
+			break;
+		}
+	}
+
+	return uiWindow;
+}
+
 //---- VIEWPORT SNAP SECTIONS ----//
 
 void ViewportSnapSection::GetSizeAndPosition(ImVec2& outSize, ImVec2& outPos) const
@@ -569,14 +616,14 @@ void ViewportSnapSection::GetSizeAndPosition(ImVec2& outSize, ImVec2& outPos) co
 	outPos = ImVec2(lPos, tPos);
 }
 
-ViewportSnapSectionQuadrant ViewportSnapSection::Contains(const ImVec2& _position) const
+ViewportSnapSectionQuadrant ViewportSnapSection::Contains(const ImVec2& _position, bool noCenter) const
 {
 	ImVec2 position, size;
 	Vector3 position3, size3, inPosition3;
 	GetSizeAndPosition(size, position);
 
 	position3 = Vector3(position.x, position.y, 0.0f);
-	size3 = Vector3(size.x, size.y, 0.0f);
+	size3 = Vector3(size.x, size.y, 1.0f);
 	inPosition3 = Vector3(_position.x, _position.y, 0.0f);
 
 	if (_position.x > position.x && _position.x < position.x + size.x
@@ -584,6 +631,9 @@ ViewportSnapSectionQuadrant ViewportSnapSection::Contains(const ImVec2& _positio
 	{
 		Vector3 center = position3 + size3 / 2.0f;
 		Vector3 dirToPoint = (inPosition3 - center) / size3;
+		dirToPoint.z = 0;
+
+		if (!noCenter && dirToPoint.Length() < 0.15f) return ViewportSnapSectionQuadrant::center;
 
 		if (fabs(dirToPoint.x) > fabs(dirToPoint.y))
 		{

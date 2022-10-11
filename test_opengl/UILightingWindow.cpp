@@ -45,44 +45,46 @@ void UILightingWindow::LightPicker()
 {
 	ImGui::Text("\n\n");
 
-	if (ImGui::BeginTable("Light Picker : ", 2))
+	int id = 0;
+	int width = ImGui::GetWindowSize().x;
+
+	ImGui::Text("Light Picker : \n\n");
+	ImGui::SameLine();
+	if (ImGui::Button("New Light"))
 	{
-		int id = 0;
+		Light::Create();
+	}
 
-		ImGui::TableNextColumn();
-		ImGui::Text("Light Picker : \n\n");
-		ImGui::TableNextColumn();
+	ImGui::Text("\n");
 
-		if (ImGui::Button("New Light"))
+	for (auto it = Light::lights.begin(); it != Light::lights.end(); ++it)
+	{
+		Light* light = *it;
+		ImGui::BeginChild(id + 1, ImVec2(width, 20));
+		if (ImGui::BeginTable("Light Picker : ", 2))
 		{
-			Light::Create();
-		}
-
-		ImGui::Text("\n");
-
-		for (auto it = Light::lights.begin(); it != Light::lights.end(); ++it)
-		{
-			Light* light = *it;
 
 			ImGui::TableNextColumn();
 
-			if (ImGui::Button((STR(id) + " : " + light->name).c_str()))
+			if (ImGui::Button(light->name.c_str()))
 			{
 				currentLight = light;
 			}
 
 			ImGui::TableNextColumn();
 
-			if (ImGui::Button(("delete : " + STR(id)).c_str()))
+			if (ImGui::Button("delete"))
 			{
+				if (light == currentLight) currentLight = nullptr;
 				Light::Destroy(light);
-				currentLight = nullptr;
-				break;
+				light = nullptr;
 			}
 
-			++id;
+			ImGui::EndTable();
 		}
-		ImGui::EndTable();
+		++id;
+		ImGui::EndChild();
+		if (!light) break;
 	}
 }
 

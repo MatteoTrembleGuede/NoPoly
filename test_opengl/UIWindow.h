@@ -10,6 +10,8 @@ enum ViewportSnapSectionQuadrant;
 class UIWindow
 {
 	friend class ViewportManager;
+	friend class UIHost;
+
 public:
 
 	UIWindow();
@@ -23,7 +25,10 @@ public:
 
 protected:
 
+	static bool mustSkipDisplay;
 	std::string name;
+	unsigned int flags;
+	void* host = nullptr;
 
 	virtual void WindowBody();
 	void Destroy();
@@ -37,9 +42,10 @@ private:
 	bool canResize = false;
 	ViewportSnapSectionQuadrant sideDragged;
 
-	static bool mustSkipDisplay;
 	static std::list<UIWindow*> windows;
 
 	static bool MustSkip();
 };
+
+
 

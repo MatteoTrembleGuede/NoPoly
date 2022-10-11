@@ -15,7 +15,8 @@ typedef enum ViewportSnapSectionQuadrant
 	left,
 	right,
 	top,
-	bot
+	bot,
+	center
 }ViewportSnapSectionQuadrant;
 
 typedef struct ViewportSnapSection
@@ -26,7 +27,7 @@ typedef struct ViewportSnapSection
 public:
 
 	void GetSizeAndPosition(ImVec2& outSize, ImVec2& outPos) const;
-	ViewportSnapSectionQuadrant Contains(const ImVec2& position) const;
+	ViewportSnapSectionQuadrant Contains(const ImVec2& position, bool noCenter = false) const;
 	ViewportSnapSectionQuadrant GetDirectionFromSectionCenter(const ImVec2& _position) const;
 	void PushSide(ViewportSnapSectionQuadrant side, float value);
 
@@ -55,12 +56,14 @@ public:
 	static void RemoveEdge(Edge* edge);
 	static void RemoveSection(ViewportSnapSection* section);
 	static void Snap(UIWindow* window, ImVec2 position);
+	static void Snap(UIWindow* window, UIWindow* parentWindow);
 	static void DebugDrawEdges();
 	static void AdjustQuad();
 	static float FixNextPosition(Edge* edge, float position);
 	static void MaximizeSceneView(bool _maximize);
 	static bool IsSceneViewMaximized();
 	static void GetSceneViewPosAndSize(ImVec2& outSize, ImVec2& outPos);
+	static UIWindow* GetUIWindowInSection(ViewportSnapSection* _section);
 	static GLFWwindow* GetWindow() { return window; };
 
 private:
@@ -73,7 +76,7 @@ private:
 	static GLFWwindow* window;
 	static bool maximizeSceneView;
 
-	static ViewportSnapSection* GetSectionAndQuadrant(ImVec2 position, ViewportSnapSectionQuadrant& outQuadrant);
+	static ViewportSnapSection* GetSectionAndQuadrant(ImVec2 position, ViewportSnapSectionQuadrant& outQuadrant, bool noCenter = false);
 	static ViewportSnapSection* AddSection(ImVec2 position);
 
 	static void WindowSizeCallback(GLFWwindow* window, int width, int height);

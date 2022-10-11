@@ -188,6 +188,7 @@
     <ClCompile Include="UIDebug.cpp" />
     <ClCompile Include="UIDisplayTextWindow.cpp" />
     <ClCompile Include="UIGlobalParam.cpp" />
+    <ClCompile Include="UIHost.cpp" />
     <ClCompile Include="UIMaterialInspector.cpp" />
     <ClCompile Include="UIResourceBrowser.cpp" />
     <ClCompile Include="UIShaderEditorWindow.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="UIDebug.h" />
     <ClInclude Include="UIDisplayTextWindow.h" />
     <ClInclude Include="UIGlobalParam.h" />
+    <ClInclude Include="UIHost.h" />
     <ClInclude Include="UIMaterialInspector.h" />
     <ClInclude Include="UIResourceBrowser.h" />
     <ClInclude Include="UIShaderEditorWindow.h" />

@@ -99,12 +99,12 @@ int main(int argc, char* argv[])
 	float width, height;
 	ViewportManager::GetScreenSize(width, height);
 	ViewportManager::Snap(sceneEditor, ImVec2(width / 5.0f, height / 2.0f));
+	ViewportManager::Snap(CustomPrimitiveEditor, sceneEditor);
 	ViewportManager::Snap(lightingEditor, ImVec2(3.0f * width / 4.0f, height / 2.0f));
-	ViewportManager::Snap(materialEditor, ImVec2(4.5f * width / 5.0f, 3.0f * height / 5.0f));
-	ViewportManager::Snap(CustomPrimitiveEditor, ImVec2(0.5f * width, 4.0f * height / 5.0f));
-	ViewportManager::Snap(debugWindow, ImVec2(0.5f * width, 4.5f * height / 5.0f));
-	ViewportManager::Snap(globalParamWindow, ImVec2(0.75f * width, 4.75f * height / 5.0f));
-	ViewportManager::Snap(playerWindow, ImVec2(0.5f * width, 0.1f * height));
+	ViewportManager::Snap(materialEditor, lightingEditor);
+	ViewportManager::Snap(globalParamWindow, ImVec2(0.5f * width, 4.5f * height / 5.0f));
+	ViewportManager::Snap(playerWindow, globalParamWindow);
+	ViewportManager::Snap(debugWindow, globalParamWindow);
 	Camera camera;
 	onWheelScroll.Bind(glfwSetScrollCallback(window, OnWheelScrolled));
 

@@ -35,10 +35,8 @@ for(int i=0;i<Type;i++)
 if (spherical >= 1.)
 	{
 		p.y = length(point);
-		p.xz /= p.y;
+		p.xz *= radius/p.y;
 		p.y -= radius;
-		p.y /= radius;
-		p *= 2;
 	}
 else
 	p.y -= radius;
@@ -46,6 +44,8 @@ else
 
 
 return InvTranslate(m, point - p);
+
+
 
 
 

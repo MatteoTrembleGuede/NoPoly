@@ -185,11 +185,12 @@ void UIShaderFunctionEditor::SignModel()
 				ImGui::TableNextColumn();
 				ImGui::Text("\n");
 
+				ImGui::BeginChild(i+1, ImVec2(250, 50));
 				int id = param->type;
 				if (ImGui::BeginTable("param desc : ", 2))
 				{
 					ImGui::TableNextColumn();
-					ImGui::Combo((std::string("type ") + std::to_string(i)).c_str(), &id,
+					ImGui::Combo("type", &id,
 						[](void* data, int idx, const char** out_text)
 						{
 							std::string* types = (std::string*)data;
@@ -213,7 +214,7 @@ void UIShaderFunctionEditor::SignModel()
 					}
 
 					ImGui::TableNextColumn();
-					if (ImGui::Button((std::string("options ") + std::to_string(i)).c_str()))
+					if (ImGui::Button((std::string("options")).c_str()))
 					{
 						new UIAttribDesc(param->name, *param);
 					}
@@ -223,10 +224,10 @@ void UIShaderFunctionEditor::SignModel()
 				const char* tmpName = param->name.c_str();
 				char* newName = new char[512];
 				strcpy(newName, tmpName);
-				ImGui::InputText(("name " + std::to_string(i)).c_str(), newName, 512);
+				ImGui::InputText("name ", newName, 512);
 				param->name = newName;
 				delete[] newName;
-
+				ImGui::EndChild();
 				++i;
 			}
 			ImGui::EndTable();

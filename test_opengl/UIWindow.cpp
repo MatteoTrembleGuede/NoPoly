@@ -7,6 +7,7 @@ bool UIWindow::mustSkipDisplay;
 
 UIWindow::UIWindow()
 {
+	flags = 0;
 	name = "Untitled";
 	windows.push_front(this);
 	snapSection = nullptr;
@@ -21,13 +22,14 @@ UIWindow::UIWindow(std::string _name)
 
 UIWindow::~UIWindow()
 {
+	if (snapSection) ViewportManager::RemoveSection(snapSection);
 	windows.remove(this);
 	mustSkipDisplay = true;
 }
 
 void UIWindow::Display()
 {
-	ImGui::Begin(name.c_str());
+	ImGui::Begin(name.c_str(), nullptr, flags);
 	WindowBody();
 	ImGui::End();
 
@@ -44,10 +46,6 @@ void UIWindow::DisplayUI()
 
 		if (MustSkip()) break;
 	}
-	/*if (history.size() > 0 && *history.begin())
-	{
-		(*history.begin())->Display();
-	}*/
 }
 
 UIWindow* UIWindow::GetWindow(std::string name)
