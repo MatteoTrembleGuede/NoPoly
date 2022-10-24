@@ -6,8 +6,6 @@ A small raymarching program that allows you to build little 3d scenes
 ## Requirements
 ### include folder
 - BalazsJako's text editor : https://github.com/BalazsJako/ImGuiColorTextEdit
-- FFmpeg : https://ffmpeg.org/download.html
-- x264 : https://www.videolan.org/developers/x264.html
 - imgui : https://github.com/ocornut/imgui
 - ImGuizmo : https://github.com/CedricGuillemet/ImGuizmo
 - stb_image : https://github.com/nothings/stb/blob/master/stb_image.h
@@ -17,10 +15,16 @@ A small raymarching program that allows you to build little 3d scenes
 - glm : https://github.com/g-truc/glm
 
 ### lib folder
-all libs coming from ffmpeg, x264, GLFW3
+all libs coming from GLFW3
 
 ### binary folder (x64/Release or Debug)
-all dll coming from ffmpeg, x264, GLFW3
+openh264-1.8.0-win64.dll and glfw3.dll
+
+### opencv
+opencv 4.6.0 must be installed
+you need to add environment variables :
+- in your system variables : OPENCV_DIR <path to opencv directory containing bin and lib folders> (for example in my case : C:\Program Files\Git\usr\local\x64\vc16)
+- add %OPENCV_DIR%\bin to Path
 
 ## Features
 non-exhaustive list
@@ -39,7 +43,7 @@ non-exhaustive list
 - time management
 
 ## Warning
-There is a feature that allows you to save a video of your scene but it is very glitchy (easy crashs and lots of encoding issues), this was just a way to try learning about video encoding but as a matter of fact i don't understand very much yet how ffmpeg works.
+video recording only works in Release
 
 Please ensure you have saved all your "SpaceRemap" and "Primitive" custom functions before saving the scene as you might not be able to reload it later (in the .scene file you could try to find a line where there is a "function" key but no path written after it)
 

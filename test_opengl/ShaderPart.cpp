@@ -90,7 +90,9 @@ void ShaderPart::RemoveSpaceRemap(ShaderFunction* func)
 {
 	func->OnModelWillDestroy.Unbind(this, &ShaderPart::RemoveSpaceRemap);
 	spaceRemaps.remove(func);
-	delete func;
+	func->model.onModelDeleted += [func] {
+		delete func; 
+	};
 }
 
 void ShaderPart::AddSpaceRemap()

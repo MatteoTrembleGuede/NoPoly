@@ -5,12 +5,14 @@
 class UIHost :
     public UIWindow
 {
+    friend class ViewportManager;
 public:
 
     UIHost(std::string _name);
     ~UIHost();
 
     void AddChild(UIWindow* window);
+    void RemoveChild(UIWindow* window);
 
 protected:
 

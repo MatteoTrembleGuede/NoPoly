@@ -85,7 +85,6 @@ smooth 0.000000
 blendMode 0
 matId 0
 new object
-bias 0.700000
 name new object
 transformPoint 1
 dynTransform 1
@@ -118,13 +117,13 @@ function ../functions\Hat.funk
 dynamic 1
 attribValue 0.000000 -0.200000 
 attribValue 1.700000 
-attribValue 0.300000 
+attribValue 2.300000 
 attribValue 0.220000 
 attribValue 1.200000 
 attribValue -0.800000 
 attribValue 0.800000 
 attribValue 3.300000 
-attribValue 0.000000 0.000000  
+attribValue 0.000000 0.000000 
 end
 endGroup
 endGroup

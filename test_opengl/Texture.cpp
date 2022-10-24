@@ -97,13 +97,17 @@ void Texture::UpdateBuffer()
 void Texture::UpdateBuffer(ColorChannel _format, int _width, int _height, unsigned char* _colorBuffer, bool copy)
 {
 	delete[] buffer;
+	buffer = nullptr;
 	width = _width;
 	height = _height;
 	channelFormat = _format;
 	unsigned int step = channelFormat == RGBA ? 4 : (channelFormat == RGB ? 3 : (channelFormat == RG ? 2 : 1));
-	buffer = new unsigned char[width * height * step];
 	if (copy)
+	{
+		//std::cout << "w = " << width << " h = " << height << " s = " << step << " w*h*s = " << width * height * step << std::endl;
+		buffer = new unsigned char[width * height * step];
 		memcpy(buffer, _colorBuffer, width * height * step);
+	}
 	else
 		buffer = _colorBuffer;
 	UpdateBuffer();

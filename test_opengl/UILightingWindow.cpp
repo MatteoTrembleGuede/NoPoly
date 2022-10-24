@@ -2,18 +2,25 @@
 #include "Lighting.h"
 #include "Light.h"
 #include "Guizmo.h"
+#include <iostream>
 
 #define STR(a) std::to_string(a)
+
+void UILightingWindow::UnsetCurrentLight()
+{
+	currentLight = nullptr;
+}
 
 UILightingWindow::UILightingWindow(std::string _name, Lighting* _lighting) : UIWindow(_name)
 {
 	lighting = _lighting;
 	currentLight = nullptr;
+	Light::notifyClearLights.Bind(this, &UILightingWindow::UnsetCurrentLight);
 }
 
 UILightingWindow::~UILightingWindow()
 {
-
+	Light::notifyClearLights.Unbind(this, &UILightingWindow::UnsetCurrentLight);
 }
 
 void UILightingWindow::SunDirection()
@@ -60,7 +67,7 @@ void UILightingWindow::LightPicker()
 	for (auto it = Light::lights.begin(); it != Light::lights.end(); ++it)
 	{
 		Light* light = *it;
-		ImGui::BeginChild(id + 1, ImVec2(width, 20));
+		ImGui::BeginChild(id + 1, ImVec2(width, 25));
 		if (ImGui::BeginTable("Light Picker : ", 2))
 		{
 

@@ -637,7 +637,9 @@ ShaderPart* ShaderLeaf::Copy()
 
 	if (customPimitive)
 	{
-		leaf->customPimitive = new ShaderFunction(*customPimitive);
+		leaf->customPimitive = nullptr;
+		leaf->SetCustomShape(new ShaderFunction(*customPimitive));
+		//leaf->customPimitive = new ShaderFunction(*customPimitive);
 	}
 
 	leaf->SetDynamic(IsDynamic());

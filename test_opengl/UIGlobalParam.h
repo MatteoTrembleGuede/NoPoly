@@ -2,7 +2,13 @@
 #include "UIWindow.h"
 #include "Shader.h"
 
-
+enum NegativeCorrectionMode
+{
+	None,
+	Post,
+	During,
+	NCCount
+};
 
 class UIGlobalParam :
     public UIWindow
@@ -12,7 +18,9 @@ private:
 
 	Shader* shader;
 
-	static bool applyPRMNC;
+	static NegativeCorrectionMode correctionMode;
+	static int NCStepNum;
+	static int DRMNCPrecision;
 	static float AORadius;
 	static float AOStrength;
 	static float normalRadius;

@@ -3,10 +3,13 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
-RenderTexture::RenderTexture(float texWidth, float texHeight) : Texture(ColorChannel::RGBA, texWidth, texHeight)
+RenderTexture::RenderTexture(float texWidth, float texHeight) : 
+	Texture(ColorChannel::RGBA, int(texWidth) - (int(texWidth) % 4), int(texHeight) - (int(texHeight) % 4))
 {
-	width = texWidth;
-	height = texHeight;
+	int w = int(texWidth);
+	int h = int(texHeight);
+	width = w - (w % 4);
+	height = h - (h % 4);
 	glGenFramebuffers(1, &glFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, glFBO);
 
@@ -23,8 +26,10 @@ void RenderTexture::SetSize(float _width, float _height)
 {
 	int w = int(_width);
 	int h = int(_height);
-	width = w % 2 == 0 ? w : w - 1;
-	height = h % 2 == 0 ? h : h - 1;
+	/*width = w % 2 == 0 ? w : w - 1;
+	height = h % 2 == 0 ? h : h - 1;*/
+	width = w - (w % 4);
+	height = h - (h % 4);
 	UpdateBuffer();
 }
 

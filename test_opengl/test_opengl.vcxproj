@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{3b3f4f81-8ebc-456d-8745-c77a8ad93a65}</ProjectGuid>
     <RootNamespace>testopengl</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -78,11 +78,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>NoPoly</TargetName>
+    <IncludePath>$(OPENCV_DIR)\..\..\include</IncludePath>
+    <LibraryPath>$(OPENCV_DIR)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,6 +139,8 @@
       <PreprocessorDefinitions>_NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../include/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,7 +148,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../lib/</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;glfw3dll.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;libavcodec.dll.a;libavdevice.dll.a;libavfilter.dll.a;libavformat.dll.a;libavutil.dll.a;libpostproc.dll.a;libswresample.dll.a;libswscale.dll.a;postproc.lib;swresample.lib;swscale.lib;libx264.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3_mt.lib;glfw3dll.lib;opencv_calib3d460.lib;opencv_core460.lib;opencv_dnn460.lib;opencv_features2d460.lib;opencv_flann460.lib;opencv_gapi460.lib;opencv_highgui460.lib;opencv_imgcodecs460.lib;opencv_imgproc460.lib;opencv_ml460.lib;opencv_objdetect460.lib;opencv_photo460.lib;opencv_stitching460.lib;opencv_video460.lib;opencv_videoio460.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -165,6 +170,7 @@
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MenuBar.cpp" />
     <ClCompile Include="RenderPlane.cpp" />
     <ClCompile Include="RenderTexture.cpp" />
     <ClCompile Include="ShaderGenerator.cpp" />
@@ -199,6 +205,7 @@
     <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="ViewportManager.cpp" />
+    <ClCompile Include="WinPopup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\BalazsJakoTextEditor\TextEditor.h" />
@@ -220,6 +227,7 @@
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MenuBar.h" />
     <ClInclude Include="RenderPlane.h" />
     <ClInclude Include="RenderTexture.h" />
     <ClInclude Include="resource.h" />
@@ -255,6 +263,7 @@
     <ClInclude Include="UIWindow.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="ViewportManager.h" />
+    <ClInclude Include="WinPopup.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\x64\Debug\Shaders\FragmentShader.shader" />

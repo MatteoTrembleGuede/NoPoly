@@ -26,6 +26,7 @@ typedef struct ViewportSnapSection
 
 public:
 
+
 	void GetSizeAndPosition(ImVec2& outSize, ImVec2& outPos) const;
 	ViewportSnapSectionQuadrant Contains(const ImVec2& position, bool noCenter = false) const;
 	ViewportSnapSectionQuadrant GetDirectionFromSectionCenter(const ImVec2& _position) const;
@@ -37,9 +38,12 @@ private:
 	Edge* left;
 	Edge* right;
 
+	ViewportSnapSection* parent = nullptr;
+
 	ViewportSnapSection();
 	~ViewportSnapSection();
 
+	void SetSizeAndPosition(ImVec2 outSize, ImVec2 outPos);
 	void Destroy();
 }ViewportSnapSection;
 
@@ -48,6 +52,9 @@ static class ViewportManager
 public:
 
 	static float screenResolutionScale;
+	static UIWindow* draggedWindow;
+	static ImVec2 lSize;
+	static ImVec2 lPos;
 
 	static void Init(Shader* _shader, RenderPlane* _quad);
 	static GLFWwindow* CreateWindow();
@@ -62,9 +69,15 @@ public:
 	static float FixNextPosition(Edge* edge, float position);
 	static void MaximizeSceneView(bool _maximize);
 	static bool IsSceneViewMaximized();
+	static bool IsQuadContaining(ImVec2 pos);
 	static void GetSceneViewPosAndSize(ImVec2& outSize, ImVec2& outPos);
 	static UIWindow* GetUIWindowInSection(ViewportSnapSection* _section);
 	static GLFWwindow* GetWindow() { return window; };
+	static void SaveLayout();
+	static bool LoadLayout();
+	static void DragWindow(UIWindow* _window);
+	static void StopDragging();
+	static void Update();
 
 private:
 

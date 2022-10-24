@@ -1,132 +1,271 @@
 #include "Encoder.h"
-#include "UIResourceBrowser.h"
+#include <vector>
+#include <iostream>
 
-#define DEST_PIX_FMT AV_PIX_FMT_YUV420P
-#define SRC_PIX_FMT AV_PIX_FMT_RGB24
+#ifndef _DEBUG
+#include <opencv2/opencv.hpp>
+#endif
 
-Encoder::Encoder(std::string fileName, int width, int height, int frameRate, Texture*& _debug) : debug(_debug)
+//#include "Vector3.h"
+//#include <opencv2/highgui.hpp>
+
+struct Pixel
 {
-	assert(avformat_alloc_output_context2(&m_muxer, nullptr, nullptr, fileName.c_str()) == 0);
-	assert(m_muxer != nullptr);
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
 
-	const char* encoderName = UIResourceBrowser::GetExtension(fileName) == std::string("webm") ? "libvpx-vp9" : "libx264";
-	//const char* encoderName = "libx264";
-	const AVCodec* videoCodec = avcodec_find_encoder_by_name(encoderName);
-	m_encoder = avcodec_alloc_context3(videoCodec);
-	m_encoder->bit_rate = width * height * frameRate * 2;
-	m_encoder->width = width;
-	m_encoder->height = height;
-	m_encoder->time_base = AVRational{ 1, frameRate };
-	m_encoder->framerate = AVRational{ frameRate, 1 };
+	struct SwizzleXYZ
+	{
+		operator Pixel()
+		{
+			return Pixel{ *((unsigned char*)this-3), *((unsigned char*)this - 2), *((unsigned char*)this - 1) };
+		}
+	};
+	
+	struct SwizzleXZY
+	{
+		operator Pixel()
+		{
+			auto t = this - 1;
+			return Pixel{ *((unsigned char*)t-3), *((unsigned char*)t - 1), *((unsigned char*)t - 2) };
+		}
+	};
+	
+	struct SwizzleYXZ
+	{
+		operator Pixel()
+		{
+			auto t = this - 2;
+			return Pixel{ *((unsigned char*)t-2), *((unsigned char*)t - 3), *((unsigned char*)t - 1) };
+		}
+	};
+	
+	struct SwizzleYZX
+	{
+		operator Pixel()
+		{
+			auto t = this - 3;
+			return Pixel{ *((unsigned char*)t-2), *((unsigned char*)t - 1), *((unsigned char*)t - 3) };
+		}
+	};
+	
+	struct SwizzleZXY
+	{
+		operator Pixel()
+		{
+			auto t = this - 4;
+			return Pixel{ *((unsigned char*)t-1), *((unsigned char*)t - 3), *((unsigned char*)t - 2) };
+		}
+	};
+	
+	struct SwizzleZYX
+	{
+		operator Pixel()
+		{
+			auto t = this - 5;
+			return Pixel{ *((unsigned char*)t-1), *((unsigned char*)t - 2), *((unsigned char*)t - 3) };
+		}
+	};
 
-	m_encoder->gop_size = frameRate;
-	m_encoder->max_b_frames = 1;
-	m_encoder->pix_fmt = DEST_PIX_FMT;
+	SwizzleXYZ rgb;
+	SwizzleXZY rbg;
+	SwizzleYXZ grb;
+	SwizzleYZX gbr;
+	SwizzleZXY brg;
+	SwizzleZYX bgr;
 
-	AVDictionary* opt = NULL;
-	av_dict_set(&opt, "preset", "ultrafast", 0);
-	av_dict_set(&opt, "crf", "0", 0);
+	Pixel Lerp(const Pixel& pix, float a)
+	{
+		a = std::min(1.0f, std::max(0.0f, a));
+		Pixel res;
+		res.r = roundf(pix.r * a + r * (1.0f - a));
+		res.g = roundf(pix.g * a + g * (1.0f - a));
+		res.b = roundf(pix.b * a + b * (1.0f - a));
+		return res;
+	}
+};
 
-	assert(avcodec_open2(m_encoder, videoCodec, &opt) == 0);
-	av_dict_free(&opt);
+#ifndef _DEBUG
+class Writer
+{
+	cv::VideoWriter writer;
+public:
 
-	//assert(avcodec_open2(m_encoder, videoCodec, nullptr) == 0);
+	Writer(std::string fileName, int width, int height, int frameRate) :
+		writer(fileName.c_str(), cv::VideoWriter::fourcc('a', 'v', 'c', '1'), frameRate, cv::Size(width, height))
+		//writer(fileName.c_str(), cv::VideoWriter::fourcc('H', '2', '6', '4'), frameRate, cv::Size(width, height))
+	{
+		if (!writer.isOpened()) std::cout << "video writer couldn't create/open " << fileName << std::endl;
+		else
+		{
+			//writer.set(cv::VIDEOWRITER_PROP_QUALITY, 50.0);
+		}
+	};
+	~Writer() { writer.release(); };
 
-	m_muxer->video_codec_id = videoCodec->id;
-	m_muxer->video_codec = videoCodec;
+	void Write(cv::Mat& matrix) { writer.write(matrix); };
+};
+#endif
 
-	m_avStream = avformat_new_stream(m_muxer, videoCodec);
-	assert(m_avStream != nullptr);
-	m_avStream->id = m_muxer->nb_streams - 1;
-	m_avStream->time_base = m_encoder->time_base;
+void Encoder::SetRatioAndResolution()
+{
 
-	// Some formats want stream headers to be separate.
-	if (m_muxer->oformat->flags & AVFMT_GLOBALHEADER)
-		m_encoder->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+#ifndef _DEBUG
+	if (!writer)
+	{
+#endif
+		if (inputHeight <= 240)
+		{
+			videoHeight = 240;
+		}
+		else if (inputHeight <= 360)
+		{
+			videoHeight = 360;
+		}
+		else if (inputHeight <= 480)
+		{
+			videoHeight = 480;
+		}
+		else if (inputHeight <= 720)
+		{
+			videoHeight = 720;
+		}
+		else if (inputHeight <= 1080)
+		{
+			videoHeight = 1080;
+		}
+		else if (inputHeight <= 2160)
+		{
+			videoHeight = 2160;
+		}
 
-	assert(avcodec_parameters_from_context(m_avStream->codecpar, m_encoder) == 0);
-	assert(avio_open(&m_muxer->pb, fileName.c_str(), AVIO_FLAG_WRITE) == 0);
-	assert(avformat_write_header(m_muxer, nullptr) == 0);
+		if (inputWidth <= videoHeight * 4 / 3)
+		{
+			videoWidth = videoHeight * 4 / 3;
+		}
+		else if (inputWidth <= videoHeight * 16 / 9)
+		{
+			videoWidth = videoHeight * 16 / 9;
+		}
+		else if (inputWidth <= videoHeight * 21 / 9)
+		{
+			videoWidth = videoHeight * 21 / 9;
+		}
+		else if (inputWidth <= videoHeight * 32 / 9)
+		{
+			videoWidth = videoHeight * 32 / 9;
+		}
 
-	swsCtx = sws_getContext(
-		width, height, SRC_PIX_FMT, // src
-		width, height, DEST_PIX_FMT, // dst
-		//SWS_FAST_BILINEAR, NULL, NULL, NULL);
-		SWS_POINT, NULL, NULL, NULL);
+#ifndef _DEBUG
+	}
+#endif
 
-	debug = Texture::LoadFromBuffer(ColorChannel::RGB, width, height);
+	xRatio = inputWidth / float(videoWidth);
+	yRatio = inputHeight / float(videoHeight);
+
+	if (yRatio > xRatio)
+	{
+		xRatio = videoWidth / (inputWidth / yRatio);
+		yRatio = 1.0f;
+	}
+	else
+	{
+		yRatio = videoHeight/ (inputHeight/ xRatio);
+		xRatio = 1.0f;
+	}
+}
+
+Encoder::Encoder(std::string fileName, int width, int height, int frameRate, Texture* videoRecordDebug) :
+	displayTexture(videoRecordDebug),
+	inputWidth(width),
+	inputHeight(height)
+{
+	if (forceInputResolution)
+	{
+		videoWidth = inputWidth;
+		videoHeight = inputHeight;
+		xRatio = 1.0f;
+		yRatio = 1.0f;
+	}
+	else
+	{
+		SetRatioAndResolution();
+	}
+
+#ifndef _DEBUG
+	writer = new Writer(fileName, videoWidth, videoHeight, frameRate);
+#endif
 }
 
 Encoder::~Encoder()
 {
-	flush();
-	delete debug;
-	debug = nullptr;
-	avio_closep(&m_muxer->pb);
-	avcodec_close(m_encoder);
-	avformat_free_context(m_muxer);
-	sws_freeContext(swsCtx);
+#ifndef _DEBUG
+	delete writer;
+#endif
 }
 
-void Encoder::addFrame(unsigned char* pixels)
+Pixel Encoder::Bilinear(unsigned char* pixels, int x, int y)
 {
-	AVFrame* frame = av_frame_alloc();
-	frame->format = SRC_PIX_FMT;
-	frame->width = m_encoder->width;
-	frame->height = m_encoder->height;
-	assert(av_frame_get_buffer(frame, 0) == 0);
-	assert(av_frame_make_writable(frame) == 0);
+	float u = ((x / float(videoWidth)) * 2.0f - 1.0f) * xRatio * 0.5f + 0.5f;
+	float v = ((y / float(videoHeight)) * 2.0f - 1.0f) * yRatio * 0.5f + 0.5f;
 
-	debug->UpdateBuffer(ColorChannel::RGB, frame->width, frame->height, pixels, false);
+	if (u < 0.0f || u > 1.0f || v < 0.0f || v > 1.0f) return Pixel{ 0, 0, 0 };
 
-	for (int y = 0; y < frame->height; y++) {
-		for (int x = 0; x < frame->width; x++) {
-			int iy = frame->height - y - 1;
-			frame->data[0][y * frame->linesize[0] + x + 0] = pixels[iy * 3 * frame->width + 3 * x + 2];
-			frame->data[0][y * frame->linesize[0] + x + 1] = pixels[iy * 3 * frame->width + 3 * x + 1];
-			frame->data[0][y * frame->linesize[0] + x + 2] = pixels[iy * 3 * frame->width + 3 * x + 0];
+	float ax = u * inputWidth;
+	float ay = v * inputHeight;
+	int x1 = ax;
+	int x2 = (x1 + 1) >= inputWidth ? x1 : (x1 + 1);
+	ax = ax - x1;
+	int y1 = ay;
+	int y2 = (y1 + 1) >= inputHeight ? y1 : (y1 + 1);
+	y1 = inputHeight - 1 - y1;
+	y2 = inputHeight - 1 - y2;
+
+	Pixel& pix00 = *(Pixel*)&pixels[(y1 * inputWidth + x1)*3];
+	Pixel& pix01 = *(Pixel*)&pixels[(y2 * inputWidth + x1)*3];
+	Pixel& pix10 = *(Pixel*)&pixels[(y1 * inputWidth + x2)*3];
+	Pixel& pix11 = *(Pixel*)&pixels[(y2 * inputWidth + x2)*3];
+
+	Pixel&& lpix1 = pix00.Lerp(pix01, ay);
+	Pixel&& lpix2 = pix10.Lerp(pix11, ay);
+	return lpix1.Lerp(lpix2, ax);
+}
+
+Pixel Encoder::Point(unsigned char* pixels, int x, int y)
+{
+	float u = ((x / float(videoWidth)) * 2.0f - 1.0f) * xRatio * 0.5f + 0.5f;
+	float v = ((y / float(videoHeight)) * 2.0f - 1.0f) * yRatio * 0.5f + 0.5f;
+
+	if (u < 0.0f || u > 1.0f || v < 0.0f || v > 1.0f) return Pixel{ 0, 0, 0 };
+
+	int x1 = u * inputWidth;
+	int y1 = v * inputHeight;
+	y1 = inputHeight - 1 - y1;
+	return *(Pixel*)&pixels[(y1 * inputWidth + x1) * 3];
+}
+
+void Encoder::AddFrame(unsigned char* pixels)
+{
+	if (displayTexture) displayTexture->UpdateBuffer(ColorChannel::RGB, inputWidth, inputHeight, pixels, true);
+
+	unsigned char* newPix = new unsigned char[videoWidth * videoHeight * 3];
+
+	for (int i = 0; i < videoHeight; ++i)
+	{
+		for (int j = 0; j < videoWidth; ++j)
+		{
+			//Pixel& npix = *(Pixel*)&newPix[(i * videoWidth + j) * 3];
+			//npix = Bilinear(pixels, j, i);
+			//npix = Point(pixels, j, i);
+
+			*(Pixel*)&newPix[(i * videoWidth + j) * 3] = (*(Pixel*)&pixels[((videoHeight - 1 - i) * videoWidth + j) * 3]).bgr;
 		}
 	}
 
-	AVFrame* yuvframe = av_frame_alloc();
-	yuvframe->format = DEST_PIX_FMT;
-	yuvframe->width = m_encoder->width;
-	yuvframe->height = m_encoder->height;
-	assert(av_frame_get_buffer(yuvframe, 0) == 0);
-	assert(av_frame_make_writable(yuvframe) == 0);
-
-	sws_scale(swsCtx, frame->data, frame->linesize, 0, m_encoder->height, yuvframe->data, yuvframe->linesize);
-
-	yuvframe->pts = m_frameId++;
-	encodeFrame(yuvframe);
-
-	av_frame_free(&frame);
-	av_frame_free(&yuvframe);
-}
-
-void Encoder::flush()
-{
-	encodeFrame(nullptr);
-	av_write_trailer(m_muxer);
-}
-
-void Encoder::encodeFrame(AVFrame* frame)
-{
-	assert(avcodec_send_frame(m_encoder, frame) == 0);
-
-	AVPacket* packet = av_packet_alloc();
-	int ret = 0;
-	while (ret >= 0) {
-		ret = avcodec_receive_packet(m_encoder, packet);
-		if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
-			return;  // nothing to write
-		}
-		assert(ret >= 0);
-
-		av_packet_rescale_ts(packet, m_encoder->time_base, m_avStream->time_base);
-		packet->stream_index = m_avStream->index;
-		av_interleaved_write_frame(m_muxer, packet);
-		av_packet_unref(packet);
-	}
-	av_packet_free(&packet);
+#ifndef _DEBUG
+	cv::Mat frame(videoHeight, videoWidth, CV_8UC3, newPix);
+	writer->Write(frame);
+#endif
+	delete[] newPix;
 }

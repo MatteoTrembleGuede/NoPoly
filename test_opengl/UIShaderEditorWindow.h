@@ -8,6 +8,7 @@
 class UIShaderEditorWindow :
     public UIWindow
 {
+    friend class MenuBar;
 public:
 
     UIShaderEditorWindow(std::string _name, ShaderGenerator* _shader);
@@ -45,7 +46,6 @@ private:
 
     // generic ui
     void InputName();
-    void Menu();
     void CompileButton();
     void BlendModeButton();
     void ReturnButton();

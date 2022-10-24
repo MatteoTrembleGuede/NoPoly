@@ -14,6 +14,7 @@ float Light::directions[96];
 float Light::colors[128];
 float Light::attribs[128];
 std::list<Light*> Light::lights;
+Notify Light::notifyClearLights;
 
 Light::Light() : 
 	ID(count),
@@ -109,6 +110,7 @@ void Light::Clear()
 
 	count = 0;
 	lights.clear();
+	notifyClearLights();
 }
 
 void Light::Save(std::string& outSave)

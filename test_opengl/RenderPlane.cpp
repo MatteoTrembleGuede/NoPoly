@@ -8,7 +8,6 @@
 void RenderPlane::UpdateNumChunkToRender()
 {
 	int fps = 1.0f / mainFPSCounter.meanFrameTime;
-	//int maxFps = 1.0f / mainFPSCounter.minimumFrameTime;
 	int targetFps = 200;
 
 	if (fps > targetFps / 1.2f && targetChunkNumToRender > 0)
@@ -142,9 +141,9 @@ bool RenderPlane::Draw()
 			unsigned char* pixels = new unsigned char[3 * width * height];
 			renderTexture->BindAsTarget();
 			glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-			movieWriter->addFrame(pixels);
+			movieWriter->AddFrame(pixels);
 			renderTexture->Unbind();
-			//delete[] pixels;
+			delete[] pixels;
 		}
 
 		return true;
@@ -181,6 +180,7 @@ void RenderPlane::StartMovie(std::string fileName, int frameRate)
 {
 	unsigned int width, height;
 	renderTexture->GetSize(width, height);
+	videoRecordDebug = Texture::LoadFromBuffer(ColorChannel::RGB, width, height);
 	movieWriter = new Encoder(fileName, width, height, frameRate, videoRecordDebug);
 	forceFullDraw = true;
 }
@@ -190,4 +190,6 @@ void RenderPlane::StopMovie()
 	delete movieWriter;
 	movieWriter = nullptr;
 	forceFullDraw = false;
+	delete videoRecordDebug;
+	videoRecordDebug = nullptr;
 }

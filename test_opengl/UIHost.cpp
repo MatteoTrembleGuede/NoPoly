@@ -13,7 +13,7 @@ UIHost::UIHost(std::string _name) : UIWindow(_name)
 
 UIHost::~UIHost()
 {
-
+	if (((UIWindow*)this)->snapSection && children.size() > 0) ((UIWindow*)this)->snapSection = nullptr;
 }
 
 void UIHost::AddChild(UIWindow* window)
@@ -34,9 +34,18 @@ void UIHost::AddChild(UIWindow* window)
 			children.push_back(child);
 		}
 		children.remove(childHost);
+		if (ViewportManager::draggedWindow == childHost) ViewportManager::DragWindow(this);
 		delete childHost;
-		mustSkipDisplay = true;
 	}
+	mustSkipDisplay = true;
+}
+
+void UIHost::RemoveChild(UIWindow* window)
+{
+	UIWindow::windows.push_back(window);
+	window->host = nullptr;
+	children.remove(window);
+	mustSkipDisplay = true;
 }
 
 void UIHost::WindowBody()
@@ -60,33 +69,12 @@ void UIHost::WindowBody()
 				{
 					if (out)
 					{
-						draggedWindow = window;
+						ViewportManager::DragWindow(window);
 					}
 				}
-				if (draggedWindow == window)
-				{
-					if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0, 0.1))
-					{
-						ImGui::BeginTooltip();
-						ImGui::Text(window->name.c_str());
-						ImGui::EndTooltip();
-					}
-					else
-					{
-						UIWindow::windows.push_back(draggedWindow);
-						draggedWindow->host = nullptr;
-						children.remove(draggedWindow);
-						ViewportManager::Snap(draggedWindow, mousePos);
-						mustSkipDisplay = true;
-						draggedWindow = nullptr;
-					}
-				}
-				else
-				{
-					ImGui::BeginChild(i);
-					window->WindowBody();
-					ImGui::EndChild();
-				}
+				ImGui::BeginChild(i);
+				window->WindowBody();
+				ImGui::EndChild();
 				ImGui::EndTabItem();
 			}
 

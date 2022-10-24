@@ -14,11 +14,13 @@ public:
 	Lighting* lighting;
 	Light* currentLight;
 
+
 	UILightingWindow(std::string _name, Lighting* _lighting);
 	~UILightingWindow();
 
 protected:
 
+	void UnsetCurrentLight();
 	void SunDirection();
 	void SunColor();
 	void SkyColor();

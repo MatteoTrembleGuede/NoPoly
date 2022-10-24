@@ -6,7 +6,7 @@
 #include <iostream>
 
 class Shader;
-class GLFWwindow;
+struct GLFWwindow;
 
 class Camera
 {

@@ -1,39 +1,37 @@
-#ifndef ENCODER_H
-#define ENCODER_H
-#include <cassert>
-
-extern "C" {
-#include <FFmpeg/libswscale/swscale.h>
-#include <FFmpeg/libavcodec/avcodec.h>
-#include <FFmpeg/libavformat/avformat.h>
-#include <FFmpeg/libavutil/opt.h>
-#include <FFmpeg/libavutil/hwcontext.h>
-#include <FFmpeg/libavfilter/avfilter.h>
-}
+#pragma once
 
 #include <string>
 #include "Texture.h"
 
+class Writer;
+struct Pixel;
+
 class Encoder
 {
 public:
-    Encoder(std::string fileName, int width, int height, int frameRate, Texture*& debug);
-    ~Encoder();
-    void addFrame(unsigned char* pixels);
-    void flush();
+
+	Encoder(std::string fileName, int width, int height, int frameRate, Texture* videoRecordDebug);
+	~Encoder();
+
+
+	void AddFrame(unsigned char* pixels);
 
 private:
-    void encodeFrame(AVFrame* frame);
 
-    // members
-    int m_frameId = 1;
-    Texture*& debug;
+#ifndef _DEBUG
+	Writer* writer;
+#endif
 
-    SwsContext* swsCtx;
-    AVCodecContext* m_encoder = nullptr;
-    AVFormatContext* m_muxer = nullptr;
-    AVStream* m_avStream = nullptr;
-    AVBufferRef* m_device = nullptr;
+	Texture* displayTexture;
+	int videoWidth, videoHeight;
+	int inputWidth, inputHeight;
+
+	float xRatio;
+	float yRatio;
+
+	bool forceInputResolution = true;
+
+	Pixel Bilinear(unsigned char* pixels, int x, int y);
+	Pixel Point(unsigned char* pixels, int x, int y);
+	void SetRatioAndResolution();
 };
-
-#endif // ENCODER_H

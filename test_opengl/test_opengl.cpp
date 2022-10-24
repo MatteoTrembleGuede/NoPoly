@@ -31,9 +31,11 @@
 #include "UIGlobalParam.h"
 #include "UIResourceBrowser.h"
 #include "Time.h"
+#include "MenuBar.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
+
 #include "UIPlayer.h"
 
 #define BALL_NUM 1
@@ -98,13 +100,19 @@ int main(int argc, char* argv[])
 	materialEditor->shader = &testShader;
 	float width, height;
 	ViewportManager::GetScreenSize(width, height);
-	ViewportManager::Snap(sceneEditor, ImVec2(width / 5.0f, height / 2.0f));
-	ViewportManager::Snap(CustomPrimitiveEditor, sceneEditor);
-	ViewportManager::Snap(lightingEditor, ImVec2(3.0f * width / 4.0f, height / 2.0f));
-	ViewportManager::Snap(materialEditor, lightingEditor);
-	ViewportManager::Snap(globalParamWindow, ImVec2(0.5f * width, 4.5f * height / 5.0f));
-	ViewportManager::Snap(playerWindow, globalParamWindow);
-	ViewportManager::Snap(debugWindow, globalParamWindow);
+
+	if (!ViewportManager::LoadLayout())
+	{
+		ViewportManager::Snap(sceneEditor, ImVec2(width / 5.0f, height / 2.0f));
+		ViewportManager::Snap(CustomPrimitiveEditor, sceneEditor);
+		ViewportManager::Snap(lightingEditor, ImVec2(3.0f * width / 4.0f, height / 2.0f));
+		ViewportManager::Snap(materialEditor, lightingEditor);
+		ViewportManager::Snap(globalParamWindow, ImVec2(0.5f * width, 4.5f * height / 5.0f));
+		ViewportManager::Snap(playerWindow, globalParamWindow);
+		ViewportManager::Snap(debugWindow, globalParamWindow);
+	}
+
+	MenuBar menuBar(sceneEditor);
 	Camera camera;
 	onWheelScroll.Bind(glfwSetScrollCallback(window, OnWheelScrolled));
 
@@ -123,8 +131,6 @@ int main(int argc, char* argv[])
 	{
 		sceneEditor->Load(argv[1], "", nullptr);
 	}
-
-	glfwSwapInterval(0);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -276,7 +282,7 @@ int main(int argc, char* argv[])
 
 		glfwGetCursorPos(window, &mouseX, &mouseY);
 
-		if (glfwGetMouseButton(window, 1))
+		if (glfwGetMouseButton(window, 1) && (wasRightClicking || ViewportManager::IsQuadContaining(ImVec2(mouseX, mouseY))))
 		{
 			if (!wasRightClicking) onWheelScroll.Bind(Camera::SetCameraSpeed);
 			wasRightClicking = true;
@@ -331,14 +337,21 @@ int main(int argc, char* argv[])
 			onWheelScroll.Unbind(Camera::SetCameraSpeed);
 		}
 
+		/*static double truc = 0;
+		if (Time::fullTime - truc > 1)
+		{
+			truc = Time::fullTime;
+			ViewportManager::LoadLayoutOneStep();
+		}*/
+
 		// new imgui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-
+		ViewportManager::Update();
 		ImGuizmo::SetDrawlist(ImGui::GetForegroundDrawList());
 		// Update
-
+		menuBar.Display();
 		UIWindow::DisplayUI();
 		ImGuizmo::BeginFrame();
 
@@ -383,5 +396,8 @@ int main(int argc, char* argv[])
 	ImGui::DestroyContext();
 
 	glfwTerminate();
+
+	ViewportManager::SaveLayout();
+
 	return 0;
 }

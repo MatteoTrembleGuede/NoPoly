@@ -170,7 +170,7 @@ vec3 GetDiffuseAndSpecular( in vec3 position, in vec3 viewDirection, in vec3 nor
 	// sky and floor indirect lighting
 	vec3 skyDirection = normalize(reflect(viewDirection, normal));
 	specular += GetSpecular(skyReflection, -skyDirection, viewDirection, normal, sceneColor, roughness) / _Gloss;
-	diffuse += sceneColor * ((0.5 + 0.5 * (normal.y)) * skyColor + max(-normal.y, 0) * floorColor) * (1.0f - _Metallic);
+	diffuse += sceneColor * ((0.5 + 0.5 * (normal.y)) * skyColor * (1.0f - _Metallic) + max(-normal.y, 0) * floorColor);
 	//diffuse *= GetAmbientOcclusion(position + 0.001f * normal, normal) * ao;
 	ao *= GetAmbientOcclusion(position + 0.001f * normal, normal);
 		
@@ -220,7 +220,35 @@ void main()
     for (; n < MaxIteration && totalDistance < MaxDistance; ++n)
 	{
 		float tmpDistResult = DistToScene(direction * totalDistance + camPos);
-		//float tmpDistResult = DistToScene(p);
+		
+		if (applyDRMNC)
+		{
+			vec3 tmpNormalFP = GetNormal(direction * totalDistance + camPos);
+			float dotnd1 = dot(tmpNormalFP, direction);
+			if (tmpDistResult > 0 && dotnd1 > 0)
+			{
+				vec3 tmpNormalLFP = GetNormal(direction * lastTotalDist + camPos);
+				float dotnd2 = dot(tmpNormalLFP, direction);
+				if (sign(dotnd1) != sign(dotnd2))
+				{
+					float tmpBias = 1 - 0.1 / float(DRMNCPrecision);
+					for (int i = 0; /*dot(tmpNormalFP, tmpNormalLFP) < 0 &&*/ tmpBias > 0 && (tmpDistResult > 0); ++i)
+					{
+						float tmpTotalDistance = lastTotalDist + (totalDistance - lastTotalDist) * tmpBias;
+						if (dot(tmpNormalFP = GetNormal(direction * tmpTotalDistance + camPos), direction) < 0)
+						{
+							tmpDistResult = DistToScene(direction * tmpTotalDistance + camPos);
+							totalDistance = tmpTotalDistance;
+							break;
+						}
+						else
+						{
+							tmpBias -= 0.1 / float(DRMNCPrecision);
+						}
+					}
+				}
+			}
+		}
 		
 		if ((tmpDistResult) < RAYCAST_PRECISION * totalDistance + RAYCAST_PRECISION)
 		{
@@ -230,28 +258,33 @@ void main()
 		else
 		{
 			lastTotalDist = totalDistance;
-			//p += direction * tmpDistResult;
 			totalDistance += (tmpDistResult);
 		}
 		lastDist = tmpDistResult;
 	}
 	
-	
-	
-	if (applyPRMNC /*&& distResult.w < 0*/)
+	if (applyPRMNC)
 	{
 		if (DistToScene(direction * totalDistance + camPos) < 0)
-		for (int i = 0; (distResult.w >= RAYCAST_PRECISION * totalDistance + RAYCAST_PRECISION || distResult.w < 0) && i < 10; ++i)
 		{
-			//if (dot(direction, direction * sign(totalDistance)) < 0) break;
-			float weight = distResult.w / ((distResult.w) - (lastDist));
-			totalDistance = mix(totalDistance, lastTotalDist, weight);
-			distResult.w = DistToScene(direction * totalDistance + camPos);
+			for (int i = 0; (distResult.w >= RAYCAST_PRECISION * totalDistance + RAYCAST_PRECISION || distResult.w < 0) && i < PRMNCStepNum; ++i)
+			{
+				float weight = distResult.w / ((distResult.w) - (lastDist));
+				float tmpTotalDistance = mix(totalDistance, lastTotalDist, weight);
+				float tmpDist = DistToScene(direction * tmpTotalDistance + camPos);
+				if (tmpDist >= 0 && tmpDist < lastDist)
+				{
+					lastDist = tmpDist;
+					lastTotalDist = tmpTotalDistance;
+				}
+				else
+				{
+					distResult.w = tmpDist;
+					totalDistance = tmpTotalDistance;
+				}
+			}
 		}
 	}
-	
-	
-		
 	
 	const vec3 finalPosition = direction * totalDistance + camPos;
     vec3 normal = GetNormal(finalPosition);
@@ -401,7 +434,7 @@ void main()
 	finalColor = clamp(pow(finalColor, vec3(0.45)), 0.0f, 1.0f);
 	finalColor = finalColor * finalColor * (3.0f - 2.0f * finalColor);
 	
-	if (showRenderChunks) 
+	if (showRenderChunks)
 	{
 		float factor = chunkNum / float(chunkNumMax);
 		FragColor = vec4(1 - pow(factor, 5.0f), pow(factor, 0.20f), 0, 1);
@@ -411,11 +444,12 @@ void main()
 		if (showComplexity) finalColor = vec3(pow(totalDistance / MaxDistance ,0.5), float(n) / float(MaxIteration), 1.0f / abs(distResult.w));
 		
 		if (showTrespassing && distResult.w < 0)
+		{
 			FragColor = vec4(
 				int(abs(finalPosition.x) + abs(finalPosition.y) + abs(finalPosition.z) * 100.0f) % 2 == 0 ? vec2(1, 0) : vec2(0, 1)
 				, 0, 1);
+		}
 		else
 			FragColor = vec4(finalColor, 1);
 	}
 }
-

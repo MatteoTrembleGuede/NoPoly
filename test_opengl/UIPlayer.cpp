@@ -98,7 +98,7 @@ void UIPlayer::WindowBody()
 				ImGui::TableNextColumn();
 				if (ImGui::Button("Record Video"))
 				{
-					new UIResourceBrowser("Save video to", ".webm,.mp4,.mov,.avi", this, &UIPlayer::StartRecord, nullptr, true);
+					new UIResourceBrowser("Save video to", ".mp4,.mov,.avi", this, &UIPlayer::StartRecord, nullptr, true);
 					//new UIResourceBrowser("Save video to", ".mp4", this, &UIPlayer::StartRecord, nullptr, true);
 				}
 			}

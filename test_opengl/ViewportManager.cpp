@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "stb_image/stb_image.h"
 #include "UIResourceBrowser.h"
+#include "ShaderGenerator.h"
 #include "UIHost.h"
 
 #define Min(val1, val2) ((val2) > (val1) ? (val1) : (val2))
@@ -33,7 +34,7 @@ typedef struct Edge
 private:
 
 
-	void RebindSections(Edge* replacementEdge);
+	void RebindSections(Edge* replacementEdge, ViewportSnapSection* deletedSection);
 } Edge;
 
 void Edge::GetPositions(Vector3& outTop, Vector3& outBot)
@@ -59,16 +60,18 @@ void Edge::NotifySectionDestruction(ViewportSnapSection* section, Edge* replacem
 
 	if (right.size() == 0 || left.size() == 0)
 	{
-		RebindSections(replacementEdge);
+		RebindSections(replacementEdge, section);
 		ViewportManager::RemoveEdge(this);
 	}
 }
 
-void Edge::RebindSections(Edge* replacementEdge)
+void Edge::RebindSections(Edge* replacementEdge, ViewportSnapSection* deletedSection)
 {
 	for (auto it = right.begin(); it != right.end(); ++it)
 	{
 		ViewportSnapSection* section = *it;
+
+		if (section->parent == deletedSection) section->parent = deletedSection->parent;
 
 		if (orientation == EdgeOrientation::Horizontal)
 		{
@@ -83,6 +86,8 @@ void Edge::RebindSections(Edge* replacementEdge)
 	for (auto it = left.begin(); it != left.end(); ++it)
 	{
 		ViewportSnapSection* section = *it;
+
+		if (section->parent == deletedSection) section->parent = deletedSection->parent;
 
 		if (orientation == EdgeOrientation::Horizontal)
 		{
@@ -107,6 +112,9 @@ float ViewportManager::screenWidth, ViewportManager::screenHeight;
 float ViewportManager::screenResolutionScale;
 GLFWwindow* ViewportManager::window;
 bool ViewportManager::maximizeSceneView;
+UIWindow* ViewportManager::draggedWindow;
+ImVec2 ViewportManager::lSize;
+ImVec2 ViewportManager::lPos;
 
 void ViewportManager::WindowSizeCallback(GLFWwindow* window, int width, int height)
 {
@@ -121,6 +129,7 @@ void ViewportManager::WindowSizeCallback(GLFWwindow* window, int width, int heig
 
 void ViewportManager::Init(Shader* _shader, RenderPlane* _quad)
 {
+	draggedWindow = nullptr;
 	shader = _shader;
 	sceneQuad = _quad;
 	maximizeSceneView = false;
@@ -138,7 +147,6 @@ GLFWwindow* ViewportManager::CreateWindow()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwSwapInterval(0);
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	screenWidth = 1110;
@@ -169,6 +177,8 @@ GLFWwindow* ViewportManager::CreateWindow()
 
 	// setting callbacks
 	glfwSetFramebufferSizeCallback(window, WindowSizeCallback);
+
+	glfwSwapInterval(0);
 
 	return window;
 }
@@ -245,7 +255,8 @@ ViewportSnapSection* ViewportManager::AddSection(ImVec2 position)
 	newEdge->bot = bot;
 	edges.push_back(newEdge);
 
-	ViewportSnapSection* newSection = new ViewportSnapSection();
+	ViewportSnapSection* newSection = new ViewportSnapSection(); 
+	newSection->parent = section;
 	sections.push_back(newSection);
 
 	switch (quadrant)
@@ -340,7 +351,7 @@ void ViewportManager::AdjustQuad()
 
 	pos3 = ((Vector3(pos.x, pos.y, 1) / Vector3(screenWidth, screenHeight, 1)) * 2.0f - Vector3(1.0f, 1.0f, 3.0f));
 	size3 = (Vector3(size.x, size.y, 1) / Vector3(screenWidth, screenHeight, 1)) * 2.0f;
-	
+
 	sceneQuad->SetPosAndSize(pos3, size3, Vector3(size.x, size.y, 1) * screenResolutionScale);
 
 	shader->setInt("screenWidth", size.x);
@@ -393,6 +404,7 @@ void ViewportManager::Snap(UIWindow* window, ImVec2 position)
 	ViewportSnapSectionQuadrant quadrant;
 	ViewportSnapSection* newSection = nullptr;
 	ViewportSnapSection* section = GetSectionAndQuadrant(position, quadrant);
+
 	if (!section || section == window->snapSection) return;
 	section->GetSizeAndPosition(size, pos);
 	pos3 = Vector3(pos.x, pos.y, 0);
@@ -425,6 +437,10 @@ void ViewportManager::Snap(UIWindow* window, ImVec2 position)
 			return;
 		}
 
+		if (window->host)
+		{
+			((UIHost*)window->host)->RemoveChild(window);
+		}
 		if (window->snapSection)
 		{
 			ViewportManager::RemoveSection(window->snapSection);
@@ -442,7 +458,7 @@ void ViewportManager::Snap(UIWindow* window, ImVec2 position)
 
 void ViewportManager::Snap(UIWindow* window, UIWindow* parentWindow)
 {
-	if (parentWindow)
+	if (parentWindow && window && window->host != parentWindow)
 	{
 		UIHost* host = nullptr;
 		if (parentWindow->snapSection)
@@ -456,6 +472,10 @@ void ViewportManager::Snap(UIWindow* window, UIWindow* parentWindow)
 			host = (UIHost*)parentWindow->host;
 		}
 		if (host == nullptr) return;
+		if (window->host)
+		{
+			((UIHost*)window->host)->RemoveChild(window);
+		}
 		ViewportManager::RemoveSection(window->snapSection);
 		host->AddChild(window);
 	}
@@ -496,7 +516,7 @@ float ViewportManager::FixNextPosition(Edge* edge, float nextPosition)
 	Vector3 topPos;
 	Vector3 botPos;
 	edge->GetPositions(topPos, botPos);
-	
+
 	float topProxi = edge->position;
 	float botProxi = 1.0f - edge->position;
 	float refSize = (edge->orientation == EdgeOrientation::Horizontal) ? screenHeight : screenWidth;
@@ -553,7 +573,7 @@ float ViewportManager::FixNextPosition(Edge* edge, float nextPosition)
 
 	if (nextPosition >= bounds.x && nextPosition <= bounds.y)
 		return nextPosition;
-	else													
+	else
 		return edge->position;
 }
 
@@ -566,6 +586,12 @@ void ViewportManager::MaximizeSceneView(bool _maximize)
 bool ViewportManager::IsSceneViewMaximized()
 {
 	return maximizeSceneView;
+}
+
+bool ViewportManager::IsQuadContaining(ImVec2 pos)
+{
+	if ((*sections.begin())->Contains(pos)) return true;
+	else return false;
 }
 
 void ViewportManager::GetSceneViewPosAndSize(ImVec2& outSize, ImVec2& outPos)
@@ -602,6 +628,251 @@ UIWindow* ViewportManager::GetUIWindowInSection(ViewportSnapSection* _section)
 	return uiWindow;
 }
 
+void ViewportManager::SaveLayout()
+{
+	std::stringstream save;
+	int i = 0;
+	ViewportSnapSection* lastSec = nullptr;
+	for (ViewportSnapSection*& section : sections)
+	{
+		if (i > 0)
+		{
+			UIWindow* snappedWindow = GetUIWindowInSection(section);
+			bool isHost = dynamic_cast<UIHost*>(snappedWindow);
+			ImVec2 size, pos, center;
+			section->GetSizeAndPosition(size, pos);
+			center.x = pos.x + size.x / 2.0f;
+			center.y = pos.y + size.y / 2.0f;
+			int id = 0;
+			lastSec = section->parent;
+
+			for (auto it = sections.begin(); it != sections.end(); ++it)
+			{
+				if (*it == lastSec) break;
+				++id;
+			}
+
+			ViewportSnapSectionQuadrant quadrant = lastSec->GetDirectionFromSectionCenter(center);
+
+			size.x /= screenWidth;
+			pos.x /= screenWidth;
+			size.y /= screenHeight;
+			pos.y /= screenHeight;
+
+			save << id << " " << (int)quadrant << " " << pos.x << " " << pos.y << " " << size.x << " " << size.y << " ";
+
+			if (isHost)
+			{
+				save << "host;";
+				for (UIWindow*& child : ((UIHost*)snappedWindow)->children)
+				{
+					save << child->name << ";";
+				}
+			}
+			else
+			{
+				save << snappedWindow->name << ";";
+			}
+
+			save << "\n";
+		}
+
+		++i;
+	}
+
+	std::ofstream file;
+	file.open(ShaderGenerator::GetProjectPath() + "/" + "layout");
+	if (file.is_open())
+	{
+		file << save.str();
+		file.close();
+	}
+}
+
+bool ViewportManager::LoadLayout()
+{
+	std::ifstream file;
+	file.open(ShaderGenerator::GetProjectPath() + "/" + "layout");
+	if (file.is_open())
+	{
+		char buf[512];
+		while (!file.eof())
+		{
+			file.getline(buf, 512);
+			std::string line = buf;
+
+			if (line.size() == 0 || line == "\0") break;
+
+			int idLastQuad = std::stoi(std::string(line.c_str(), line.find_first_of(" ")));
+			line = std::string(line.c_str() + line.find_first_of(" ") + 1);
+
+			ViewportSnapSectionQuadrant quadrant = (ViewportSnapSectionQuadrant)std::stoi(std::string(line.c_str(), line.find_first_of(" ")));
+			line = std::string(line.c_str() + line.find_first_of(" ") + 1);
+
+			float px = std::stof(std::string(line.c_str(), line.find_first_of(" ")));
+			line = std::string(line.c_str() + line.find_first_of(" ") + 1);
+
+			float py = std::stof(std::string(line.c_str(), line.find_first_of(" ")));
+			line = std::string(line.c_str() + line.find_first_of(" ") + 1);
+
+			float sx = std::stof(std::string(line.c_str(), line.find_first_of(" ")));
+			line = std::string(line.c_str() + line.find_first_of(" ") + 1);
+
+			float sy = std::stof(std::string(line.c_str(), line.find_first_of(" ")));
+			line = std::string(line.c_str() + line.find_first_of(" ") + 1);
+
+			std::string windowName = std::string(line.c_str(), line.find_first_of(";"));
+			line = std::string(line.c_str() + line.find_first_of(";") + 1);
+
+			UIWindow* curWin = nullptr;
+
+			if (windowName == "host")
+			{
+				UIHost* host = new UIHost("Host Window");
+
+				while ((windowName = std::string(line.c_str(), line.find_first_of(";"))).size() > 0)
+				{
+					UIWindow* win = UIWindow::GetWindow(windowName);
+					if (win) host->AddChild(win);
+					line = std::string(line.c_str() + line.find_first_of(";") + 1);
+					if (line.size() == 0 || line == "\0") break;
+				}
+
+				curWin = host;
+			}
+			else
+			{
+				curWin = UIWindow::GetWindow(windowName);
+			}
+
+			ViewportSnapSection* section = nullptr;
+			auto it = sections.begin();
+			for (int i = 0; i <= idLastQuad; ++i)
+			{
+				if (i == idLastQuad) section = *it;
+				it++;
+			}
+
+			ImVec2 size, pos;
+
+			if (section && curWin)
+			{
+				section->GetSizeAndPosition(size, pos);
+				if (quadrant == right || quadrant == left)
+				{
+					size.x /= 4.0f;
+				}
+				else
+				{
+					size.y /= 4.0f;
+				}
+
+				if (quadrant == right)
+				{
+					pos.x += size.x * 3;
+				}
+				else if (quadrant == bot)
+				{
+					pos.y += size.y * 3;
+				}
+
+				pos.x += size.x / 2.0f;
+				pos.y += size.y / 2.0f;
+
+				Snap(curWin, pos);
+
+				if (curWin->snapSection)
+					curWin->snapSection->SetSizeAndPosition(ImVec2(sx, sy), ImVec2(px, py));
+			}
+		}
+
+		AdjustQuad();
+
+		file.close();
+
+		return true;
+	}
+	else return false;
+}
+
+void ViewportManager::DragWindow(UIWindow* _window)
+{
+	if (draggedWindow) return;
+	draggedWindow = _window;
+	if (_window && _window->snapSection)
+	{
+		_window->snapSection->GetSizeAndPosition(lSize, lPos);
+	}
+	else if (_window->host && ((UIWindow*)_window->host)->snapSection)
+	{
+		((UIWindow*)_window->host)->snapSection->GetSizeAndPosition(lSize, lPos);
+	}
+}
+
+void ViewportManager::StopDragging()
+{
+	if (!draggedWindow) return;
+	ImVec2 mousePos = ImGui::GetMousePos();
+	Snap(draggedWindow, mousePos);
+	draggedWindow = nullptr;
+}
+
+void ViewportManager::Update()
+{
+	if (draggedWindow)
+	{
+		ImVec2 mousePos = ImGui::GetMousePos();
+		ViewportSnapSectionQuadrant quadrant;
+		ViewportSnapSection* section = GetSectionAndQuadrant(mousePos, quadrant);
+		ImVec2 size, pos;
+
+		if (section)
+		{
+			section->GetSizeAndPosition(size, pos);
+			if (quadrant != center)
+			{
+				if (quadrant == right || quadrant == left)
+				{
+					size.x /= 4.0f;
+				}
+				else
+				{
+					size.y /= 4.0f;
+				}
+
+				if (quadrant == right)
+				{
+					pos.x += size.x * 3;
+				}
+				else if (quadrant == bot)
+				{
+					pos.y += size.y * 3;
+				}
+			}
+			else
+			{
+				size.x /= 2.0f;
+				size.y /= 2.0f;
+				pos.x += size.x / 2;
+				pos.y += size.y / 2;
+			}
+			float alpha = Time::deltaTime * 10.0f;
+			lSize.x = alpha * size.x + (1 - alpha) * lSize.x;
+			lSize.y = alpha * size.y + (1 - alpha) * lSize.y;
+			lPos.x = alpha * pos.x + (1 - alpha) * lPos.x;
+			lPos.y = alpha * pos.y + (1 - alpha) * lPos.y;
+
+			ImGui::Begin((draggedWindow->name + " dragged").c_str());
+			draggedWindow->WindowBody();
+			ImGui::SetWindowPos(lPos);
+			ImGui::SetWindowSize(lSize);
+			ImGui::End();
+		}
+		if (!ImGui::IsMouseDown(0))
+			ViewportManager::StopDragging();
+	}
+}
+
 //---- VIEWPORT SNAP SECTIONS ----//
 
 void ViewportSnapSection::GetSizeAndPosition(ImVec2& outSize, ImVec2& outPos) const
@@ -614,6 +885,14 @@ void ViewportSnapSection::GetSizeAndPosition(ImVec2& outSize, ImVec2& outPos) co
 	float bPos = (bot ? bot->position : 1.0f) * height;
 	outSize = ImVec2(rPos - lPos, bPos - tPos);
 	outPos = ImVec2(lPos, tPos);
+}
+
+void ViewportSnapSection::SetSizeAndPosition(ImVec2 size, ImVec2 pos)
+{
+	if (left) left->position = pos.x;
+	if (top) top->position = pos.y;
+	if (right) right->position = pos.x + size.x;
+	if (bot) bot->position = pos.y + size.y;
 }
 
 ViewportSnapSectionQuadrant ViewportSnapSection::Contains(const ImVec2& _position, bool noCenter) const

@@ -29,7 +29,7 @@ UIWindow::~UIWindow()
 
 void UIWindow::Display()
 {
-	ImGui::Begin(name.c_str(), nullptr, flags);
+	ImGui::Begin(name.c_str(), nullptr, flags | (snapSection ? ImGuiWindowFlags_NoMove : 0));
 	WindowBody();
 	ImGui::End();
 
@@ -70,29 +70,27 @@ bool UIWindow::MustSkip()
 
 void UIWindow::WindowBody()
 {
+	if (ViewportManager::draggedWindow == this) return;
 	if (snapSection)
 	{
 		ImVec2 pos, size;
 		snapSection->GetSizeAndPosition(size, pos);
 
-		ImGui::SetWindowPos(pos);
-		ImGui::SetWindowSize(size);
+		if (!isResized)
+		{
+			ImGui::SetWindowPos(pos);
+			ImGui::SetWindowSize(size);
+		}
 
 		ImVec2 mousePos = ImGui::GetMousePos();
 
 		if (ImGui::IsWindowFocused())
 		{
-			if (ImGui::IsWindowHovered())
+			if (ImGui::IsWindowHovered() &&
+				ImGui::IsMouseDragging(0, 0.1f) && 
+				!ViewportManager::draggedWindow)
 			{
-				if (ImGui::IsMouseDragging(0, 0.1f))
-				{
-					isDragged = true;
-				}
-				else if (isDragged)
-				{
-					ViewportManager::Snap(this, mousePos);
-					isDragged = false;
-				}
+				ViewportManager::DragWindow(this);
 			}
 			if (snapSection)
 			{

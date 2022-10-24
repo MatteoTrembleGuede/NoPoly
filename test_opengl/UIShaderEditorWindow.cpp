@@ -5,8 +5,8 @@
 #include "Transform.h"
 #include "Guizmo.h"
 #include "ViewportManager.h"
-#include "UIResourceBrowser.h"
 #include "Material.h"
+#include "UIResourceBrowser.h"
 #include "UIDisplayTextWindow.h"
 #include <bitset>
 
@@ -409,7 +409,7 @@ void UIShaderEditorWindow::NodeBody()
 	int width = ImGui::GetWindowSize().x;
 	for (auto it = node->parts.begin(); it != node->parts.end(); ++it)
 	{
-		ImGui::BeginChild(id + 1, ImVec2(width, 20));
+		ImGui::BeginChild(id + 1, ImVec2(width, 25));
 		bool mustBreak = false;
 		if (ImGui::BeginTable("children list : ", 3))
 		{
@@ -589,91 +589,6 @@ void UIShaderEditorWindow::Load(std::string path, std::string fileName, void* da
 	compilationError = !shader->Recompile(errorMsg, errorCode);
 	Material::SendData(shader);
 	editor.SetText(errorCode);
-}
-
-void UIShaderEditorWindow::Menu()
-{
-	ImGui::BeginMainMenuBar();
-	if (ImGui::BeginMenu("File"))
-	{
-		std::string path = std::string("Save/");
-		if (ImGui::MenuItem("New"))
-		{
-			shader->Clear();
-			SetPartTarget(shader->root);
-
-			compilationError = !shader->Recompile(errorMsg, errorCode);
-			editor.SetText(errorCode);
-		}
-		else if (ImGui::MenuItem("Save"))
-		{
-			new UIResourceBrowser("Save", ".scene", this, &UIShaderEditorWindow::Save, nullptr, true);
-		}
-		if (!isLeaf && (ShaderNode*)currentPart != shader->root && ImGui::MenuItem("Save from this node"))
-		{
-			new UIResourceBrowser("Save from this node : " + currentPart->name, ".scene", this, &UIShaderEditorWindow::Save, (ShaderNode*)currentPart, true);
-		}
-		if (ImGui::MenuItem("Load"))
-		{
-			new UIResourceBrowser("Load", ".scene", this, &UIShaderEditorWindow::Load, nullptr);
-		}
-		if (!isLeaf && (ShaderNode*)currentPart != shader->root && ImGui::MenuItem("Load from this node"))
-		{
-			new UIResourceBrowser("Load from this node : " + currentPart->name, ".scene", this, &UIShaderEditorWindow::Load, (ShaderNode**)&currentPart);
-		}
-		//if (ImGui::MenuItem("Quit", "Esc"))
-			// QUIT   
-		ImGui::EndMenu();
-	}
-	if (ImGui::BeginMenu("About"))
-	{
-		if (ImGui::MenuItem("Useful keys"))
-		{
-			new UIDisplayTextWindow("Useful keys",
-				"	Global controls\n"
-				"H : hide ui\n"
-				"G : hide gizmo\n"
-				"Space : pause/resume\n"
-				"Numpad Enter : compile\n"
-				"Numpad 1/2/3 : translation/rotation/scale gizmo\n"
-				"Numpad 0 : switch world/local gizmo\n\n"
-				"	Camera controls\n"
-				"Right click : camera control mode\n"
-				"Left alt : switch qwerty/azerty\n"
-				"Z/W : forward	S : backward\n"
-				"Q/A : left		D : right\n"
-				"A/Q : down		E : up\n"
-				"Mouse wheel : change camera move speed\n"
-				"Backspace : reset camera position and speed\n"
-			);
-		}
-
-		if (ImGui::MenuItem("Credits"))
-		{
-			new UIDisplayTextWindow("Credits",
-				"NoPoly : Matteo TREMBLE-GUEDE\n\n\n"
-				"	UI Libraries\n\n"
-				"Dear ImGui : Omar Cornut\n"
-				"	https://github.com/ocornut/imgui \n\n"
-				"ImGuizmo : Cedric Guillemet\n"
-				"	https://github.com/CedricGuillemet/ImGuizmo \n\n"
-				"Text editor : Balazs Jako\n"
-				"	https://github.com/BalazsJako/ImGuiColorTextEdit \n\n\n"
-				"	Shader Algorithms\n\n"
-				"Signed distance functions : Inigo Quilez\n"
-				"	https://iquilezles.org \n"
-				"	(very useful blog to learn about raymarching)\n\n"
-				"Simplex noise : Nikita Miropolskiy\n"
-				"	http://www.shadertoy.com/view/XsX3zB \n\n"
-			);
-		}
-		ImGui::EndMenu();
-	}
-	ImVec2 size;
-	ViewportManager::GetScreenSize(size.x, size.y);
-	ImGui::SetCursorPosX(size.x - 200.0f);
-	ImGui::Text((std::string("Guizmo : ") + std::string(Guizmo::IsWorld() ? "World " : "local ")).c_str());
-	ImGui::EndMainMenuBar();
 }
 
 void UIShaderEditorWindow::DisplayError()
@@ -974,7 +889,6 @@ void UIShaderEditorWindow::WindowBody()
 	}
 
 	mainFPSCounter.Update();
-	Menu();
 	ImGui::Text("frame time %f s | frame rate %f", mainFPSCounter.meanFrameTime, 1.0f / mainFPSCounter.meanFrameTime);
 	ImGui::Text("Render time %f s | render rate %f", renderFPSCounter.meanFrameTime, 1.0f / renderFPSCounter.meanFrameTime);
 

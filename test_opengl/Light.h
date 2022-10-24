@@ -3,6 +3,7 @@
 #include "Transformable.h"
 #include <list>
 #include "Transform.h"
+#include "Delegate.h"
 
 class Lighting;
 class Shader;
@@ -44,6 +45,7 @@ public:
 	// class
 
 	static std::list<Light*> lights;
+	static Notify notifyClearLights;
 
 	static Light* Create();
 	static void Destroy(Light* light);

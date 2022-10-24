@@ -20,7 +20,7 @@ protected:
 	unsigned int width;
 	ColorChannel channelFormat;
 	unsigned int glID;
-	std::string path;
+	std::string path = "";
 
 	Texture();
 	Texture(ColorChannel format, unsigned int imageWidth, unsigned int imageHeight, unsigned char* colorBuffer = nullptr);
