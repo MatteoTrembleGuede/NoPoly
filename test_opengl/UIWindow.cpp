@@ -3,9 +3,10 @@
 
 
 std::list<UIWindow*> UIWindow::windows;
+std::list<UIWindow*> UIWindow::notHidableWindows;
 bool UIWindow::mustSkipDisplay;
 
-UIWindow::UIWindow()
+UIWindow::UIWindow() : notHidable(false)
 {
 	flags = 0;
 	name = "Untitled";
@@ -13,17 +14,27 @@ UIWindow::UIWindow()
 	snapSection = nullptr;
 }
 
-UIWindow::UIWindow(std::string _name)
+UIWindow::UIWindow(std::string _name, bool _notHidable) : notHidable(_notHidable)
 {
 	name = _name;
-	windows.push_front(this);
+
+	if (notHidable)
+		notHidableWindows.push_front(this);
+	else
+		windows.push_front(this);
+
 	snapSection = nullptr;
 }
 
 UIWindow::~UIWindow()
 {
 	if (snapSection) ViewportManager::RemoveSection(snapSection);
-	windows.remove(this);
+
+	if (notHidable)
+		notHidableWindows.remove(this);
+	else
+		windows.remove(this);
+
 	mustSkipDisplay = true;
 }
 
@@ -38,13 +49,20 @@ void UIWindow::Display()
 
 void UIWindow::DisplayUI()
 {
+	for (auto it = notHidableWindows.begin(); it != notHidableWindows.end(); ++it)
+	{
+		(*it)->Display();
+
+		if (MustSkip()) return;
+	}
+
 	if (ViewportManager::IsSceneViewMaximized()) return;
 
 	for (auto it = windows.begin(); it != windows.end(); ++it)
 	{
 		(*it)->Display();
 
-		if (MustSkip()) break;
+		if (MustSkip()) return;
 	}
 }
 

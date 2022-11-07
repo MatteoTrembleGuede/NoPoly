@@ -5,6 +5,7 @@
 #include "UIResourceBrowser.h"
 #include "ShaderGenerator.h"
 #include "UIHost.h"
+#include "Input/Input.h"
 
 #define Min(val1, val2) ((val2) > (val1) ? (val1) : (val2))
 #define Max(val1, val2) ((val2) > (val1) ? (val2) : (val1))
@@ -127,6 +128,79 @@ void ViewportManager::WindowSizeCallback(GLFWwindow* window, int width, int heig
 	}
 }
 
+void ViewportManager::ToggleMaximizedScenView()
+{
+	ViewportManager::MaximizeSceneView(!ViewportManager::IsSceneViewMaximized());
+}
+
+void ViewportManager::SetTeleportMouse()
+{
+	Input::GetGlobalInput(0).BindAxis("MoveMouseX", &ViewportManager::TeleportMouseH);
+	Input::GetGlobalInput(0).BindAxis("MoveMouseY", &ViewportManager::TeleportMouseV);
+}
+
+void ViewportManager::UnsetTeleportMouse()
+{
+	Input::GetGlobalInput(0).UnbindAxis("MoveMouseX", &ViewportManager::TeleportMouseH);
+	Input::GetGlobalInput(0).UnbindAxis("MoveMouseY", &ViewportManager::TeleportMouseV);
+}
+
+void ViewportManager::TeleportMouseH(float dummy1, float dummy2)
+{
+	if (ImGui::IsMouseDragging(0.1))
+	{
+		float border = 1;
+		Input::MousePos m = Input::GetMousePosition();
+		bool mouseTeleported = false;
+
+		if (m.x >= screenWidth - border)
+		{
+			m.x = border + 1;
+			mouseTeleported = true;
+		}
+		else if (m.x <= border)
+		{
+			m.x = screenWidth - (border + 1);
+			mouseTeleported = true;
+		}
+
+		if (mouseTeleported)
+		{
+			ImGui::GetIO().MousePosPrev = ImVec2(m.x, m.y);
+			ImGui::GetIO().MousePos = ImVec2(m.x, m.y);
+			Input::SetMousePosition(m);
+		}
+	}
+}
+
+void ViewportManager::TeleportMouseV(float dummy1, float dummy2)
+{
+	if (ImGui::IsMouseDragging(0.1))
+	{
+		float border = 1;
+		Input::MousePos m = Input::GetMousePosition();
+		bool mouseTeleported = false;
+
+		if (m.y >= screenHeight - border)
+		{
+			m.y = border + 1;
+			mouseTeleported = true;
+		}
+		else if (m.y <= border)
+		{
+			m.y = screenHeight - (border + 1);
+			mouseTeleported = true;
+		}
+
+		if (mouseTeleported)
+		{
+			ImGui::GetIO().MousePosPrev = ImVec2(m.x, m.y);
+			ImGui::GetIO().MousePos = ImVec2(m.x, m.y);
+			Input::SetMousePosition(m);
+		}
+	}
+}
+
 void ViewportManager::Init(Shader* _shader, RenderPlane* _quad)
 {
 	draggedWindow = nullptr;
@@ -138,6 +212,16 @@ void ViewportManager::Init(Shader* _shader, RenderPlane* _quad)
 	sections.push_back(new ViewportSnapSection());
 
 	WindowSizeCallback(window, screenWidth, screenHeight);
+
+	Input::GetGlobalInput(0).AddAxis("MoveMouseX", Input::Key(Input::MouseAxis::Horizontal));
+	Input::GetGlobalInput(0).AddAxis("MoveMouseY", Input::Key(Input::MouseAxis::Vertical));
+
+	Input::GetGlobalInput(0).AddAction("SetTeleportMouse", Input::Key(Input::KeyVal::MOUSE0));
+	Input::GetGlobalInput(0).BindAction("SetTeleportMouse", Input::Mode::Press, &ViewportManager::SetTeleportMouse);
+	Input::GetGlobalInput(0).BindAction("SetTeleportMouse", Input::Mode::Release, &ViewportManager::UnsetTeleportMouse);
+
+	Input::GetGlobalInput(0).AddAction("ToggleMaximizedView", Input::Key(Input::KeyVal::H));
+	Input::GetGlobalInput(0).BindAction("ToggleMaximizedView", Input::Mode::Press, &ViewportManager::ToggleMaximizedScenView);
 }
 
 GLFWwindow* ViewportManager::CreateWindow()

@@ -93,5 +93,10 @@ private:
 	static ViewportSnapSection* AddSection(ImVec2 position);
 
 	static void WindowSizeCallback(GLFWwindow* window, int width, int height);
+	static void ToggleMaximizedScenView();
+	static void SetTeleportMouse();
+	static void UnsetTeleportMouse();
+	static void TeleportMouseH(float dummy1, float dummy2);
+	static void TeleportMouseV(float dummy1, float dummy2);
 };
 

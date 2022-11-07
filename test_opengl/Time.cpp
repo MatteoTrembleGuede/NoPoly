@@ -2,6 +2,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "Shader.h"
+#include "ViewportManager.h"
+#include "imgui/imgui.h"
+#include "Input/Input.h"
 
 bool Time::playing;
 bool Time::fixedFrameTime;
@@ -14,6 +17,11 @@ double Time::loopTime;
 unsigned int Time::frameRate;
 Notify Time::notifyLoopEnd;
 
+void Time::TogglePause()
+{
+	Time::playing = !Time::playing;
+}
+
 void Time::Init()
 {
 	playing = true;
@@ -24,6 +32,9 @@ void Time::Init()
 	loopTime = 10.0f;
 	frameRate = 30.0f;
 	Reset();
+
+	Input::GetGlobalInput(0).AddAction("TogglePause", Input::Key(Input::KeyVal::SPACE));
+	Input::GetGlobalInput(0).BindAction("TogglePause", Input::Mode::Press, &Time::TogglePause);
 }
 
 void Time::Reset()
@@ -53,6 +64,15 @@ void Time::Update()
 			case MirroredLoop:
 				condition = time >= (loopTime * 2.0f);
 				break;
+			}
+
+			if (ViewportManager::IsSceneViewMaximized())
+			{
+				ImGui::OpenPopup("record progress");
+				ImGui::BeginPopup("record progress");
+				float t = Time::time;
+				ImGui::SliderFloat("Time", &t, 0, Time::loopTime, "%f s");
+				ImGui::EndPopup();
 			}
 
 			if (condition) StopFixedStepSequence();

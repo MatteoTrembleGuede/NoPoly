@@ -17,9 +17,18 @@ private:
 	Vector3 forward;
 	Vector3 up;
 	Vector3 right;
+	Vector3 input;
 	static float speed;
 
 	void RebuildDirection();
+	void RotateCameraX(float rot, float lastRot);
+	void RotateCameraY(float rot, float lastRot);
+	void SetMoveCamera();
+	void UnsetMoveCamera();
+	void Reset();
+	void ModifySpeed(float delta, float dummy);
+	void IncreaseSpeed();
+	void DecreaseSpeed();
 
 public:
 	static float fov;
@@ -27,16 +36,10 @@ public:
 	Camera();
 	~Camera();
 
-	static void SetCameraSpeed(GLFWwindow* _window, double _x, double _y)
-	{
-		speed += _y;
-		if (speed < 1)
-		{
-			speed = 1;
-		}
-	}
-
-	void Move(Vector3 _input, float _deltaTime);
+	void MoveX(float current, float last);
+	void MoveY(float current, float last);
+	void MoveZ(float current, float last);
+	void Move(float _deltaTime);
 	void SetPosition(Vector3 _newPosition);
 	Vector3 GetPosition();
 	Vector3 GetForward();

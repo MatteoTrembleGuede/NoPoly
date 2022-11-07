@@ -15,7 +15,7 @@ class UIWindow
 public:
 
 	UIWindow();
-	UIWindow(std::string _name);
+	UIWindow(std::string _name, bool _unHidable = false);
 	~UIWindow();
 
 	virtual void Display();
@@ -25,6 +25,7 @@ public:
 
 protected:
 
+	const bool notHidable;
 	static bool mustSkipDisplay;
 	std::string name;
 	unsigned int flags;
@@ -43,6 +44,7 @@ private:
 	ViewportSnapSectionQuadrant sideDragged;
 
 	static std::list<UIWindow*> windows;
+	static std::list<UIWindow*> notHidableWindows;
 
 	static bool MustSkip();
 };

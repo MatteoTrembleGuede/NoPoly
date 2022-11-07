@@ -3,7 +3,7 @@
 #include "Transformable.h"
 #include <list>
 #include "Transform.h"
-#include "Delegate.h"
+#include "Input/Delegate.h"
 
 class Lighting;
 class Shader;

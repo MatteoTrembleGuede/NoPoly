@@ -135,9 +135,6 @@
     <ClCompile Include="UICustomPrimitiveEditor.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Delegate.inl">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="UIDebug.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -178,6 +175,12 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="WinPopup.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="UIKeyBinding.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\Input\Input.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -296,9 +299,6 @@
     <ClInclude Include="UICustomPrimitiveEditor.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Delegate.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="UIDebug.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -350,6 +350,15 @@
     <ClInclude Include="WinPopup.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="UIKeyBinding.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Input\Input.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Input\Delegate.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\x64\Debug\Shaders\FragmentShader.shader">
@@ -357,6 +366,9 @@
     </None>
     <None Include="..\x64\Debug\Shaders\VertexShader.shader">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\include\Input\Delegate.inl">
+      <Filter>Fichiers sources</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

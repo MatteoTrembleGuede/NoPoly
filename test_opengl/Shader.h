@@ -11,7 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/vec3.hpp>
-#include "Delegate.h"
+#include "Input/Delegate.h"
 
 
 class Shader

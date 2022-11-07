@@ -4,7 +4,7 @@
 #define UIRESOURCE_BROWSER_H
 
 #include "UIWindow.h"
-#include "Delegate.h"
+#include "Input/Delegate.h"
 
 enum InDirectoryType
 {
@@ -100,7 +100,7 @@ protected:
 };
 
 template<class T>
-UIResourceBrowser::UIResourceBrowser(std::string _name, std::string extensionsFilter, T* commandOwnerPtr, void (T::* cmd)(std::string, std::string, void*), void* cmdData, bool _forExporting) : UIWindow(_name)
+UIResourceBrowser::UIResourceBrowser(std::string _name, std::string extensionsFilter, T* commandOwnerPtr, void (T::* cmd)(std::string, std::string, void*), void* cmdData, bool _forExporting) : UIWindow(_name, true)
 {
 	commandData = cmdData;
 	command.Bind(commandOwnerPtr, cmd);

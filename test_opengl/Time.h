@@ -1,5 +1,5 @@
 #pragma once
-#include "Delegate.h"
+#include "Input/Delegate.h"
 
 enum TimeMode
 {
@@ -25,6 +25,7 @@ public:
 	static double speed;
 	static double loopTime;
 
+
 	static void Init();
 	static void Reset();
 	static void Update();
@@ -32,5 +33,6 @@ public:
 	static double GetFrameTime() { return deltaTime; }
 	static void StartFixedStepSequence();
 	static void StopFixedStepSequence();
+	static void TogglePause();
 };
 

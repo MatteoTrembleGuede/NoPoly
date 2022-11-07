@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "ViewportManager.h"
 #include "ImGuizmo/ImGuizmo.h"
-#include <GLFW/glfw3.h>
+#include "Input/Input.h"
 
 float Camera::speed;
 float Camera::fov;
@@ -13,6 +13,57 @@ void Camera::RebuildDirection()
 	up = Vector3::Cross(right, forward).Normalize();
 }
 
+void Camera::RotateCameraX(float rot, float lastRot)
+{
+	LookAt(GetPosition() + GetForward() + (rot * GetRight()) / 100.0f);
+}
+
+void Camera::RotateCameraY(float rot, float lastRot)
+{
+	LookAt(GetPosition() + GetForward() - (rot * GetUp()) / 100.0f);
+}
+
+void Camera::SetMoveCamera()
+{
+	Input::MousePos mp = Input::GetMousePosition();
+	if (ViewportManager::IsQuadContaining(ImVec2(mp.x, mp.y)))
+	{
+		Input::SetCursorVisible(false);
+		Input::GetGlobalInput(0).BindAxis("MoveX", this, &Camera::MoveX);
+		Input::GetGlobalInput(0).BindAxis("MoveY", this, &Camera::MoveY);
+		Input::GetGlobalInput(0).BindAxis("MoveZ", this, &Camera::MoveZ);
+		Input::GetGlobalInput(0).BindAxis("ModifySpeed", this, &Camera::ModifySpeed);
+		Input::GetGlobalInput(0).BindAxis("MoveMouseX", this, &Camera::RotateCameraX);
+		Input::GetGlobalInput(0).BindAxis("MoveMouseY", this, &Camera::RotateCameraY);
+		Input::GetGlobalInput(0).BindAction("ResetCamera", Input::Mode::Press, this, &Camera::Reset);
+	}
+}
+
+void Camera::UnsetMoveCamera()
+{
+	Input::SetCursorVisible(true);
+	Input::GetGlobalInput(0).UnbindAxis("MoveX", this, &Camera::MoveX);
+	Input::GetGlobalInput(0).UnbindAxis("MoveY", this, &Camera::MoveY);
+	Input::GetGlobalInput(0).UnbindAxis("MoveZ", this, &Camera::MoveZ);
+	Input::GetGlobalInput(0).UnbindAxis("ModifySpeed", this, &Camera::ModifySpeed);
+	Input::GetGlobalInput(0).UnbindAxis("MoveMouseX", this, &Camera::RotateCameraX);
+	Input::GetGlobalInput(0).UnbindAxis("MoveMouseY", this, &Camera::RotateCameraY);
+	Input::GetGlobalInput(0).UnbindAction("ResetCamera", Input::Mode::Press, this, &Camera::Reset);
+}
+
+void Camera::Reset()
+{
+	SetPosition(Vector3());
+	LookAt(Vector3(0, 0, 1));
+	speed = 1;
+}
+
+void Camera::ModifySpeed(float dummy, float delta)
+{
+	speed += delta;
+	if (speed < 1) speed = 1;
+}
+
 Camera::Camera()
 {
 	speed = 1.0f;
@@ -21,6 +72,16 @@ Camera::Camera()
 	up = Vector3(0, 1, 0);
 	right = Vector3(-1, 0, 0);
 	fov = 1.571f;
+	/*Input::GetGlobalInput(0).AddAxis("RotateCameraX", Input::Key(Input::MouseAxis::Horizontal));
+	Input::GetGlobalInput(0).AddAxis("RotateCameraY", Input::Key(Input::MouseAxis::Vertical));*/
+	Input::GetGlobalInput(0).AddAxis("MoveX", Input::Key(Input::KeyVal::D), Input::Key(Input::KeyVal::A));
+	Input::GetGlobalInput(0).AddAxis("MoveY", Input::Key(Input::KeyVal::E), Input::Key(Input::KeyVal::Q));
+	Input::GetGlobalInput(0).AddAxis("MoveZ", Input::Key(Input::KeyVal::W), Input::Key(Input::KeyVal::S));
+	Input::GetGlobalInput(0).AddAxis("ModifySpeed", Input::Key(Input::KeyVal::MOUSEWUP), Input::Key(Input::KeyVal::MOUSEWDOWN));
+	Input::GetGlobalInput(0).AddAction("SetMoveCamera", Input::Key(Input::KeyVal::MOUSE1));
+	Input::GetGlobalInput(0).AddAction("ResetCamera", Input::Key(Input::KeyVal::BACKSPACE));
+	Input::GetGlobalInput(0).BindAction("SetMoveCamera", Input::Mode::Press, this, &Camera::SetMoveCamera);
+	Input::GetGlobalInput(0).BindAction("SetMoveCamera", Input::Mode::Release, this, &Camera::UnsetMoveCamera);
 }
 
 Camera::~Camera()
@@ -28,9 +89,25 @@ Camera::~Camera()
 
 }
 
-void Camera::Move(Vector3 _input, float _deltaTime)
+void Camera::MoveX(float current, float last)
 {
-	position += (_input.x * right + _input.y * up + _input.z * forward) * _deltaTime * speed;
+	input.x += current;
+}
+
+void Camera::MoveY(float current, float last)
+{
+	input.y += current;
+}
+
+void Camera::MoveZ(float current, float last)
+{
+	input.z += current;
+}
+
+void Camera::Move(float _deltaTime)
+{
+	position += (input.x * right + input.y * up + input.z * forward) * _deltaTime * speed;
+	input = Vector3(0, 0, 0);
 }
 
 void Camera::SetPosition(Vector3 _newPosition)

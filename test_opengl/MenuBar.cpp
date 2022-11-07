@@ -5,6 +5,7 @@
 #include "ViewportManager.h"
 #include "Guizmo.h"
 #include "UIShaderEditorWindow.h"
+#include "UIKeyBinding.h"
 
 void MenuBar::Display()
 {
@@ -43,10 +44,12 @@ void MenuBar::Display()
 	{
 		if (ImGui::MenuItem("Useful keys"))
 		{
-			new UIDisplayTextWindow("Useful keys",
+			new UIKeyBinding("shortcuts");
+			/*new UIDisplayTextWindow("Useful keys",
 				"	Global controls\n"
 				"H : hide ui\n"
 				"G : hide gizmo\n"
+				"R : start recording (must be in loop or mirrored loop playing mode)\n"
 				"Space : pause/resume\n"
 				"Numpad Enter : compile\n"
 				"Numpad 1/2/3 : translation/rotation/scale gizmo\n"
@@ -59,7 +62,7 @@ void MenuBar::Display()
 				"A/Q : down		E : up\n"
 				"Mouse wheel : change camera move speed\n"
 				"Backspace : reset camera position and speed\n"
-			);
+			);*/
 		}
 
 		if (ImGui::MenuItem("Credits"))

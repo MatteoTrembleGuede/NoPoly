@@ -5,11 +5,37 @@
 #include "ShaderPart.h"
 #include "Transform.h"
 #include "ViewportManager.h"
+#include "Input/Input.h"
 
 Transformable* Guizmo::target;
 bool Guizmo::isVisible;
 int Guizmo::manipulationOP;
 int Guizmo::manipulationMode;
+
+void SetTranslateMode()
+{
+	Guizmo::SetOperation((int)ImGuizmo::TRANSLATE);
+}
+
+void SetRotateMode()
+{
+	Guizmo::SetOperation((int)ImGuizmo::ROTATE);
+}
+
+void SetScaleMode()
+{
+	Guizmo::SetOperation((int)ImGuizmo::SCALE);
+}
+
+void ToggleWorldLocal()
+{
+	Guizmo::SetWorld(!Guizmo::IsWorld());
+}
+
+void ToggleVisibility()
+{
+	Guizmo::SetVisible(!Guizmo::IsVisible());
+}
 
 void Guizmo::Init()
 {
@@ -17,6 +43,21 @@ void Guizmo::Init()
 	isVisible = true;
 	manipulationOP = ImGuizmo::TRANSLATE;
 	manipulationMode = ImGuizmo::WORLD;
+
+	Input::GetGlobalInput(0).AddAction("SetTranslate", Input::Key(Input::KeyVal::KP_1));
+	Input::GetGlobalInput(0).BindAction("SetTranslate", Input::Mode::Press, &SetTranslateMode);
+
+	Input::GetGlobalInput(0).AddAction("SetRotate", Input::Key(Input::KeyVal::KP_2));
+	Input::GetGlobalInput(0).BindAction("SetRotate", Input::Mode::Press, &SetRotateMode);
+
+	Input::GetGlobalInput(0).AddAction("SetScale", Input::Key(Input::KeyVal::KP_3));
+	Input::GetGlobalInput(0).BindAction("SetScale", Input::Mode::Press, &SetScaleMode);
+
+	Input::GetGlobalInput(0).AddAction("ToggleWorldLocal", Input::Key(Input::KeyVal::KP_0));
+	Input::GetGlobalInput(0).BindAction("ToggleWorldLocal", Input::Mode::Press, &ToggleWorldLocal);
+
+	Input::GetGlobalInput(0).AddAction("ToggleVisibility", Input::Key(Input::KeyVal::G));
+	Input::GetGlobalInput(0).BindAction("ToggleVisibility", Input::Mode::Press, &ToggleVisibility);
 }
 
 void Guizmo::Update(Camera* camera)

@@ -32,6 +32,7 @@
 #include "UIResourceBrowser.h"
 #include "Time.h"
 #include "MenuBar.h"
+#include "Input/Input.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
@@ -40,24 +41,10 @@
 
 #define BALL_NUM 1
 
-DeclareDelegate(OnWheelScroll, GLFWwindow*, double, double)
-OnWheelScroll onWheelScroll;
-
-void OnWheelScrolled(GLFWwindow* _window, double _x, double _y)
-{
-	onWheelScroll(_window, _x, _y);
-}
-
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-	UIResourceBrowser::SetApplicationDirectory(UIResourceBrowser::RemoveFileNameFromPath(argv[0]));
-	Light::Init();
-	Transform::Init();
-	ShaderLeaf::Init();
-	Guizmo::Init();
-	ShaderFunction::Init();
 	srand(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()));
 	rand();
 	rand();
@@ -71,6 +58,14 @@ int main(int argc, char* argv[])
 		std::cout << "program stopped, couldn't create opengl window" << std::endl;
 		return -1;
 	}
+	Input::Init();
+	Input::GetGlobalInput(0);
+	UIResourceBrowser::SetApplicationDirectory(UIResourceBrowser::RemoveFileNameFromPath(argv[0]));
+	Light::Init();
+	Transform::Init();
+	ShaderLeaf::Init();
+	Guizmo::Init();
+	ShaderFunction::Init();
 
 	// init imgui
 	const char* glsl_version = "#version 130";
@@ -114,15 +109,6 @@ int main(int argc, char* argv[])
 
 	MenuBar menuBar(sceneEditor);
 	Camera camera;
-	onWheelScroll.Bind(glfwSetScrollCallback(window, OnWheelScrolled));
-
-	// test materials
-
-	bool qwerty = false;
-	bool antiRepeat = false;
-	double mouseX, lastX;
-	double mouseY, lastY;
-	glfwGetCursorPos(window, &mouseX, &mouseY);
 
 	bool HasUpdatedRender = false;
 	bool wasRightClicking = false;
@@ -132,237 +118,31 @@ int main(int argc, char* argv[])
 		sceneEditor->Load(argv[1], "", nullptr);
 	}
 
+	{
+		Input::BindSet bs = Input::BindSet("bindsetTest.bs");
+		Input::GetGlobalInput(0).ApplyBindSet(bs);
+	}
+
 	while (!glfwWindowShouldClose(window))
 	{
-		Vector3 camMove;
-
-		lastY = mouseY;
-		lastX = mouseX;
-
-		Time::Update();
-
-		bool shouldRepeat = false;
-
 		//Event
-		glfwPollEvents();
-
-		/*if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		{
-			glfwSetWindowShouldClose(window, true);
-		}
-		else
-		{
-			shouldRepeat = true;
-		}*/
-
-		if (glfwGetMouseButton(window, 0) && ImGui::IsMouseDragging(0.1))
-		{
-			float width, height;
-			double mx, my;
-			float border = 1;
-			ViewportManager::GetScreenSize(width, height);
-			glfwGetCursorPos(window, &mx, &my);
-			bool mouseTeleported = false;
-
-			if (mx >= width - border)
-			{
-				mx = border + 1;
-				mouseTeleported = true;
-			}
-			else if (mx <= border)
-			{
-				mx = width - (border + 1);
-				mouseTeleported = true;
-			}
-
-			if (my >= height - border)
-			{
-				my = border + 1;
-				mouseTeleported = true;
-			}
-			else if (my <= border)
-			{
-				my = height - (border + 1);
-				mouseTeleported = true;
-			}
-
-			if (mouseTeleported)
-			{
-				ImGui::GetIO().MousePosPrev = ImVec2(mx, my);
-				ImGui::GetIO().MousePos = ImVec2(mx, my);
-				glfwSetCursorPos(window, mx, my);
-			}
-		}
-
-		if (!ImGui::GetIO().WantTextInput && !ImGui::GetIO().WantCaptureKeyboard)
-		{
-			shouldRepeat = false;
-			if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					Guizmo::SetOperation((int)ImGuizmo::TRANSLATE);
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					qwerty = !qwerty;
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_KP_ENTER) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					sceneEditor->CompileShader();
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					Guizmo::SetOperation((int)ImGuizmo::ROTATE);
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					Guizmo::SetOperation((int)ImGuizmo::SCALE);
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					Guizmo::SetWorld(!Guizmo::IsWorld());
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					ViewportManager::MaximizeSceneView(!ViewportManager::IsSceneViewMaximized());
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					Guizmo::SetVisible(!Guizmo::IsVisible());
-					antiRepeat = true;
-				}
-			}
-			else if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-			{
-				if (!antiRepeat)
-				{
-					Time::playing = !Time::playing;
-					antiRepeat = true;
-				}
-			}
-			else
-			{
-				shouldRepeat = true;
-			}
-		}
-
-		if (shouldRepeat)
-		{
-			antiRepeat = false;
-		}
-
-		glfwGetCursorPos(window, &mouseX, &mouseY);
-
-		if (glfwGetMouseButton(window, 1) && (wasRightClicking || ViewportManager::IsQuadContaining(ImVec2(mouseX, mouseY))))
-		{
-			if (!wasRightClicking) onWheelScroll.Bind(Camera::SetCameraSpeed);
-			wasRightClicking = true;
-			float width, height;
-			ViewportManager::GetScreenSize(width, height);
-			glfwSetCursorPos(window, width / 2, height / 2);
-			camera.LookAt(camera.GetPosition() + camera.GetForward() + ((mouseX - lastX) * camera.GetRight() - (mouseY - lastY) * camera.GetUp()) / 100.0f);
-			glfwGetCursorPos(window, &mouseX, &mouseY);
-
-			if (qwerty)
-			{
-				if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-					camMove.z += 1;
-				if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-					camMove.z += -1;
-				if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-					camMove.x += 1;
-				if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-					camMove.x += -1;
-				if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-					camMove.y += -1;
-				if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-					camMove.y += 1;
-			}
-			else
-			{
-				if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-					camMove.z += 1;
-				if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-					camMove.z += -1;
-				if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-					camMove.x += 1;
-				if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-					camMove.x += -1;
-				if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-					camMove.y += -1;
-				if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-					camMove.y += 1;
-			}
-
-			if (glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS)
-			{
-				camera.SetPosition(Vector3());
-				camera.LookAt(Vector3(0, 0, 1));
-				Camera::SetCameraSpeed(window, 0, -10000000);
-			}
-
-		}
-		else
-		{
-			wasRightClicking = false;
-			onWheelScroll.Unbind(Camera::SetCameraSpeed);
-		}
-
-		/*static double truc = 0;
-		if (Time::fullTime - truc > 1)
-		{
-			truc = Time::fullTime;
-			ViewportManager::LoadLayoutOneStep();
-		}*/
+		Input::PollEvents();
 
 		// new imgui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ViewportManager::Update();
 		ImGuizmo::SetDrawlist(ImGui::GetForegroundDrawList());
-		// Update
+
+		Input::GetGlobalInput(0).AllowInput(!ImGui::GetIO().WantTextInput && !ImGui::GetIO().WantCaptureKeyboard);
+		Time::Update();
+		ViewportManager::Update();
+
 		menuBar.Display();
 		UIWindow::DisplayUI();
 		ImGuizmo::BeginFrame();
-
-		camera.Move(camMove, Time::GetFrameTime());
-		//camera.ApplyToShader(&testShader);
+		camera.Move(Time::GetFrameTime());
 		Guizmo::Update(&camera);
-
-		//testShader.setFloat("_Metallic", 0.0f);
-		//testShader.setFloat("_Metallic", 0.8f);
-		/*testShader.setFloat("_Gloss", 0.5f);
-		testShader.setFloat("_Shine", 2.5f);*/
 		if (HasUpdatedRender)
 		{
 			camera.ApplyToShader(&testShader);

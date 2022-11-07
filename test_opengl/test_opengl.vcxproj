@@ -161,12 +161,9 @@
     <ClCompile Include="..\include\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\include\Input\Input.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CustomPrimitive.cpp" />
-    <ClCompile Include="Delegate.inl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="FPSCounter.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -195,6 +192,7 @@
     <ClCompile Include="UIDisplayTextWindow.cpp" />
     <ClCompile Include="UIGlobalParam.cpp" />
     <ClCompile Include="UIHost.cpp" />
+    <ClCompile Include="UIKeyBinding.cpp" />
     <ClCompile Include="UIMaterialInspector.cpp" />
     <ClCompile Include="UIResourceBrowser.cpp" />
     <ClCompile Include="UIShaderEditorWindow.cpp" />
@@ -220,10 +218,11 @@
     <ClInclude Include="..\include\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\include\imgui\imstb_textedit.h" />
     <ClInclude Include="..\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\include\Input\Delegate.h" />
+    <ClInclude Include="..\include\Input\Input.h" />
     <ClInclude Include="..\include\stb_image\stb_image.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CustomPrimitive.h" />
-    <ClInclude Include="Delegate.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="FPSCounter.h" />
     <ClInclude Include="Material.h" />
@@ -253,6 +252,7 @@
     <ClInclude Include="UIDisplayTextWindow.h" />
     <ClInclude Include="UIGlobalParam.h" />
     <ClInclude Include="UIHost.h" />
+    <ClInclude Include="UIKeyBinding.h" />
     <ClInclude Include="UIMaterialInspector.h" />
     <ClInclude Include="UIResourceBrowser.h" />
     <ClInclude Include="UIShaderEditorWindow.h" />
@@ -266,6 +266,7 @@
     <ClInclude Include="WinPopup.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\include\Input\Delegate.inl" />
     <None Include="..\x64\Debug\Shaders\FragmentShader.shader" />
     <None Include="..\x64\Debug\Shaders\VertexShader.shader" />
   </ItemGroup>

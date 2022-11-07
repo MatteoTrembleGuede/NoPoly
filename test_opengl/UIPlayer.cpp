@@ -1,14 +1,24 @@
 #include "UIPlayer.h"
 #include "Time.h"
 #include "UIResourceBrowser.h"
+#include "Input/Input.h"
 
 UIPlayer::UIPlayer(std::string _name, RenderPlane* _plane) : UIWindow(_name), plane(_plane)
 {
-
+	Input::GetGlobalInput(0).AddAction("SaveRecord", Input::Key(Input::KeyVal::R));
+	Input::GetGlobalInput(0).BindAction("SaveRecord", Input::Mode::Press, this, &UIPlayer::SaveRecord);
 }
 
 UIPlayer::~UIPlayer()
 {
+}
+
+void UIPlayer::SaveRecord()
+{
+	if (Time::mode > TimeMode::Normal)
+	{
+		new UIResourceBrowser("Save video to", ".mp4,.mov,.avi", this, &UIPlayer::StartRecord, nullptr, true);
+	}
 }
 
 void UIPlayer::StartRecord(std::string _path, std::string _filename, void* _data)
@@ -32,7 +42,7 @@ void UIPlayer::WindowBody()
 		ImGui::TableNextColumn();
 		if (!Time::fixedFrameTime && ImGui::Button(Time::playing ? "Pause" : "Play"))
 		{
-			Time::playing = !Time::playing;
+			Time::TogglePause();
 		}
 
 		ImGui::SameLine();
@@ -98,7 +108,7 @@ void UIPlayer::WindowBody()
 				ImGui::TableNextColumn();
 				if (ImGui::Button("Record Video"))
 				{
-					new UIResourceBrowser("Save video to", ".mp4,.mov,.avi", this, &UIPlayer::StartRecord, nullptr, true);
+					SaveRecord();
 					//new UIResourceBrowser("Save video to", ".mp4", this, &UIPlayer::StartRecord, nullptr, true);
 				}
 			}

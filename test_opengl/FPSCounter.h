@@ -1,5 +1,5 @@
 #pragma once
-#include "Delegate.h"
+#include "Input/Delegate.h"
 
 class FPSCounter
 {

@@ -9,6 +9,7 @@
 #include "UIResourceBrowser.h"
 #include "UIDisplayTextWindow.h"
 #include <bitset>
+#include "Input/Input.h"
 
 char* UIShaderEditorWindow::noMatText;
 
@@ -32,6 +33,9 @@ UIShaderEditorWindow::UIShaderEditorWindow(std::string _name, ShaderGenerator* _
 		primitiveTypesNames[i] = new char[name.size() + 1];
 		strcpy(primitiveTypesNames[i], name.c_str());
 	}
+
+	Input::GetGlobalInput(0).AddAction("CompileShader", Input::Key(Input::KeyVal::KP_ENTER));
+	Input::GetGlobalInput(0).BindAction("CompileShader", Input::Mode::Press, this, &UIShaderEditorWindow::CompileShader);
 }
 
 UIShaderEditorWindow::~UIShaderEditorWindow()

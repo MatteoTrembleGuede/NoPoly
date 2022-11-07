@@ -5,7 +5,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
-#include "Delegate.h"
+#include "Input/Delegate.h"
 
 #define CUSTOM_DATA_NUM 128
 
