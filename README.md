@@ -13,6 +13,7 @@ A small raymarching program that allows you to build little 3d scenes
 - glad : https://glad.dav1d.de/#profile=compatibility&language=c&specification=gl&loader=on&api=gl%3D4.6
 - GLFW : https://www.glfw.org
 - glm : https://github.com/g-truc/glm
+- Input : https://github.com/MatteoTrembleGuede/Input-system-for-glfw3-delegate
 
 ### lib folder
 all libs coming from GLFW3
