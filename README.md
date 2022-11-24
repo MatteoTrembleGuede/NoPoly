@@ -2,6 +2,7 @@
 A small raymarching program that allows you to build little 3d scenes
 
 ![Marching Hammers](http://i.imgur.com/bRWJ2hZ.gif)
+Inspired by Pink Floyd's Marching Hammers
 
 ## Requirements
 ### include folder
