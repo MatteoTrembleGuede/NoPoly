@@ -8,10 +8,11 @@ class UIKeyBinding :
 public:
 
 	UIKeyBinding(std::string _name);
-
+	~UIKeyBinding();
 
 protected:
 
+	Input::DeviceID dID;
 	Input::BindSet backup;
 
 	virtual void WindowBody() override;

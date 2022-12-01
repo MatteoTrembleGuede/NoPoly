@@ -135,14 +135,14 @@ void ViewportManager::ToggleMaximizedScenView()
 
 void ViewportManager::SetTeleportMouse()
 {
-	Input::GetGlobalInput(0).BindAxis("MoveMouseX", &ViewportManager::TeleportMouseH);
-	Input::GetGlobalInput(0).BindAxis("MoveMouseY", &ViewportManager::TeleportMouseV);
+	Input::GetGlobalInput(1).BindAxis("MoveMouseX", &ViewportManager::TeleportMouseH);
+	Input::GetGlobalInput(1).BindAxis("MoveMouseY", &ViewportManager::TeleportMouseV);
 }
 
 void ViewportManager::UnsetTeleportMouse()
 {
-	Input::GetGlobalInput(0).UnbindAxis("MoveMouseX", &ViewportManager::TeleportMouseH);
-	Input::GetGlobalInput(0).UnbindAxis("MoveMouseY", &ViewportManager::TeleportMouseV);
+	Input::GetGlobalInput(1).UnbindAxis("MoveMouseX", &ViewportManager::TeleportMouseH);
+	Input::GetGlobalInput(1).UnbindAxis("MoveMouseY", &ViewportManager::TeleportMouseV);
 }
 
 void ViewportManager::TeleportMouseH(float dummy1, float dummy2)
@@ -213,14 +213,14 @@ void ViewportManager::Init(Shader* _shader, RenderPlane* _quad)
 
 	WindowSizeCallback(window, screenWidth, screenHeight);
 
-	Input::GetGlobalInput(0).AddAxis("MoveMouseX", Input::Key(Input::MouseAxis::Horizontal));
-	Input::GetGlobalInput(0).AddAxis("MoveMouseY", Input::Key(Input::MouseAxis::Vertical));
+	Input::GetGlobalInput(1).AddAxis("MoveMouseX", Input::Key(Input::MouseAxis::Horizontal));
+	Input::GetGlobalInput(1).AddAxis("MoveMouseY", Input::Key(Input::MouseAxis::Vertical));
 
-	Input::GetGlobalInput(0).AddAction("SetTeleportMouse", Input::Key(Input::KeyVal::MOUSE0));
-	Input::GetGlobalInput(0).BindAction("SetTeleportMouse", Input::Mode::Press, &ViewportManager::SetTeleportMouse);
-	Input::GetGlobalInput(0).BindAction("SetTeleportMouse", Input::Mode::Release, &ViewportManager::UnsetTeleportMouse);
+	Input::GetGlobalInput(1).AddAction("SetTeleportMouse", Input::Key(Input::KeyCode::MOUSE0));
+	Input::GetGlobalInput(1).BindAction("SetTeleportMouse", Input::Mode::Press, &ViewportManager::SetTeleportMouse);
+	Input::GetGlobalInput(1).BindAction("SetTeleportMouse", Input::Mode::Release, &ViewportManager::UnsetTeleportMouse);
 
-	Input::GetGlobalInput(0).AddAction("ToggleMaximizedView", Input::Key(Input::KeyVal::H));
+	Input::GetGlobalInput(0).AddAction("ToggleMaximizedView", Input::Key(Input::KeyCode::H));
 	Input::GetGlobalInput(0).BindAction("ToggleMaximizedView", Input::Mode::Press, &ViewportManager::ToggleMaximizedScenView);
 }
 

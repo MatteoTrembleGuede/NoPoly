@@ -15,12 +15,12 @@ void Camera::RebuildDirection()
 
 void Camera::RotateCameraX(float rot, float lastRot)
 {
-	LookAt(GetPosition() + GetForward() + (rot * GetRight()) / 100.0f);
+	xRotInput += rot;
 }
 
 void Camera::RotateCameraY(float rot, float lastRot)
 {
-	LookAt(GetPosition() + GetForward() - (rot * GetUp()) / 100.0f);
+	yRotInput += rot;
 }
 
 void Camera::SetMoveCamera()
@@ -33,8 +33,8 @@ void Camera::SetMoveCamera()
 		Input::GetGlobalInput(0).BindAxis("MoveY", this, &Camera::MoveY);
 		Input::GetGlobalInput(0).BindAxis("MoveZ", this, &Camera::MoveZ);
 		Input::GetGlobalInput(0).BindAxis("ModifySpeed", this, &Camera::ModifySpeed);
-		Input::GetGlobalInput(0).BindAxis("MoveMouseX", this, &Camera::RotateCameraX);
-		Input::GetGlobalInput(0).BindAxis("MoveMouseY", this, &Camera::RotateCameraY);
+		Input::GetGlobalInput(1).BindAxis("MoveMouseX", this, &Camera::RotateCameraX);
+		Input::GetGlobalInput(1).BindAxis("MoveMouseY", this, &Camera::RotateCameraY);
 		Input::GetGlobalInput(0).BindAction("ResetCamera", Input::Mode::Press, this, &Camera::Reset);
 	}
 }
@@ -46,8 +46,8 @@ void Camera::UnsetMoveCamera()
 	Input::GetGlobalInput(0).UnbindAxis("MoveY", this, &Camera::MoveY);
 	Input::GetGlobalInput(0).UnbindAxis("MoveZ", this, &Camera::MoveZ);
 	Input::GetGlobalInput(0).UnbindAxis("ModifySpeed", this, &Camera::ModifySpeed);
-	Input::GetGlobalInput(0).UnbindAxis("MoveMouseX", this, &Camera::RotateCameraX);
-	Input::GetGlobalInput(0).UnbindAxis("MoveMouseY", this, &Camera::RotateCameraY);
+	Input::GetGlobalInput(1).UnbindAxis("MoveMouseX", this, &Camera::RotateCameraX);
+	Input::GetGlobalInput(1).UnbindAxis("MoveMouseY", this, &Camera::RotateCameraY);
 	Input::GetGlobalInput(0).UnbindAction("ResetCamera", Input::Mode::Press, this, &Camera::Reset);
 }
 
@@ -74,12 +74,12 @@ Camera::Camera()
 	fov = 1.571f;
 	/*Input::GetGlobalInput(0).AddAxis("RotateCameraX", Input::Key(Input::MouseAxis::Horizontal));
 	Input::GetGlobalInput(0).AddAxis("RotateCameraY", Input::Key(Input::MouseAxis::Vertical));*/
-	Input::GetGlobalInput(0).AddAxis("MoveX", Input::Key(Input::KeyVal::D), Input::Key(Input::KeyVal::A));
-	Input::GetGlobalInput(0).AddAxis("MoveY", Input::Key(Input::KeyVal::E), Input::Key(Input::KeyVal::Q));
-	Input::GetGlobalInput(0).AddAxis("MoveZ", Input::Key(Input::KeyVal::W), Input::Key(Input::KeyVal::S));
-	Input::GetGlobalInput(0).AddAxis("ModifySpeed", Input::Key(Input::KeyVal::MOUSEWUP), Input::Key(Input::KeyVal::MOUSEWDOWN));
-	Input::GetGlobalInput(0).AddAction("SetMoveCamera", Input::Key(Input::KeyVal::MOUSE1));
-	Input::GetGlobalInput(0).AddAction("ResetCamera", Input::Key(Input::KeyVal::BACKSPACE));
+	Input::GetGlobalInput(0).AddAxis("MoveX", Input::Key(Input::KeyCode::D), Input::Key(Input::KeyCode::A));
+	Input::GetGlobalInput(0).AddAxis("MoveY", Input::Key(Input::KeyCode::E), Input::Key(Input::KeyCode::Q));
+	Input::GetGlobalInput(0).AddAxis("MoveZ", Input::Key(Input::KeyCode::W), Input::Key(Input::KeyCode::S));
+	Input::GetGlobalInput(0).AddAxis("ModifySpeed", Input::Key(Input::KeyCode::MOUSEWUP), Input::Key(Input::KeyCode::MOUSEWDOWN));
+	Input::GetGlobalInput(0).AddAction("SetMoveCamera", Input::Key(Input::KeyCode::MOUSE1));
+	Input::GetGlobalInput(0).AddAction("ResetCamera", Input::Key(Input::KeyCode::BACKSPACE));
 	Input::GetGlobalInput(0).BindAction("SetMoveCamera", Input::Mode::Press, this, &Camera::SetMoveCamera);
 	Input::GetGlobalInput(0).BindAction("SetMoveCamera", Input::Mode::Release, this, &Camera::UnsetMoveCamera);
 }
@@ -106,6 +106,13 @@ void Camera::MoveZ(float current, float last)
 
 void Camera::Move(float _deltaTime)
 {
+	float alpha = std::max(std::min(1.0f, _deltaTime * 30.0f), 0.0f);
+	float xrot = alpha * xRotInput;
+	float yrot = alpha * yRotInput;
+	xRotInput = (1 - alpha) * xRotInput;
+	yRotInput = (1 - alpha) * yRotInput;
+	LookAt(GetPosition() + GetForward() + (xrot * GetRight()) / 100.0f);
+	LookAt(GetPosition() + GetForward() - (yrot * GetUp()) / 100.0f);
 	position += (input.x * right + input.y * up + input.z * forward) * _deltaTime * speed;
 	input = Vector3(0, 0, 0);
 }

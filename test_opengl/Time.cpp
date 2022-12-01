@@ -33,7 +33,7 @@ void Time::Init()
 	frameRate = 30.0f;
 	Reset();
 
-	Input::GetGlobalInput(0).AddAction("TogglePause", Input::Key(Input::KeyVal::SPACE));
+	Input::GetGlobalInput(0).AddAction("TogglePause", Input::Key(Input::KeyCode::SPACE));
 	Input::GetGlobalInput(0).BindAction("TogglePause", Input::Mode::Press, &Time::TogglePause);
 }
 

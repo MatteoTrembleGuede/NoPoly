@@ -1,8 +1,15 @@
 #include "UIKeyBinding.h"
+#include <iostream>
 
 UIKeyBinding::UIKeyBinding(std::string _name) : UIWindow(_name)
 {
 	backup = Input::GetGlobalInput(0).GetBindSet();
+	dID = backup.GetDevice();
+}
+
+UIKeyBinding::~UIKeyBinding()
+{
+
 }
 
 void UIKeyBinding::DisplayActions(Input::BindSet& bs)
@@ -92,11 +99,20 @@ void UIKeyBinding::WindowBody()
 {
 	UIWindow::WindowBody();
 	Input::BindSet bs = Input::GetGlobalInput(0).GetBindSet();
-	
+
 	DisplayActions(bs);
 	DisplayAxes(bs);
 
-	ImGui::Text("\n\n");
+	/*ImGui::Text("\n\n");
+	ImGui::Text(Input::GetDeviceName(dID).c_str());
+	ImGui::Text(Input::GetDeviceName(Input::GetLastUsedDeviceID()).c_str());
+	ImGui::Text(Input::GetLastUsedKey().ToString().c_str());
+
+	if (Input::GetLastUsedKey().GetType() == Input::KeyType::JStick)
+	{
+		ImGui::SameLine();
+		ImGui::Text(std::to_string(Input::GetStickValue(Input::JoystickDeviceID(Input::GetLastUsedDeviceID().jID), Input::GetLastUsedKey().data[0].i)).c_str());
+	}*/
 
 	if (Input::GetGlobalInput(0).IsListening())
 	{

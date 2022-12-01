@@ -1,4 +1,13 @@
 new group
+spaceRemaps 
+function ../functions\FactoryChain.funk
+dynamic 1
+attribValue 20.000000 
+attribValue 2.500000 
+attribValue 0.250000 
+attribValue 0.250000 
+attribValue 0.100000 
+bias 0.500000
 name CreaLogo
 transformPoint 1
 dynTransform 0
@@ -15,7 +24,7 @@ round 0
 hollow 0
 roundValue 0.000000
 repeat 0
-repeatOffset 0.000000 0.000000 0.000000
+repeatOffset 20.000000 0.000000 0.000000
 revolutionRepeat 0
 revolutionTimesRepeat 0.000000
 rotating 0
@@ -74,6 +83,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 7.000000 5.000000 1.000000
@@ -104,6 +114,7 @@ smooth 0.000000
 blendMode 2
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 7
 height 2.000000
@@ -135,6 +146,7 @@ smooth 0.000000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 3.500000 2.500000 2.000000
@@ -165,6 +177,7 @@ smooth 0.000000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 0.700000 10.000000 2.000000
@@ -220,6 +233,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 0.500000 0.500000 2.000000
@@ -250,6 +264,7 @@ smooth 0.000000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 9
 end
@@ -280,6 +295,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 1.200000 1.200000 1.000000
@@ -290,7 +306,7 @@ name animatedLogo
 transformPoint 1
 dynTransform 0
 position 0.000000 0.000000 -3.000000
-rotation 3.141499 0.000500 3.141499
+rotation 3.141497 0.000500 3.141497
 scale 1.000000
 animateScale 0
 animatedScaleFunction 
@@ -386,6 +402,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 2.000000 5.000000 1.000000
@@ -416,6 +433,7 @@ smooth 0.050000
 blendMode 2
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 7
 height 2.000000
@@ -522,6 +540,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 7
 height 1.000000
@@ -553,6 +572,7 @@ smooth 0.050000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 9
 end
@@ -611,6 +631,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 1.150000 1.150000 1.000000
@@ -667,6 +688,7 @@ smooth 0.050000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 7
 height 0.200000
@@ -749,6 +771,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 7
 height 0.500000
@@ -780,6 +803,7 @@ smooth 0.050000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 3
 mainRadius 0.500000
@@ -838,6 +862,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 1.300000 1.200000 1.000000
@@ -868,6 +893,7 @@ smooth 0.000000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 9
 end
@@ -923,6 +949,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 1
 halfExtends 1.300000 1.200000 1.000000
@@ -953,6 +980,7 @@ smooth 0.050000
 blendMode 1
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.960784 0.505882 0.000000
 shape 9
 end

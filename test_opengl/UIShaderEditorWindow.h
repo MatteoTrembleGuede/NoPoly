@@ -79,10 +79,12 @@ private:
     void ChooseCustomPrimitive();
 
     // node functions
+    void Hide(bool hide);
     void Group();
     void UnGroup();
     void NodeBody();
     void NewPart();
+
 
 protected:
 

@@ -77,6 +77,7 @@ public:
 	float smooth;
 
 	bool emittingLight = false;
+	bool hide = false;
 	
 	int layer;
 

@@ -19,6 +19,7 @@ private:
 	Vector3 right;
 	Vector3 input;
 	static float speed;
+	float xRotInput, yRotInput;
 
 	void RebuildDirection();
 	void RotateCameraX(float rot, float lastRot);
@@ -27,8 +28,6 @@ private:
 	void UnsetMoveCamera();
 	void Reset();
 	void ModifySpeed(float delta, float dummy);
-	void IncreaseSpeed();
-	void DecreaseSpeed();
 
 public:
 	static float fov;

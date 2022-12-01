@@ -5,7 +5,7 @@
 
 UIPlayer::UIPlayer(std::string _name, RenderPlane* _plane) : UIWindow(_name), plane(_plane)
 {
-	Input::GetGlobalInput(0).AddAction("SaveRecord", Input::Key(Input::KeyVal::R));
+	Input::GetGlobalInput(0).AddAction("SaveRecord", Input::Key(Input::KeyCode::R));
 	Input::GetGlobalInput(0).BindAction("SaveRecord", Input::Mode::Press, this, &UIPlayer::SaveRecord);
 }
 

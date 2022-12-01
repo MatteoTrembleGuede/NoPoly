@@ -124,6 +124,7 @@ void ShaderPart::ReplaceSpaceRemap(ShaderFunction* oldFunc, ShaderFunction* newF
 
 void ShaderPart::GenerateCode(std::string& outCode, int _layer, GenerationPass pass)
 {
+	if (hide) return;
 	layer = _layer;
 	outCode += "\n" + Tab(layer + 1) + "// " + name + "\n" + Tab(layer + 1) + "{\n";
 	if (pass == Color)

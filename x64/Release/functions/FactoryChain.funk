@@ -1,0 +1,41 @@
+type SpaceRemap
+name FactoryChain
+attribName repeatSize
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName loopDuration
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName speed
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName transitionDuration
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName loopTimeOffset
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+body 
+float t = time / loopDuration;
+float transitionTime = clamp((fract(t) - (1.0 - transitionDuration)) / transitionDuration, 0, 1);
+float tOffset = int(t) + transitionTime * transitionTime * (3.0 - 2.0 * transitionTime);
+point.x += tOffset * repeatSize;
+float offset = sign(point.x) * int((abs(point.x) + repeatSize / 2.0f) / repeatSize);
+t = t * speed - offset * speed;
+progress = clamp(t + loopTimeOffset, 0, 1);
+return InvTranslate(m, vec3((offset - tOffset) * repeatSize, 0, 0));

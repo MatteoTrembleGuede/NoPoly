@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
 	rand();
 	rand();
 
+	glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
 	GLFWwindow* window = ViewportManager::CreateWindow();
 	if (!window)
 	{
@@ -74,25 +75,25 @@ int main(int argc, char* argv[])
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 	ImGuizmo::Enable(true);
-	ShaderGenerator testShader/*("Shaders/VertexShader.shader", "Shaders/FragmentShader.shader")*/;
-	RenderPlane* quad = new RenderPlane(&testShader);
-	ViewportManager::Init(&testShader, quad);
+	ShaderGenerator shader;
+	RenderPlane* quad = new RenderPlane(&shader);
+	ViewportManager::Init(&shader, quad);
 	Time::Init();
 
 	{
 		std::string tmpCode;
 		std::string tmpMsg;
-		testShader.Recompile(tmpMsg, tmpCode);
+		shader.Recompile(tmpMsg, tmpCode);
 	}
 
-	UIShaderEditorWindow* sceneEditor = new UIShaderEditorWindow("scene editor", &testShader);
-	UILightingWindow* lightingEditor = new UILightingWindow("lighting editor", testShader.lighting);
+	UIShaderEditorWindow* sceneEditor = new UIShaderEditorWindow("scene editor", &shader);
+	UILightingWindow* lightingEditor = new UILightingWindow("lighting editor", shader.lighting);
 	UIMaterialInspector* materialEditor = new UIMaterialInspector("material editor");
 	UIShaderFunctionEditor* CustomPrimitiveEditor = new UIShaderFunctionEditor("custom primitive editor");
-	UIDebug* debugWindow = new UIDebug("Debug", &testShader);
-	UIGlobalParam* globalParamWindow = new UIGlobalParam("Global Parameters", &testShader);
+	UIDebug* debugWindow = new UIDebug("Debug", &shader);
+	UIGlobalParam* globalParamWindow = new UIGlobalParam("Global Parameters", &shader);
 	UIPlayer* playerWindow = new UIPlayer("Player", quad);
-	materialEditor->shader = &testShader;
+	materialEditor->shader = &shader;
 	float width, height;
 	ViewportManager::GetScreenSize(width, height);
 
@@ -111,7 +112,6 @@ int main(int argc, char* argv[])
 	Camera camera;
 
 	bool HasUpdatedRender = false;
-	bool wasRightClicking = false;
 
 	if (argc == 2)
 	{
@@ -145,23 +145,22 @@ int main(int argc, char* argv[])
 		Guizmo::Update(&camera);
 		if (HasUpdatedRender)
 		{
-			camera.ApplyToShader(&testShader);
-			testShader.setDouble("timeSinceLaunch", Time::GetTime());
+			camera.ApplyToShader(&shader);
+			shader.setDouble("timeSinceLaunch", Time::GetTime());
 			sceneEditor->UpdateRenderFrameRate();
 		}
 
-		testShader.lighting->UpdateData();
-		Transform::SendData(&testShader);
-		ShaderLeaf::SendData(&testShader);
-		ShaderFunction::SendData(&testShader);
-		Material::SendData(&testShader);
+		shader.lighting->UpdateData();
+		Transform::SendData(&shader);
+		ShaderLeaf::SendData(&shader);
+		ShaderFunction::SendData(&shader);
+		Material::SendData(&shader);
 
 		//Display
-
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		testShader.use();
+		shader.use();
 		HasUpdatedRender = quad->Draw();
 
 		//ViewportManager::DebugDrawEdges();

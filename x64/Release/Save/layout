@@ -1,0 +1,5 @@
+0 2 0.8125 0.0194742 0.1875 0.980526 host;lighting editor;material editor;
+0 1 0 0.0194742 0.203125 0.980526 host;scene editor;custom primitive editor;
+0 4 0.203125 0.743435 0.294961 0.256565 Global Parameters;
+3 2 0.498086 0.743435 0.314414 0.114898 Player;
+4 4 0.498086 0.858333 0.314414 0.141667 Debug;

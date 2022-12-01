@@ -34,7 +34,7 @@ UIShaderEditorWindow::UIShaderEditorWindow(std::string _name, ShaderGenerator* _
 		strcpy(primitiveTypesNames[i], name.c_str());
 	}
 
-	Input::GetGlobalInput(0).AddAction("CompileShader", Input::Key(Input::KeyVal::KP_ENTER));
+	Input::GetGlobalInput(0).AddAction("CompileShader", Input::Key(Input::KeyCode::KP_ENTER));
 	Input::GetGlobalInput(0).BindAction("CompileShader", Input::Mode::Press, this, &UIShaderEditorWindow::CompileShader);
 }
 
@@ -295,6 +295,16 @@ void UIShaderEditorWindow::NewPart()
 		{
 			Group();
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("hide"))
+		{
+			Hide(true);
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("unhide"))
+		{
+			Hide(false);
+		}
 	}
 	else
 	{
@@ -355,6 +365,22 @@ void UIShaderEditorWindow::NewPart()
 
 		ImGui::EndPopup();
 	}
+}
+
+void UIShaderEditorWindow::Hide(bool hide)
+{
+	ShaderNode* node = (ShaderNode*)currentPart;
+	int i = 0;
+	for (auto it = node->parts.begin(); it != node->parts.end(); ++it)
+	{
+		if (selMask >> i & 1)
+		{
+			(*it)->hide = hide;
+		}
+		++i;
+	}
+	selMask = 0;
+	CompileShader();
 }
 
 void UIShaderEditorWindow::Group()
@@ -448,14 +474,14 @@ void UIShaderEditorWindow::NodeBody()
 
 			if (childNode)
 			{
-				if (ImGui::Button(("grp " + STR(id) + " : " + childNode->name).c_str()))
+				if (ImGui::Button(("grp " + STR(id) + " : " + (childNode->hide ? "(hidden)" : "") + childNode->name).c_str()))
 				{
 					SetPartTarget(childNode);
 				}
 			}
 			else if (childLeaf)
 			{
-				if (ImGui::Button(("obj " + STR(id) + " : " + childLeaf->name).c_str()))
+				if (ImGui::Button(("obj " + STR(id) + " : " + (childLeaf->hide ? "(hidden)" : "") + childLeaf->name).c_str()))
 				{
 					SetPartTarget(childLeaf);
 				}

@@ -44,19 +44,19 @@ void Guizmo::Init()
 	manipulationOP = ImGuizmo::TRANSLATE;
 	manipulationMode = ImGuizmo::WORLD;
 
-	Input::GetGlobalInput(0).AddAction("SetTranslate", Input::Key(Input::KeyVal::KP_1));
+	Input::GetGlobalInput(0).AddAction("SetTranslate", Input::Key(Input::KeyCode::KP_1));
 	Input::GetGlobalInput(0).BindAction("SetTranslate", Input::Mode::Press, &SetTranslateMode);
 
-	Input::GetGlobalInput(0).AddAction("SetRotate", Input::Key(Input::KeyVal::KP_2));
+	Input::GetGlobalInput(0).AddAction("SetRotate", Input::Key(Input::KeyCode::KP_2));
 	Input::GetGlobalInput(0).BindAction("SetRotate", Input::Mode::Press, &SetRotateMode);
 
-	Input::GetGlobalInput(0).AddAction("SetScale", Input::Key(Input::KeyVal::KP_3));
+	Input::GetGlobalInput(0).AddAction("SetScale", Input::Key(Input::KeyCode::KP_3));
 	Input::GetGlobalInput(0).BindAction("SetScale", Input::Mode::Press, &SetScaleMode);
 
-	Input::GetGlobalInput(0).AddAction("ToggleWorldLocal", Input::Key(Input::KeyVal::KP_0));
+	Input::GetGlobalInput(0).AddAction("ToggleWorldLocal", Input::Key(Input::KeyCode::KP_0));
 	Input::GetGlobalInput(0).BindAction("ToggleWorldLocal", Input::Mode::Press, &ToggleWorldLocal);
 
-	Input::GetGlobalInput(0).AddAction("ToggleVisibility", Input::Key(Input::KeyVal::G));
+	Input::GetGlobalInput(0).AddAction("ToggleVisibility", Input::Key(Input::KeyCode::G));
 	Input::GetGlobalInput(0).BindAction("ToggleVisibility", Input::Mode::Press, &ToggleVisibility);
 }
 
