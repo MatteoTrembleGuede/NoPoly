@@ -18,7 +18,15 @@ ShaderGenerator::ShaderGenerator()
 	vertexSrcPath = "";
 	fragmentSrcPath = "";
 
-	DistWithColorFuncStart = "float DistToScene(in vec3 p, in vec3 n, out vec3 color)\n{\n"
+	ClosestBoundStart = "float GetClosestBound(out vec3 boundingColor)\n"
+		"{\n"
+		"\tfloat smallestDist = 99999999;\n"
+		"\tfloat tmpDist = 0;\n"
+		"\tvec3 color = vec3(0);\n"
+		;
+
+	DistWithColorFuncStart = "\n	boundingColor = color;\n	return smallestDist;\n}\n\n"
+		"float DistToScene(in vec3 p, in vec3 n, out vec3 color)\n{\n"
 		"\tfloat minDist = 999999999;\n"
 		"\tcolor = vec3(0, 0, 0);\n"
 		"\tfloat tmpDist = 0; \n"
@@ -27,7 +35,7 @@ ShaderGenerator::ShaderGenerator()
 		"\tmat4 m = mat4(1, 0, 0, 0, \n"
 			"\t\t0, 1, 0, 0, \n"
 			"\t\t0, 0, 1, 0, \n"
-			"\t\t0, 0, 0, 1);\n ";
+			"\t\t0, 0, 0, 1);\n";
 	
 	DistWithLightPropertiesFuncStart = "	return minDist;\n"
 		"}\n\n"
@@ -78,7 +86,7 @@ ShaderGenerator::ShaderGenerator()
 		fShaderStartFile.open(UIResourceBrowser::GetApplicationDirectory() + "Shaders/CompositeFragmentShaderStart.shaderPart");
 		tmp << fShaderStartFile.rdbuf();
 		HeadCode = tmp.str();
-		fShaderStream << fShaderStartFile.rdbuf() << DistWithColorFuncStart << DistWithLightPropertiesFuncStart << DistOnlyFuncStart;
+		fShaderStream << fShaderStartFile.rdbuf() << ClosestBoundStart << DistWithColorFuncStart << DistWithLightPropertiesFuncStart << DistOnlyFuncStart;
 		fShaderStartFile.close();
 
 		fShaderEndFile.open(UIResourceBrowser::GetApplicationDirectory() + "Shaders/CompositeFragmentShaderEnd.shaderPart");
@@ -149,25 +157,27 @@ bool ShaderGenerator::Recompile(std::string& errorString, std::string& errorCode
 	char infoLog[512];
 	std::string fragmentCode;
 	std::stringstream fShaderStream;
-	fShaderStream << HeadCode << ShaderFunction::GenerateFunctionsDeclaration() << DistWithColorFuncStart;
+	fShaderStream << HeadCode << ShaderFunction::GenerateFunctionsDeclaration();
 
+	std::list<std::string> bools;
 	std::string generatedCode;
-	root->GenerateCode(generatedCode, 0);
-	fShaderStream << generatedCode;
+	root->GenerateBounds(generatedCode, bools);
 
-	fShaderStream << DistWithLightPropertiesFuncStart;
+	for (std::string boollean : bools) fShaderStream << "bool " << boollean << ";\n";
+
+	fShaderStream << ClosestBoundStart << generatedCode << DistWithColorFuncStart;
+
+	generatedCode.clear();
+	root->GenerateCode(generatedCode, 0);
+	fShaderStream << generatedCode << DistWithLightPropertiesFuncStart;
 
 	generatedCode.clear();
 	root->GenerateCode(generatedCode, 0, LightingProp);
-	fShaderStream << generatedCode;
-
-	fShaderStream << DistOnlyFuncStart;
+	fShaderStream << generatedCode << DistOnlyFuncStart;
 
 	generatedCode.clear();
 	root->GenerateCode(generatedCode, 0, DistanceOnly);
-	fShaderStream << generatedCode;
-
-	fShaderStream << TailCode;
+	fShaderStream << generatedCode << TailCode;
 
 	fragmentCode = fShaderStream.str();
 	const char* fShaderCode = fragmentCode.c_str();

@@ -681,6 +681,34 @@ void UIShaderEditorWindow::TransformPoint()
 	//AnimateDistance();
 }
 
+void UIShaderEditorWindow::SetBoundingVolume()
+{
+	ImGui::Checkbox("Use bounding volume", &currentPart->useBoundingVolume);
+
+	if (currentPart->useBoundingVolume)
+	{
+		int selected = currentPart->boundingVolume.type;
+		const char* names[BoundingVolume::Type::Count] = {"Box", "Sphere"};
+		if (ImGui::Combo("Bounding volume type", &selected, names, BoundingVolume::Type::Count))
+		{
+			currentPart->boundingVolume.type = (BoundingVolume::Type)selected;
+		}
+
+		switch (currentPart->boundingVolume.type)
+		{
+		case BoundingVolume::Type::Box:
+			ImGui::DragFloat3("Bounding box size", (float*)&currentPart->boundingVolume.size.b, 0.1f, 0.0f);
+			break;
+		case BoundingVolume::Type::Sphere:
+			ImGui::DragFloat("Bounding sphere size", (float*)&currentPart->boundingVolume.size.s, 0.1f, 0.0f);
+			break;
+		}
+
+		ImGui::DragFloat3("Bounding volume offset", (float*)&currentPart->boundingVolume.offset, 0.1f);
+		ImGui::ColorEdit3("Bounding volume color", (float*)&currentPart->boundingVolume.color, 0.1f);
+	}
+}
+
 void UIShaderEditorWindow::AnimateScale()
 {
 	ImGui::Checkbox("animate scale", &currentPart->animateScale);
@@ -929,6 +957,7 @@ void UIShaderEditorWindow::WindowBody()
 	InputName();
 	ImGui::Text("\n\nShader part data : \n\n");
 	TransformPoint();
+	SetBoundingVolume();
 	RevolutionRepeat();
 	RotateObject();
 	Repeat();

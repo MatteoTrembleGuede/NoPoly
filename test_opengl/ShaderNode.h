@@ -16,6 +16,7 @@ public:
 	void Save(std::string& outSave);
 	void Load(std::stringstream& inSave);
 	virtual ShaderPart* Copy() override;
+	virtual void GenerateBounds(std::string& outCode, std::list<std::string>& boolNames) override;
 
 protected:
 

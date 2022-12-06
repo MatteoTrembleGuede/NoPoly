@@ -33,6 +33,7 @@ protected:
 private:
 
 	std::string HeadCode;
+	std::string ClosestBoundStart;
 	std::string DistWithLightPropertiesFuncStart;
 	std::string DistWithColorFuncStart;
 	std::string DistOnlyFuncStart;

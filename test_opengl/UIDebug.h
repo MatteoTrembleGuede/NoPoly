@@ -11,6 +11,7 @@ private:
 	static bool showSDF;
 	static bool showComplexity;
 	static bool showRenderChunks;
+	static bool showBoundingVolumes;
 
 	Shader* shader;
 

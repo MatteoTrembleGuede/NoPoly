@@ -101,3 +101,10 @@ ShaderPart* ShaderNode::Copy()
 
 	return node;
 }
+
+void ShaderNode::GenerateBounds(std::string& outCode, std::list<std::string>& boolNames)
+{
+	ShaderPart::GenerateBounds(outCode, boolNames);
+
+	for (ShaderPart* child : parts) child->GenerateBounds(outCode, boolNames);
+}

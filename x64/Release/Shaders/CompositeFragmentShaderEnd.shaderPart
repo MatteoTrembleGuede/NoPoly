@@ -204,10 +204,6 @@ void main()
 	vec3 finalColor;
 	const vec2 factor = 2.0f * (vertexUV.xy) - 1.0f;
 	
-    float totalDistance = 0;
-    vec4 distResult = vec4(0, 0, 0, 9999999);
-	float lastDist = 9999999;
-	float lastTotalDist = 0;
 
 	int n = 0;
 	
@@ -216,7 +212,15 @@ void main()
 	time = float(timeSinceLaunch);// + pow(0.5*random + 0.5, 2.0) * 0.02;
 	progress = time * 0.1f;
 	/*const vec3*/ direction = normalize(camForward + factor.x * camRight * screenWidth * tan(camAngle * 0.5f) / screenHeight + factor.y * camUp * tan(camAngle * 0.5f));
-	vec3 p = camPos;
+	//vec3 p = camPos;
+	
+	vec3 boundingColor;
+    float startDistance = GetClosestBound(boundingColor);
+	float totalDistance = startDistance;
+    vec4 distResult = vec4(0, 0, 0, 9999999);
+	float lastDist = 9999999;
+	float lastTotalDist = totalDistance;
+	
     for (; n < MaxIteration && totalDistance < MaxDistance; ++n)
 	{
 		float tmpDistResult = DistToScene(direction * totalDistance + camPos);
@@ -402,6 +406,11 @@ void main()
 	{
 		finalColor =  ((GetDiffuseAndSpecular( finalPosition, direction, normal , distResult.xyz, ao, roughness)
 		+ ambientColor * distResult.xyz) * ao * (1 - farRatio) + sky * farRatio);
+	}
+	
+	if (showBoundingVolumes && startDistance < MaxDistance)
+	{
+		finalColor += boundingColor;
 	}
 	
 	if (showSDF)

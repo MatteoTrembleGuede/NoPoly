@@ -51,6 +51,7 @@ private:
     void ReturnButton();
     void DisplayError();
     void TransformPoint();
+    void SetBoundingVolume();
     void AnimateScale();
     void AnimatePosition();
     void ChooseSpaceRemap(ShaderFunction*& func);

@@ -162,6 +162,7 @@
     <ClCompile Include="..\include\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\include\Input\Input.cpp" />
+    <ClCompile Include="BoundingVolume.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CustomPrimitive.cpp" />
     <ClCompile Include="Encoder.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="..\include\Input\Delegate.h" />
     <ClInclude Include="..\include\Input\Input.h" />
     <ClInclude Include="..\include\stb_image\stb_image.h" />
+    <ClInclude Include="BoundingVolume.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CustomPrimitive.h" />
     <ClInclude Include="Encoder.h" />

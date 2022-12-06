@@ -130,7 +130,7 @@ bool RenderPlane::Draw()
 		RenderTexture* tmp = renderTexture;
 		renderTexture = renderTextureTmp;
 		renderTextureTmp = tmp;
-		renderTextureTmp->Clear();
+		//renderTextureTmp->Clear();
 		renderTextureTmp->Unbind();
 		renderFPSCounter.Update();
 

@@ -5,6 +5,7 @@ bool UIDebug::showTrespassing;
 bool UIDebug::showSDF;
 bool UIDebug::showComplexity;
 bool UIDebug::showRenderChunks;
+bool UIDebug::showBoundingVolumes;
 
 void UIDebug::SendDebugConfig()
 {
@@ -12,6 +13,7 @@ void UIDebug::SendDebugConfig()
 	shader->setBool("showComplexity", showComplexity);
 	shader->setBool("showTrespassing", showTrespassing);
 	shader->setBool("showRenderChunks", showRenderChunks);
+	shader->setBool("showBoundingVolumes", showBoundingVolumes);
 }
 
 UIDebug::UIDebug(std::string _name, Shader* _shader) : UIWindow(_name)
@@ -45,6 +47,11 @@ void UIDebug::WindowBody()
 	}
 
 	if (ImGui::Checkbox("Show Render Chunks", &showRenderChunks))
+	{
+		SendDebugConfig();
+	}
+
+	if (ImGui::Checkbox("Show Bounding Volumes", &showBoundingVolumes))
 	{
 		SendDebugConfig();
 	}

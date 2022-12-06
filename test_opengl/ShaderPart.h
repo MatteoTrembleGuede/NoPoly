@@ -3,6 +3,7 @@
 #include <string>
 #include "Transform.h"
 #include "Transformable.h"
+#include "BoundingVolume.h"
 
 #define STR(a) std::to_string(a)
 #define Layer STR(layer)
@@ -83,9 +84,13 @@ public:
 
 	std::list<ShaderFunction*> spaceRemaps;
 
+	BoundingVolume boundingVolume;
+	bool useBoundingVolume = false;
+
 	void RemoveSpaceRemap(ShaderFunction* func);
 	void AddSpaceRemap();
 	void ReplaceSpaceRemap(ShaderFunction* oldFunc, ShaderFunction* newFunc);
+	virtual void GenerateBounds(std::string& outCode, std::list<std::string>& boolNames);
 	void GenerateCode(std::string& outCode, int _layer, GenerationPass pass = Color);
 	ShaderPart* GetParent();
 	void SetParent(ShaderPart* _parent) { parent = _parent; };

@@ -33,6 +33,7 @@
 #include "Time.h"
 #include "MenuBar.h"
 #include "Input/Input.h"
+#include "BoundingVolume.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image/stb_image.h"
@@ -157,8 +158,8 @@ int main(int argc, char* argv[])
 		Material::SendData(&shader);
 
 		//Display
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		/*glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);*/
 
 		shader.use();
 		HasUpdatedRender = quad->Draw();

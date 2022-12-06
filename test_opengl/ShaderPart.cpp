@@ -122,11 +122,60 @@ void ShaderPart::ReplaceSpaceRemap(ShaderFunction* oldFunc, ShaderFunction* newF
 	delete newFunc;
 }
 
+#define BOOL_NAME std::string("obj_") + std::to_string((unsigned int)this) + "_IsVisible"
+void ShaderPart::GenerateBounds(std::string& outCode, std::list<std::string>& boolNames)
+{
+	if (useBoundingVolume)
+	{
+		std::string boolName = BOOL_NAME;
+		boolNames.push_back(boolName);
+		glm::mat4 mat = glm::inverse(GetLocalBase() * transform->GetMatrix());
+		glm::vec4 pos4 = (mat * glm::vec4(0, 0, 0, 1));
+		glm::vec3 pos = glm::vec3(pos4.x, pos4.y, pos4.z) + boundingVolume.offset;
+
+		outCode += "	if (";
+		outCode += BOOL_NAME + " = ";
+
+		switch (boundingVolume.type)
+		{
+		case BoundingVolume::Type::Box:
+		{
+			glm::vec3 minPos = pos - boundingVolume.size.b;
+			glm::vec3 maxPos = pos + boundingVolume.size.b;
+
+			outCode += std::string("RayBoxIntersection(vec3(") + std::to_string(minPos.x) + "," + std::to_string(minPos.y) + "," + std::to_string(minPos.z) + 
+				"), vec3(" + std::to_string(maxPos.x) + "," + std::to_string(maxPos.y) + "," + std::to_string(maxPos.z) +
+				"), camPos, direction * 300, tmpDist)";
+
+			break;
+		}
+		case BoundingVolume::Type::Sphere:
+		{outCode += std::string("RaySphereIntersection(camPos, direction, vec3(") + 
+			std::to_string(pos.x) + "," + std::to_string(pos.y) + "," + std::to_string(pos.z) +
+			"), " + std::to_string(boundingVolume.size.s) +
+			", tmpDist)";
+			break;
+		}
+		}
+
+		outCode += ")\n"
+			"	{\n"
+			"		smallestDist = min(smallestDist, tmpDist);\n"
+			"		color = mix(color, vec3(" + std::to_string(boundingVolume.color.x) + "," + std::to_string(boundingVolume.color.y) + "," + std::to_string(boundingVolume.color.z) + "), 0.2);\n"
+			"	}\n";
+	}
+}
+
 void ShaderPart::GenerateCode(std::string& outCode, int _layer, GenerationPass pass)
 {
 	if (hide) return;
 	layer = _layer;
-	outCode += "\n" + Tab(layer + 1) + "// " + name + "\n" + Tab(layer + 1) + "{\n";
+	outCode += "\n" + Tab(layer + 1) + "// " + name + "\n" + Tab(layer + 1);
+
+	if (useBoundingVolume) outCode += std::string("if (") + BOOL_NAME + ")";
+
+	outCode += "{\n";
+
 	if (pass == Color)
 	{
 		outCode += Tab(layer + 2) + "vec3 color" + Layer + ";\n";
