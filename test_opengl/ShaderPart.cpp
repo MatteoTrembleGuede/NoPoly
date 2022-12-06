@@ -91,7 +91,7 @@ void ShaderPart::RemoveSpaceRemap(ShaderFunction* func)
 	func->OnModelWillDestroy.Unbind(this, &ShaderPart::RemoveSpaceRemap);
 	spaceRemaps.remove(func);
 	func->model.onModelDeleted += [func] {
-		delete func; 
+		delete func;
 	};
 }
 
@@ -122,7 +122,7 @@ void ShaderPart::ReplaceSpaceRemap(ShaderFunction* oldFunc, ShaderFunction* newF
 	delete newFunc;
 }
 
-#define BOOL_NAME std::string("obj_") + std::to_string((unsigned int)this) + "_IsVisible"
+#define BOOL_NAME (std::string("obj_") + std::to_string((unsigned int)this) + "_IsVisible")
 void ShaderPart::GenerateBounds(std::string& outCode, std::list<std::string>& boolNames)
 {
 	if (useBoundingVolume)
@@ -143,17 +143,17 @@ void ShaderPart::GenerateBounds(std::string& outCode, std::list<std::string>& bo
 			glm::vec3 minPos = pos - boundingVolume.size.b;
 			glm::vec3 maxPos = pos + boundingVolume.size.b;
 
-			outCode += std::string("RayBoxIntersection(vec3(") + std::to_string(minPos.x) + "," + std::to_string(minPos.y) + "," + std::to_string(minPos.z) + 
+			outCode += std::string("RayBoxIntersection(vec3(") + std::to_string(minPos.x) + "," + std::to_string(minPos.y) + "," + std::to_string(minPos.z) +
 				"), vec3(" + std::to_string(maxPos.x) + "," + std::to_string(maxPos.y) + "," + std::to_string(maxPos.z) +
 				"), camPos, direction * 300, tmpDist)";
-
 			break;
 		}
 		case BoundingVolume::Type::Sphere:
-		{outCode += std::string("RaySphereIntersection(camPos, direction, vec3(") + 
-			std::to_string(pos.x) + "," + std::to_string(pos.y) + "," + std::to_string(pos.z) +
-			"), " + std::to_string(boundingVolume.size.s) +
-			", tmpDist)";
+		{
+			outCode += std::string("RaySphereIntersection(camPos, direction, vec3(") +
+				std::to_string(pos.x) + "," + std::to_string(pos.y) + "," + std::to_string(pos.z) +
+				"), " + std::to_string(boundingVolume.size.s) +
+				", tmpDist)";
 			break;
 		}
 		}
@@ -197,6 +197,13 @@ ShaderPart* ShaderPart::GetParent()
 
 void ShaderPart::Save(std::string& outSave)
 {
+	outSave += "BoundingV \n";
+	outSave += "Used " + STR(useBoundingVolume) + "\n";
+	outSave += "Type " + STR(boundingVolume.type) + "\n";
+	outSave += "Size " + STR(boundingVolume.size.b.x) + " " + STR(boundingVolume.size.b.y) + " " + STR(boundingVolume.size.b.z) + "\n";
+	outSave += "Offset " + STR(boundingVolume.offset.x) + " " + STR(boundingVolume.offset.y) + " " + STR(boundingVolume.offset.z) + "\n";
+	outSave += "Color " + STR(boundingVolume.color.x) + " " + STR(boundingVolume.color.y) + " " + STR(boundingVolume.color.z) + "\n";
+	
 	if (spaceRemaps.size() > 0)
 	{
 		outSave += "spaceRemaps \n";
@@ -234,7 +241,7 @@ void ShaderPart::Save(std::string& outSave)
 	outSave += "blendMode " + STR((unsigned int)blendMode) + "\n";
 	outSave += "matId " + STR(matID) + "\n";
 
-	
+
 }
 
 
@@ -246,6 +253,51 @@ void ShaderPart::Load(std::stringstream& inSave)
 	std::string line = buf;
 	std::string word = std::string(line.c_str(), line.find_first_of(' '));
 	std::string value = std::string(line.c_str() + line.find_first_of(' ') + 1);
+
+	if (word == "BoundingV")
+	{
+		Vector3 tmp;
+		for (int i = 0; i < 5; ++i)
+		{
+			inSave.getline(buf, 512, '\n');
+			line = buf;
+			word = std::string(line.c_str(), line.find_first_of(' '));
+			value = std::string(line.c_str() + line.find_first_of(' ') + 1);
+
+			if (word == "Used")
+			{
+				useBoundingVolume = std::stoi(value);
+			}
+			else if (word == "Type")
+			{
+				boundingVolume.type = (BoundingVolume::Type)std::stoi(value);
+			}
+			else if (word == "Size")
+			{
+				tmp = Vector3::Parse(value);
+				boundingVolume.size.b = *(glm::vec3*)&tmp;
+			}
+			else if (word == "Offset")
+			{
+				tmp = Vector3::Parse(value);
+				boundingVolume.offset = *(glm::vec3*)&tmp;
+			}
+			else if (word == "Color")
+			{
+				tmp = Vector3::Parse(value);
+				boundingVolume.color = *(glm::vec3*)&tmp;
+			}
+		}
+
+		inSave.getline(buf, 512, '\n');
+		line = buf;
+		word = std::string(line.c_str(), line.find_first_of(' '));
+		value = std::string(line.c_str() + line.find_first_of(' ') + 1);
+	}
+	else
+	{
+		useBoundingVolume = false;
+	}
 
 	if (word == "spaceRemaps")
 	{
@@ -280,7 +332,7 @@ void ShaderPart::Load(std::stringstream& inSave)
 		word = std::string(line.c_str(), line.find_first_of(' '));
 		value = std::string(line.c_str() + line.find_first_of(' ') + 1);
 	}
-	
+
 	if (word == "emitLight")
 	{
 		emittingLight = true;
@@ -290,7 +342,7 @@ void ShaderPart::Load(std::stringstream& inSave)
 		word = std::string(line.c_str(), line.find_first_of(' '));
 		value = std::string(line.c_str() + line.find_first_of(' ') + 1);
 	}
-	
+
 	if (word == "name")
 	{
 		name = value;

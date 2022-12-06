@@ -1,4 +1,10 @@
 new group
+BoundingV 
+Used 1
+Type 1
+Size 258.899994 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 spaceRemaps 
 function ../functions\Portals.funk
 dynamic 1
@@ -33,6 +39,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -58,10 +70,17 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 0
+lightProps 0.000000 1.000000 1.000000
 color 0.000000 0.000000 0.000000
 shape 9
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -87,11 +106,18 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.348039 0.013649 0.013649
 shape 1
 halfExtends 0.500000 0.500000 0.500000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -117,12 +143,19 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.000000 0.000000 0.000000
 shape 3
 mainRadius 2.000000
 auxRadius 0.100000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -148,6 +181,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.000000 0.000000 0.000000
 shape 3
 mainRadius 2.000000

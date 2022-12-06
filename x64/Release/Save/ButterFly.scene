@@ -1,4 +1,10 @@
 new group
+BoundingV 
+Used 1
+Type 1
+Size 100.000000 85.500000 77.400002
+Offset 0.000000 0.000000 0.000000
+Color 1.000000 1.000000 1.000000
 name scene name
 transformPoint 1
 dynTransform 0
@@ -24,6 +30,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -49,6 +61,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 colorP 0.350000 0.200000 0.150000;0.200000 0.400000 1.000000;1.000000 1.000000 1.000000;0.250000 0.200000 0.250000
 shape 10
 function ../functions\FractalishSphere.funk

@@ -1,4 +1,10 @@
 new group
+BoundingV 
+Used 1
+Type 1
+Size 5.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 1.000000 1.000000 1.000000
 name scene name
 transformPoint 1
 dynTransform 0
@@ -24,6 +30,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 spaceRemaps 
 function ../functions\Dice.funk
 dynamic 1
@@ -34,7 +46,7 @@ name new group
 transformPoint 1
 dynTransform 0
 position 0.000000 0.000000 0.000000
-rotation 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
 scale 1.000000
 animateScale 0
 animatedScaleFunction 
@@ -55,6 +67,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 spaceRemaps 
 function ../functions\Grid.funk
 dynamic 1
@@ -64,7 +82,7 @@ attribValue -5.000000
 attribValue 0.400000 0.600000 
 name new group
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position 0.000000 0.000000 0.000000
 rotation 0.000000 -0.000000 0.000000
 scale 0.100000
@@ -87,6 +105,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -112,6 +136,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 1.000000 29.299999 6.900000
 color 1.000000 1.000000 1.000000
 shape 10
 function ../functions\PaletteBox.funk
@@ -123,11 +148,17 @@ end
 endGroup
 endGroup
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
 position 0.000000 0.000000 0.000000
-rotation 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
 scale 1.000000
 animateScale 0
 animatedScaleFunction 
@@ -148,17 +179,24 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 1.000000 1.000000 1.000000
 shape 0
 radius 1.950000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 emitLight 
 name new object
 transformPoint 1
 dynTransform 0
 position 0.000000 0.000000 0.000000
-rotation 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
 scale 1.000000
 animateScale 0
 animatedScaleFunction 
@@ -179,6 +217,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.004902 0.000505 0.000505
 shape 0
 radius 8.200000

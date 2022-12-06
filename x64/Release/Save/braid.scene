@@ -1,4 +1,10 @@
 new group
+BoundingV 
+Used 1
+Type 0
+Size 0.300000 440.799988 0.400000
+Offset 0.000000 0.000000 0.000000
+Color 1.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -24,6 +30,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name braid
 transformPoint 1
 dynTransform 1
@@ -49,6 +61,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -74,6 +92,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -99,6 +123,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -124,6 +154,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -131,6 +162,12 @@ radius 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -156,6 +193,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -181,6 +224,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -188,6 +232,12 @@ radius 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -213,6 +263,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -238,6 +294,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -247,6 +304,12 @@ endGroup
 endGroup
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name braid
 transformPoint 1
 dynTransform 1
@@ -272,6 +335,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -297,6 +366,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -322,6 +397,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -347,6 +428,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -354,6 +436,12 @@ radius 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -379,6 +467,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -404,6 +498,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -411,6 +506,12 @@ radius 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -436,6 +537,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -461,6 +568,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -470,6 +578,12 @@ endGroup
 endGroup
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name braid
 transformPoint 1
 dynTransform 1
@@ -495,6 +609,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -520,6 +640,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -545,6 +671,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -570,6 +702,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -577,6 +710,12 @@ radius 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -602,6 +741,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -627,6 +772,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000
@@ -634,6 +780,12 @@ radius 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -659,6 +811,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
@@ -684,6 +842,7 @@ smooth 0.000000
 blendMode 0
 matId -1
 dynData 1
+lightProps 0.000000 1.000000 1.000000
 color 0.598039 0.598039 0.598039
 shape 5
 height 10.000000

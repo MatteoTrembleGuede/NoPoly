@@ -1,4 +1,10 @@
 new group
+BoundingV 
+Used 0
+Type 0
+Size 0.500000 1.000000 0.500000
+Offset 0.000000 -0.250000 0.000000
+Color 1.000000 1.000000 1.000000
 name scene name
 transformPoint 1
 dynTransform 0
@@ -24,10 +30,16 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 1
+Type 0
+Size 0.400000 0.200000 0.500000
+Offset -0.050000 0.200000 0.000000
+Color 0.911765 1.000000 0.000000
 bias 0.700000
 name hat
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.012036 0.450232 -0.000000
 rotation 0.000000 -0.000000 0.118414
 scale 1.200000
@@ -66,6 +78,12 @@ attribValue 1.600000
 attribValue 0.200000 0.300000 
 end
 new group
+BoundingV 
+Used 0
+Type 0
+Size 0.500000 1.000000 0.500000
+Offset 0.000000 -0.250000 0.000000
+Color 1.000000 1.000000 1.000000
 name DonGuillermo
 transformPoint 1
 dynTransform 0
@@ -91,10 +109,16 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 1
+Type 0
+Size 0.400000 0.400000 0.250000
+Offset 0.000000 0.100000 -0.050000
+Color 0.000000 0.147059 1.000000
 spaceRemaps 
 function ../functions\MirrorX.funk
 dynamic 1
-name new group
+name head
 transformPoint 0
 dynTransform 0
 position 0.000000 0.000000 0.000000
@@ -119,6 +143,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 1
+Type 0
+Size 0.200000 0.400000 0.200000
+Offset 0.000000 0.200000 0.000000
+Color 0.000000 1.000000 0.411765
 name head
 transformPoint 1
 dynTransform 0
@@ -151,6 +181,12 @@ height 0.400000
 radius 0.200000
 end
 new group
+BoundingV 
+Used 1
+Type 0
+Size 0.200000 0.150000 0.100000
+Offset -0.090000 0.050000 0.000000
+Color 1.000000 0.823529 0.000000
 name eyes
 transformPoint 1
 dynTransform 0
@@ -176,6 +212,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -207,6 +249,12 @@ shape 0
 radius 0.091000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -238,6 +286,12 @@ shape 1
 halfExtends 0.500000 0.030000 0.500000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 0
 dynTransform 0
@@ -269,6 +323,12 @@ shape 0
 radius 0.090000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -300,6 +360,12 @@ shape 0
 radius 0.010000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -332,6 +398,12 @@ halfExtends 0.080000 0.020000 0.020000
 end
 endGroup
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name mouth
 transformPoint 1
 dynTransform 0
@@ -357,6 +429,12 @@ smooth 0.020000
 blendMode 4
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -389,6 +467,12 @@ height 0.160000
 radius 0.160000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -421,6 +505,12 @@ height 0.160000
 radius 0.200000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -452,6 +542,12 @@ shape 1
 halfExtends 0.500000 0.500000 0.500000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -483,6 +579,12 @@ shape 1
 halfExtends 0.500000 0.000000 0.500000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -514,6 +616,12 @@ shape 1
 halfExtends 0.500000 0.000000 0.500000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name moustache
 transformPoint 1
 dynTransform 0
@@ -552,11 +660,17 @@ end
 endGroup
 endGroup
 new group
+BoundingV 
+Used 1
+Type 0
+Size 0.060000 0.080000 0.150000
+Offset -0.020000 -0.475000 -0.450000
+Color 0.882353 0.000000 1.000000
 name cigar
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.036600 0.007201 -0.129073
-rotation -1.876376 0.172258 0.000000
+rotation -1.876375 0.172258 0.000000
 scale 0.299999
 animateScale 0
 animatedScaleFunction 
@@ -577,6 +691,12 @@ smooth 0.010000
 blendMode 4
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -609,9 +729,15 @@ height 1.000000
 radius 0.100000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.000000 0.350164 -0.000000
 rotation 0.000000 -0.000000 0.000000
 scale 1.000000
@@ -641,9 +767,15 @@ height 0.100000
 radius 0.100000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.000000 1.465514 -0.000000
 rotation 0.000000 -0.000000 0.000000
 scale 1.000000
@@ -673,12 +805,18 @@ halfExtends 0.100000 0.500000 0.100000
 end
 endGroup
 new group
+BoundingV 
+Used 1
+Type 0
+Size 0.500000 0.600000 0.300000
+Offset 0.000000 -0.025000 0.000000
+Color 1.000000 0.000000 0.529412
 spaceRemaps 
 function ../functions\MirrorX.funk
 dynamic 1
 name veste
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.000000 -0.625226 0.136889
 rotation 0.000000 -0.000000 0.000000
 scale 1.000000
@@ -701,9 +839,15 @@ smooth 0.000000
 blendMode 0
 matId -1
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.000000 0.000000 -0.000000
 rotation 0.000000 -0.000000 -0.200000
 scale 0.500000
@@ -726,6 +870,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -758,6 +908,12 @@ height 0.500000
 radius 0.500000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 0
@@ -791,9 +947,15 @@ radius 0.500000
 end
 endGroup
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.000000 0.299111 -0.320825
 rotation 0.000000 0.061594 -0.293794
 scale 0.999983
@@ -822,9 +984,15 @@ shape 1
 halfExtends 0.100000 0.500000 0.100000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.000000 0.364165 -0.219000
 rotation 0.000000 -0.000000 -0.381188
 scale 0.100000
@@ -853,9 +1021,15 @@ shape 1
 halfExtends 0.500000 0.500000 0.100000
 end
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
-dynTransform 1
+dynTransform 0
 position -0.020632 0.223831 -0.217000
 rotation 0.000000 -0.000000 0.100000
 scale 0.100000

@@ -21,11 +21,13 @@ ShaderGenerator::ShaderGenerator()
 	ClosestBoundStart = "float GetClosestBound(out vec3 boundingColor)\n"
 		"{\n"
 		"\tfloat smallestDist = 99999999;\n"
-		"\tfloat tmpDist = 0;\n"
+		"\tfloat tmpDist = -10;\n"
 		"\tvec3 color = vec3(0);\n"
 		;
 
-	DistWithColorFuncStart = "\n	boundingColor = color;\n	return smallestDist;\n}\n\n"
+	DistWithColorFuncStart = "if (tmpDist < -2) smallestDist = 0;"
+		"\n	boundingColor = color;"
+		"\n	return max(smallestDist, 0);\n}\n\n"
 		"float DistToScene(in vec3 p, in vec3 n, out vec3 color)\n{\n"
 		"\tfloat minDist = 999999999;\n"
 		"\tcolor = vec3(0, 0, 0);\n"

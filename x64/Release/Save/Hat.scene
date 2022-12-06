@@ -1,4 +1,11 @@
 new group
+BoundingV 
+Used 1
+Type 1
+Size 3.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.568627 0.568627 0.568627
+bias 0.700000
 name scene name
 transformPoint 1
 dynTransform 0
@@ -24,6 +31,12 @@ smooth 0.000000
 blendMode 0
 matId -1
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 spaceRemaps 
 function ../functions\NonUniformScale.funk
 dynamic 1
@@ -60,6 +73,12 @@ height 0.100000
 radius 1.500000
 end
 new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new group
 transformPoint 1
 dynTransform 0
@@ -85,6 +104,12 @@ smooth 0.000000
 blendMode 0
 matId 0
 new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
 name new object
 transformPoint 1
 dynTransform 1
