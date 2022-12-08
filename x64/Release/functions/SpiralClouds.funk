@@ -1,0 +1,35 @@
+type SpaceRemap
+name SpiralClouds
+attribName density
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName scale
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName speed
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName radius
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+body 
+float dist = length(point.xz);
+scale *= pow(dist*scale, 0.5);
+float angle = speed * time - pow(dist*scale, 0.5);
+point = Rotate(point, angle);
+glowDensity = (snoise(point/scale) + 1) * density / max(pow((dist), 2.0), 5/scale);
+gradientValue = clamp(1-dist/radius, 0, 1);
+glowDensity *= gradientValue;
+return m;

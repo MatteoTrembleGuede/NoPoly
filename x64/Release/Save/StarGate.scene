@@ -32,8 +32,8 @@ matId -1
 new group
 BoundingV 
 Used 1
-Type 0
-Size 4.000000 4.000000 0.400000
+Type 2
+Size 4.350000 4.350000 0.800000
 Offset 0.000000 0.000000 0.000000
 Color 1.000000 0.000000 0.000000
 name gate

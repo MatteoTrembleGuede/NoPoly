@@ -878,6 +878,10 @@ void ShaderLeaf::DrawShape(std::string& outCode, GenerationPass pass)
 		{
 			outCode += (Tab(layer + 2) + "lp" + Layer + " = " + GetLightingPropertiesCode() + ";\n");
 		}
+		else
+		{
+			if (emittingLight) outCode += Tab(layer + 2) + "AddGlow(" + GetColorCode() + ", tmpDist);\n";
+		}
 	}
 	else
 	{
@@ -935,6 +939,10 @@ void ShaderLeaf::DrawShape(std::string& outCode, GenerationPass pass)
 		else if (pass == LightingProp)
 		{
 			outCode += (Tab(layer + 2) + "lp" + Layer + " = " + GetLightingPropertiesCode() + ";\n");
+		}
+		else
+		{
+			if (emittingLight) outCode += Tab(layer + 2) + "AddGlow(" + GetColorCode() + ", tmpDist);\n\n";
 		}
 	}
 }

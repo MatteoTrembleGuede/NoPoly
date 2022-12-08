@@ -1,0 +1,41 @@
+type SpaceRemap
+name BlackHole
+attribName mass
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName influenceLimitDist
+attribDesc float
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+body 
+#define Cross2(a, b) (pow(a.y * b.z - b.y * a.z, 2.0) + pow(a.z * b.x - b.z * a.x, 2.0) + pow(a.x * b.y - b.x * a.y, 2.0))
+float totalD = length(lastPoint - origin);
+if (totalD > 0.01 && totalD < influenceLimitDist)
+{
+	vec3 r = (curPoint - lastPoint);
+	vec3 pl1 = normalize(lastPoint);
+	float cr = Cross2(pl1, r);
+	vec3 np = curPoint + ((-3.0 * mass) / pow(length(lastPoint), 2.0) * cr * pl1);
+	direction = normalize(np - lastPoint);
+	origin = -totalD * direction + lastPoint;
+	gradientValue = length(np);
+	if (gradientValue < mass * 2.0f) 
+	{
+		preventAddGlow = true;
+		worldColorFactor = 0.0f;
+	}
+	return InvTranslate(m, (curPoint - np));
+}
+else
+	return m;
+
+
+
+
+
+

@@ -1,0 +1,248 @@
+new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
+spaceRemaps 
+function ../functions\BlackHole.funk
+dynamic 1
+attribValue 1.100000 
+attribValue 69.900002 
+name scene name
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.000000
+rotation -0.300000 -0.100000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new group
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
+name new group
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+lightProps 0.000000 1.000000 0.100000
+color 0.000000 0.000000 0.000000
+shape 0
+radius 1.600000
+end
+new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
+spaceRemaps 
+function ../functions\SpiralClouds.funk
+dynamic 1
+attribValue 495.899994 
+attribValue 0.500000 
+attribValue 0.900000 
+attribValue 43.900002 
+bias 0.500000
+emitLight 
+name new object
+transformPoint 1
+dynTransform 1
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 0
+rotatingSpeed 1.000000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+lightProps 0.000000 1.000000 1.000000
+colorP 0.500000 0.450000 0.450000;0.400000 0.100000 0.250000;0.100000 1.600000 0.400000;1.050000 0.250000 0.200000
+shape 10
+function ../functions\SquareTorus.funk
+dynamic 1
+attribValue 3.900000 -0.100000 
+attribValue 39.400002 0.100000 
+end
+endGroup
+new object
+BoundingV 
+Used 0
+Type 0
+Size 1.000000 1.000000 1.000000
+Offset 0.000000 0.000000 0.000000
+Color 0.000000 0.000000 0.000000
+name new object
+transformPoint 1
+dynTransform 0
+position 0.000000 0.000000 0.000000
+rotation 0.000000 -0.000000 0.000000
+scale 1.000000
+animateScale 0
+animatedScaleFunction 
+animatePosition 0
+animatedPositionFunction 
+elongate 0
+elongation 0.000000 0.000000 0.000000
+round 0
+hollow 0
+roundValue 0.000000
+repeat 0
+repeatOffset 0.000000 0.000000 0.000000
+revolutionRepeat 0
+revolutionTimesRepeat 0.000000
+rotating 1
+rotatingSpeed 0.020000
+smooth 0.000000
+blendMode 0
+matId -1
+dynData 1
+lightProps 0.000000 1.000000 1.000000
+color 0.000000 0.000000 0.000000
+shape 10
+function ../functions\stars.funk
+dynamic 1
+attribValue 0.020000 0.020000 0.020000 
+attribValue 6.800000 
+attribValue 2.200000 
+attribValue 0.200000 
+attribValue 0.500000 
+attribValue 92.199997 
+end
+endGroup
+sunDirection 0.000000 -0.707107 0.707107
+sunColor 0.000000 0.000000 0.000000
+skyColor 0.000000 0.000000 0.000000
+floorColor 0.000000 0.000000 0.000000
+ambientColor 0.000000 0.000000 0.000000
+lightCount 3
+name new light
+position 0.000000 0.000000 0.000000
+direction 0.000000 -1.000000 0.000000
+type 2
+color 1.000000 1.000000 1.000000
+intensity 6.500000
+radius 28.900000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+name new light
+position -0.000000 10.164354 -0.000000
+direction 0.000000 0.000000 1.000000
+type 2
+color 1.000000 1.000000 1.000000
+intensity 2.600000
+radius 33.000000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+name new light
+position -0.000000 -9.712818 -0.000000
+direction 0.000000 0.000000 1.000000
+type 2
+color 1.000000 1.000000 1.000000
+intensity 4.200000
+radius 18.400000
+attenuation 2.000000
+aperture 1.570000
+focus 1.000000
+materialNumber 2
+name stars
+id 0
+diffuse ../TextureSamples\stars\tuhutzwjhb321.jpg
+normal ../TextureSamples\blankNormal.jpg
+roughness ../TextureSamples\White.jpg
+ambientOcclusion ../TextureSamples\White.jpg
+name sun
+id 1
+diffuse none
+normal ../TextureSamples\blankNormal.jpg
+roughness ../TextureSamples\White.jpg
+ambientOcclusion ../TextureSamples\White.jpg

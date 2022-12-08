@@ -198,6 +198,9 @@ vec3 grad(in vec3 p)
 
 void main()
 {
+	glowDensity = 1.0f;
+	worldColorFactor = 1.0f;
+	preventAddGlow = false;
 	volumetricLight = vec3(0);
 	emittersCount = 0;
 	usedMatsCount = 0;
@@ -213,7 +216,9 @@ void main()
 	progress = time * 0.1f;
 	/*const vec3*/ direction = normalize(camForward + factor.x * camRight * screenWidth * tan(camAngle * 0.5f) / screenHeight + factor.y * camUp * tan(camAngle * 0.5f));
 	//vec3 p = camPos;
-	
+	origin = camPos;
+	lastPoint = origin;
+	curPoint = origin;
 	vec3 boundingColor;
     float startDistance = GetClosestBound(boundingColor);
 	float totalDistance = startDistance;
@@ -223,15 +228,16 @@ void main()
 	
     for (; n < MaxIteration && totalDistance < MaxDistance; ++n)
 	{
-		float tmpDistResult = DistToScene(direction * totalDistance + camPos);
+		curPoint = direction * totalDistance + origin;
+		float tmpDistResult = DistToScene(curPoint);
 		
 		if (applyDRMNC)
 		{
-			vec3 tmpNormalFP = GetNormal(direction * totalDistance + camPos);
+			vec3 tmpNormalFP = GetNormal(direction * totalDistance + origin);
 			float dotnd1 = dot(tmpNormalFP, direction);
 			if (tmpDistResult > 0 && dotnd1 > 0)
 			{
-				vec3 tmpNormalLFP = GetNormal(direction * lastTotalDist + camPos);
+				vec3 tmpNormalLFP = GetNormal(direction * lastTotalDist + origin);
 				float dotnd2 = dot(tmpNormalLFP, direction);
 				if (sign(dotnd1) != sign(dotnd2))
 				{
@@ -239,9 +245,9 @@ void main()
 					for (int i = 0; /*dot(tmpNormalFP, tmpNormalLFP) < 0 &&*/ tmpBias > 0 && (tmpDistResult > 0); ++i)
 					{
 						float tmpTotalDistance = lastTotalDist + (totalDistance - lastTotalDist) * tmpBias;
-						if (dot(tmpNormalFP = GetNormal(direction * tmpTotalDistance + camPos), direction) < 0)
+						if (dot(tmpNormalFP = GetNormal(direction * tmpTotalDistance + origin), direction) < 0)
 						{
-							tmpDistResult = DistToScene(direction * tmpTotalDistance + camPos);
+							tmpDistResult = DistToScene(direction * tmpTotalDistance + origin);
 							totalDistance = tmpTotalDistance;
 							break;
 						}
@@ -261,6 +267,7 @@ void main()
 		}
 		else
 		{
+			lastPoint = direction * totalDistance + origin;
 			lastTotalDist = totalDistance;
 			totalDistance += (tmpDistResult);
 		}
@@ -269,13 +276,13 @@ void main()
 	
 	if (applyPRMNC)
 	{
-		if (DistToScene(direction * totalDistance + camPos) < 0)
+		if (DistToScene(direction * totalDistance + origin) < 0)
 		{
 			for (int i = 0; (distResult.w >= RAYCAST_PRECISION * totalDistance + RAYCAST_PRECISION || distResult.w < 0) && i < PRMNCStepNum; ++i)
 			{
 				float weight = distResult.w / ((distResult.w) - (lastDist));
 				float tmpTotalDistance = mix(totalDistance, lastTotalDist, weight);
-				float tmpDist = DistToScene(direction * tmpTotalDistance + camPos);
+				float tmpDist = DistToScene(direction * tmpTotalDistance + origin);
 				if (tmpDist >= 0 && tmpDist < lastDist)
 				{
 					lastDist = tmpDist;
@@ -290,7 +297,7 @@ void main()
 		}
 	}
 	
-	const vec3 finalPosition = direction * totalDistance + camPos;
+	const vec3 finalPosition = direction * totalDistance + origin;
     vec3 normal = GetNormal(finalPosition);
 	vec3 tmpLightP;
 	
@@ -417,7 +424,7 @@ void main()
 	{
 		if (finalPosition.z > 0)
 		{
-			const vec3 posOnPlane = camPos - (camPos.z) / (direction.z) * direction;
+			const vec3 posOnPlane = origin - (origin.z) / (direction.z) * direction;
 			
 			// test fixing distance
 			
@@ -440,7 +447,7 @@ void main()
 		}
 	}
 	
-	finalColor = clamp(pow(finalColor, vec3(0.45)), 0.0f, 1.0f);
+	finalColor = clamp(pow(finalColor * worldColorFactor + glowColor, vec3(0.45)), 0.0f, 1.0f);
 	finalColor = finalColor * finalColor * (3.0f - 2.0f * finalColor);
 	
 	if (showRenderChunks)

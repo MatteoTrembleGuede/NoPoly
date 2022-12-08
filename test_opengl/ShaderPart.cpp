@@ -156,6 +156,14 @@ void ShaderPart::GenerateBounds(std::string& outCode, std::list<std::string>& bo
 				", tmpDist)";
 			break;
 		}
+		case BoundingVolume::Type::Ellipsoid:
+		{
+			outCode += std::string("RayEllipsoidIntersection(camPos, direction, vec3(") +
+				std::to_string(boundingVolume.size.b.x) + "," + std::to_string(boundingVolume.size.b.y) + "," + std::to_string(boundingVolume.size.b.z) +
+				"), vec3(" + std::to_string(pos.x) + "," + std::to_string(pos.y) + "," + std::to_string(pos.z) +
+				"), tmpDist)";
+			break;
+		}
 		}
 
 		outCode += ")\n"
@@ -639,7 +647,7 @@ void ShaderPart::BlendShape(std::string& outCode, GenerationPass pass)
 		if (emittingLight)
 		{
 			outCode += Tab(layer + 2) + "vec3 lDir = mix(-n, normalize((InvMat(m" + Layer + ") * vec4(vec3(0), 1.0f)).xyz - p), clamp(-1.0/(smoothMin*500.0f+1)+1, 0, 1));\n";
-			outCode += Tab(layer + 2) + "AddLight((0.9*smoothMin - 0.003) * lDir + p, abs(0.9*smoothMin - 0.003), color" + Layer + "); \n";
+			outCode += Tab(layer + 2) + "AddLight((0.9*smoothMin) * lDir + p, abs(0.9*smoothMin - 0.003), color" + Layer + "); \n";
 		}
 	}
 	else if (pass == GenerationPass::LightingProp)

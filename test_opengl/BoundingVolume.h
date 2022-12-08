@@ -13,6 +13,7 @@ public:
 	{
 		Box,
 		Sphere,
+		Ellipsoid,
 		Count
 	};
 

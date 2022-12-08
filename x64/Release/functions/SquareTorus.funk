@@ -1,0 +1,21 @@
+type Primitive
+name SquareTorus
+attribName radius
+attribDesc vec2
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+attribName stretch
+attribDesc vec2
+0 -340282346638528859811704183484516925440.000000
+0 0.000000
+0 340282346638528859811704183484516925440.000000
+0 0.100000
+body 
+float distToC = length(point.xz);
+float offset = min(stretch.x, max(0, distToC - radius.x));
+point.xz -= normalize(point.xz) * offset;
+offset = min(stretch.y, max(0, abs(point.y)));
+point.y -= sign(point.y) * offset;
+return sdTorus(point, radius);

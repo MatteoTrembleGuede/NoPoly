@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
 		Input::BindSet bs = Input::BindSet("bindsetTest.bs");
 		Input::GetGlobalInput(0).ApplyBindSet(bs);
 	}
-
+	bool allowInput = true;
 	while (!glfwWindowShouldClose(window))
 	{
 		//Event
@@ -135,12 +135,13 @@ int main(int argc, char* argv[])
 		ImGui::NewFrame();
 		ImGuizmo::SetDrawlist(ImGui::GetForegroundDrawList());
 
-		Input::GetGlobalInput(0).AllowInput(!ImGui::GetIO().WantTextInput && !ImGui::GetIO().WantCaptureKeyboard);
+		Input::GetGlobalInput(0).AllowInput(allowInput);
 		Time::Update();
 		ViewportManager::Update();
 
 		menuBar.Display();
 		UIWindow::DisplayUI();
+		allowInput = !ImGui::GetIO().WantTextInput && !ImGui::GetIO().WantCaptureKeyboard;
 		ImGuizmo::BeginFrame();
 		camera.Move(Time::GetFrameTime());
 		Guizmo::Update(&camera);

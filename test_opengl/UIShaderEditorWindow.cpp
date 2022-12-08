@@ -688,7 +688,7 @@ void UIShaderEditorWindow::SetBoundingVolume()
 	if (currentPart->useBoundingVolume)
 	{
 		int selected = currentPart->boundingVolume.type;
-		const char* names[BoundingVolume::Type::Count] = {"Box", "Sphere"};
+		const char* names[BoundingVolume::Type::Count] = {"Box", "Sphere", "Ellipsoid"};
 		if (ImGui::Combo("Bounding volume type", &selected, names, BoundingVolume::Type::Count))
 		{
 			currentPart->boundingVolume.type = (BoundingVolume::Type)selected;
@@ -701,6 +701,9 @@ void UIShaderEditorWindow::SetBoundingVolume()
 			break;
 		case BoundingVolume::Type::Sphere:
 			ImGui::DragFloat("Bounding sphere size", (float*)&currentPart->boundingVolume.size.s, 0.1f, 0.0f);
+			break;
+		case BoundingVolume::Type::Ellipsoid:
+			ImGui::DragFloat3("Bounding ellipsoid size", (float*)&currentPart->boundingVolume.size.b, 0.1f, 0.0f);
 			break;
 		}
 
